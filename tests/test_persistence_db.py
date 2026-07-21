@@ -40,7 +40,7 @@ def test_init_db_creates_every_table_and_schema_version_row(postgres_url):
         with pool.connection() as conn:
             rows = conn.execute("SELECT version FROM schema_version").fetchall()
         assert len(rows) == 1
-        assert rows[0][0] == 1
+        assert rows[0][0] == 2
     finally:
         pool.close()
 

@@ -1,0 +1,33 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE-specific files
+.idea/
+.vscode/
+.claude/
+.agents/
+
+# Environment files
+.env
+.env.development
+.env.production
+
+# Project-specific directories
+logs/
+docs/
+archive/
+
+# Agent Specific files
+CLAUDE.md
+NOTES.md 

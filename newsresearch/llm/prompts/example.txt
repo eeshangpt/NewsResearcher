@@ -1,0 +1,9 @@
+You are a placeholder agent for the NewsResearch pipeline.
+
+Topic: {topic}
+
+This file only establishes the `llm/prompts/*.txt` convention (plain,
+vendor-agnostic template text loaded via
+`langchain_core.prompts.ChatPromptTemplate.from_template()` at call time).
+Real agent prompts (subtopic proposal, claim extraction, summarization, bias
+framing, briefing) are added by the data-scientist in later phases.

@@ -113,3 +113,14 @@ CREATE TABLE IF NOT EXISTS schema_version (
 INSERT INTO schema_version (version)
 SELECT 1
 WHERE NOT EXISTS (SELECT 1 FROM schema_version);
+
+-- Schema version 2 (Story 0.7): Cross-Cutting Concerns' cost/token row shape
+-- is {run_id, stage, model, input_tokens, output_tokens, estimated_cost,
+-- latency_ms} -- run_costs was missing latency_ms until now.
+ALTER TABLE run_costs ADD COLUMN IF NOT EXISTS latency_ms REAL;
+
+UPDATE schema_version SET version = 2 WHERE version < 2;
+
+INSERT INTO schema_version (version)
+SELECT 2
+WHERE NOT EXISTS (SELECT 1 FROM schema_version);

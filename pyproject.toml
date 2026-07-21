@@ -38,3 +38,11 @@ dev = [
     "ruff>=0.15.22",
     "testcontainers[postgres]>=4.14.2",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "live: opt-in real-API smoke test; never run by default, select explicitly via `-m live`",
+]
+# Testing approach (EXECUTION_PLAN.md): tests/live/ is opt-in only, never
+# CI-blocking -- excluded from a plain `uv run pytest` by default.
+addopts = "-m 'not live'"

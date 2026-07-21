@@ -30,4 +30,9 @@ archive/
 
 # Agent Specific files
 CLAUDE.md
-NOTES.md 
+NOTES.md
+
+# Project specific details
+PRD.md
+TRD.md
+news_research_arch.md

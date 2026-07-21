@@ -1,0 +1,38 @@
+# NewsResearch local development infrastructure.
+#
+# `docker compose up -d` brings up:
+#   - postgres   the application's own Postgres database (`newsresearch`)
+#   - the full self-hosted Langfuse stack, defined in deploy/langfuse/docker-compose.yml
+#     and pulled in below via `include` (a local, in-repo file — nothing is
+#     fetched from outside this repository at runtime).
+#
+# Langfuse UI: http://localhost:3000
+#
+# See README.md for the full local-dev bring-up instructions.
+
+include:
+  - deploy/langfuse/docker-compose.yml
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: newsresearch-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${NEWSRESEARCH_POSTGRES_USER:-newsresearch}
+      POSTGRES_PASSWORD: ${NEWSRESEARCH_POSTGRES_PASSWORD:-newsresearch}
+      POSTGRES_DB: ${NEWSRESEARCH_POSTGRES_DB:-newsresearch}
+    ports:
+      - "${NEWSRESEARCH_POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - newsresearch_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${NEWSRESEARCH_POSTGRES_USER:-newsresearch} -d ${NEWSRESEARCH_POSTGRES_DB:-newsresearch}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  newsresearch_postgres_data:
+    name: newsresearch_postgres_data

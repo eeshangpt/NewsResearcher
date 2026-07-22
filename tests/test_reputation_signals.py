@@ -7,6 +7,69 @@ import pytest
 from newsresearch.reputation import signals
 
 
+# --- Task 1.5.1: GDELT/RSS presence-frequency signal ------------------------
+
+
+def test_get_presence_frequency_scores_empty_input_returns_empty_dict():
+    assert signals.get_presence_frequency_scores([]) == {}
+
+
+def test_get_presence_frequency_scores_domain_across_both_source_types_scores_highest():
+    fetch_results = [
+        {"domain": "reuters.com", "source_type": "gdelt"},
+        {"domain": "reuters.com", "source_type": "rss"},
+        {"domain": "reuters.com", "source_type": "gdelt"},  # repeat, same source_type
+        {"domain": "obscure-blog.com", "source_type": "gdelt"},
+    ]
+
+    scores = signals.get_presence_frequency_scores(fetch_results)
+
+    assert scores == {"reuters.com": 1.0, "obscure-blog.com": 0.5}
+
+
+def test_get_presence_frequency_scores_normalizes_against_batch_source_type_count():
+    # Only GDELT ran (no RSS, no backfill) -- a domain hit by GDELT is the
+    # batch's maximum achievable coverage and should score 1.0, not be
+    # capped as if RSS/backfill were expected but missing.
+    fetch_results = [
+        {"domain": "gdelt-only.com", "source_type": "gdelt"},
+    ]
+
+    scores = signals.get_presence_frequency_scores(fetch_results)
+
+    assert scores == {"gdelt-only.com": 1.0}
+
+
+def test_get_presence_frequency_scores_domain_across_three_source_types_is_deterministic():
+    fetch_results = [
+        {"domain": "bbc.com", "source_type": "gdelt"},
+        {"domain": "bbc.com", "source_type": "rss"},
+        {"domain": "bbc.com", "source_type": "google_news_backfill"},
+        {"domain": "one-hit.com", "source_type": "rss"},
+        {"domain": "two-hit.com", "source_type": "gdelt"},
+        {"domain": "two-hit.com", "source_type": "google_news_backfill"},
+    ]
+
+    scores = signals.get_presence_frequency_scores(fetch_results)
+
+    assert scores == {
+        "bbc.com": 1.0,
+        "one-hit.com": pytest.approx(1 / 3),
+        "two-hit.com": pytest.approx(2 / 3),
+    }
+
+
+def test_get_presence_frequency_scores_normalizes_domain_case():
+    fetch_results = [
+        {"domain": "Example.com", "source_type": "gdelt"},
+        {"domain": "example.com", "source_type": "rss"},
+    ]
+
+    scores = signals.get_presence_frequency_scores(fetch_results)
+
+    assert scores == {"example.com": 1.0}
+
+
 # --- Task 1.6.1: WHOIS domain-age signal ------------------------------------
 
 

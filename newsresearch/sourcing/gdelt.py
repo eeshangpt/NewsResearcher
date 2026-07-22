@@ -72,12 +72,22 @@ def _format_gdelt_datetime(dt: datetime) -> str:
 def _build_query(keywords: list[str]) -> str:
     """Join a keyword list into a GDELT DOC 2.0 boolean-OR query string.
 
-    Each keyword is quoted so multi-word phrases are matched as phrases
-    rather than GDELT's default implicit-AND-of-terms behavior.
+    Verified directly against the real GDELT DOC 2.0 endpoint (tech-lead
+    review of Task 1.10.1): quoting a single-token keyword (e.g. `"Iran"`)
+    gets a real HTTP 200 with the plain-text body "The specified phrase is
+    too short" -- GDELT's phrase-quoting is for multi-word phrases only, a
+    lone token must be bare. Only whitespace-containing keywords are quoted
+    here. Separately, an OR'd multi-term query gets a real HTTP 200 with
+    "Queries containing OR'd terms must be surrounded by ()" unless the
+    whole OR expression is parenthesized -- so terms are only OR-joined
+    (with wrapping parens) when there's more than one keyword.
     """
     if not keywords:
         raise ValueError("keywords must be a non-empty list")
-    return " OR ".join(f'"{keyword}"' for keyword in keywords)
+    terms = [f'"{keyword}"' if " " in keyword else keyword for keyword in keywords]
+    if len(terms) == 1:
+        return terms[0]
+    return "(" + " OR ".join(terms) + ")"
 
 
 def _parse_article(raw: dict) -> dict:

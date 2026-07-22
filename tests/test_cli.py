@@ -9,6 +9,7 @@ from newsresearch.agents.sourcing_agent import ScoredArticle
 from newsresearch.cli import app
 from newsresearch.observability.mlflow_setup import EXPERIMENT_NAME
 from newsresearch.persistence.db import init_db
+from newsresearch.sourcing.gdelt import GDELTError
 
 # Hermetic `testcontainers[postgres]` per Story 0.4/0.7's own precedent, so
 # this doesn't depend on the dev `docker compose up -d` stack being up.
@@ -143,3 +144,16 @@ def test_dev_sourcing_test_requires_database_url(tmp_path, monkeypatch):
     result = runner.invoke(app, ["dev", "sourcing-test", "climate policy"])
 
     assert result.exit_code != 0
+
+
+# Tech-lead review follow-up: a `GDELTError` (GDELT is a primary source,
+# allowed to hard-fail per NFR-3 -- only Google News backfill soft-fails)
+# used to crash this command with a raw traceback. It should now surface as
+# a readable diagnostic + non-zero exit instead.
+def test_dev_sourcing_test_reports_a_gdelt_error_readably_instead_of_crashing(cli_env):
+    with patch("newsresearch.cli.sourcing_agent", side_effect=GDELTError("boom")):
+        result = runner.invoke(app, ["dev", "sourcing-test", "climate policy"])
+
+    assert result.exit_code != 0
+    assert "GDELT error" in result.output
+    assert "Traceback" not in result.output

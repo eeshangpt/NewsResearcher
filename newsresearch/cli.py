@@ -31,6 +31,7 @@ from newsresearch.observability.langfuse_setup import (
 )
 from newsresearch.observability.mlflow_setup import mlflow_run
 from newsresearch.persistence.db import init_db
+from newsresearch.sourcing.gdelt import GDELTError
 
 app = typer.Typer(help="NewsResearch dev CLI harness.")
 dev_app = typer.Typer(help="Manual dev-inspection subcommands (Story 1.10).")
@@ -128,6 +129,14 @@ def sourcing_test(
     pool = init_db(settings.database_url)
     try:
         results = sourcing_agent(keywords.split(), lookback_days, pool=pool, settings=settings)
+    except GDELTError as exc:
+        # GDELT/RSS are primary sources (unlike Google News backfill, NFR-3
+        # only covers that) so `sourcing_agent` is allowed to let a GDELT
+        # hard-fail propagate -- this is dev-UX polish only: a readable
+        # diagnostic + non-zero exit at the CLI layer instead of a raw
+        # traceback, not a change to that soft-fail/hard-fail contract.
+        typer.echo(f"GDELT error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
     finally:
         pool.close()
 

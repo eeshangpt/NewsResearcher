@@ -54,8 +54,23 @@ def _no_real_sleep(monkeypatch):
     monkeypatch.setattr("newsresearch.sourcing.gdelt.time.sleep", lambda _seconds: None)
 
 
-def test_build_query_joins_and_quotes_keywords():
-    assert _build_query(["climate change", "wildfire"]) == '"climate change" OR "wildfire"'
+def test_build_query_joins_and_quotes_multi_word_keywords_wrapped_in_parens():
+    # Verified against the real GDELT endpoint (tech-lead review, Task
+    # 1.10.1 follow-up): an OR'd multi-term query is rejected with HTTP 200
+    # + "Queries containing OR'd terms must be surrounded by ()" unless the
+    # whole expression is parenthesized.
+    assert _build_query(["climate change", "wildfire"]) == '("climate change" OR wildfire)'
+
+
+def test_build_query_does_not_quote_a_single_bare_token():
+    # Verified against the real GDELT endpoint: quoting a single-token
+    # keyword gets HTTP 200 + "The specified phrase is too short" --
+    # phrase-quoting is for multi-word phrases only.
+    assert _build_query(["Iran"]) == "Iran"
+
+
+def test_build_query_quotes_a_single_multi_word_phrase_without_parens():
+    assert _build_query(["climate change"]) == '"climate change"'
 
 
 def test_build_query_rejects_empty_keyword_list():

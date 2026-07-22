@@ -33,6 +33,16 @@ class ClusteringSettings(BaseModel):
     subtopic_match_threshold: float = 0.8
 
 
+class SourcingSettings(BaseModel):
+    # Below this many combined GDELT+RSS primary results, the sourcing
+    # orchestrator falls back to Google News RSS backfill (Story 1.8). 15
+    # is a sane middle ground: comfortably more than a single trusted-outlet
+    # feed's typical per-topic yield (so a quiet news day still triggers
+    # backfill) but high enough that a normal multi-source haul doesn't
+    # trigger the unofficial-endpoint fallback needlessly (NFR-3).
+    min_primary_article_count: int = 15
+
+
 class ModelSettings(BaseModel):
     # Placeholder model names per stage (TRD 2: small model for mechanical
     # tasks, large model for framing/briefing) — finalized choices are
@@ -68,6 +78,7 @@ class Settings(BaseSettings):
     pipeline: PipelineSettings = PipelineSettings()
     reputation: ReputationSettings = ReputationSettings()
     clustering: ClusteringSettings = ClusteringSettings()
+    sourcing: SourcingSettings = SourcingSettings()
     models: ModelSettings = ModelSettings()
     embeddings: EmbeddingsSettings = EmbeddingsSettings()
 

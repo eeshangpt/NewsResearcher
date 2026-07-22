@@ -20,6 +20,7 @@ def isolated_cwd(tmp_path, monkeypatch):
         "LANGFUSE_HOST",
         "MLFLOW_TRACKING_URI",
         "PIPELINE__MAX_SUBTOPICS",
+        "SOURCING__MIN_PRIMARY_ARTICLE_COUNT",
     ):
         monkeypatch.delenv(var, raising=False)
     return tmp_path
@@ -33,6 +34,7 @@ def test_settings_instantiates_with_defaults_and_every_nested_field_present(isol
     assert isinstance(settings.reputation.min_score_threshold, float)
     assert isinstance(settings.clustering.similarity_threshold, float)
     assert isinstance(settings.clustering.subtopic_match_threshold, float)
+    assert isinstance(settings.sourcing.min_primary_article_count, int)
     assert isinstance(settings.models.subtopic, str)
     assert isinstance(settings.models.claim_extraction, str)
     assert isinstance(settings.models.summarization, str)
@@ -79,3 +81,14 @@ def test_env_vars_override_yaml_tunables(isolated_cwd, monkeypatch):
     settings = Settings()
 
     assert settings.pipeline.max_subtopics == 99
+
+
+def test_sourcing_min_primary_article_count_defaults_and_overrides(isolated_cwd, monkeypatch):
+    default_settings = Settings()
+    assert default_settings.sourcing.min_primary_article_count == 15
+
+    (isolated_cwd / "config.yaml").write_text("sourcing:\n  min_primary_article_count: 20\n")
+    assert Settings().sourcing.min_primary_article_count == 20
+
+    monkeypatch.setenv("SOURCING__MIN_PRIMARY_ARTICLE_COUNT", "5")
+    assert Settings().sourcing.min_primary_article_count == 5

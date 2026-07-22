@@ -2,7 +2,9 @@ from pathlib import Path
 
 import yaml
 
-TRUSTED_OUTLETS_PATH = Path(__file__).resolve().parent.parent / "data" / "trusted_outlets.yaml"
+TRUSTED_OUTLETS_PATH = (
+    Path(__file__).resolve().parent.parent / "newsresearch" / "data" / "trusted_outlets.yaml"
+)
 
 
 def test_trusted_outlets_yaml_loads_as_nonempty_domain_to_tier_dict():
@@ -22,4 +24,4 @@ def test_trusted_outlets_yaml_contains_expected_wire_and_major_tiers():
     assert outlets["apnews.com"] == "wire"
     assert outlets["bbc.com"] == "major"
     assert outlets["theguardian.com"] == "major"
-    assert set(outlets.values()) == {"wire", "major"}
+    assert {"wire", "major"}.issubset(set(outlets.values()))

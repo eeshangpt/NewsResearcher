@@ -27,6 +27,31 @@ class ReputationSettings(BaseModel):
     staleness_days: int = 30
     min_score_threshold: float = 0.5
 
+    # TRD 4.2 `base_tier_score`: trusted-tier example is 0.7, unknown is 0.3.
+    # `data/trusted_outlets.yaml` actually carries two trusted sub-tiers
+    # (`wire`/`major`) rather than TRD's single flattened "trusted" bucket --
+    # `wire` (global wire services with no editorial slant of their own:
+    # Reuters, AP, AFP, UPI) is scored a notch above `major` outlets, both
+    # above TRD's literal 0.7 example, since it's the strictly-higher-trust
+    # tier per trusted_outlets.yaml's own docstring; `major` keeps TRD's
+    # literal 0.7; `unknown` keeps TRD's literal 0.3 floor.
+    base_score_wire: float = 0.8
+    base_score_major: float = 0.7
+    base_score_unknown: float = 0.3
+
+    # TRD 4.2 `w1..w4`: "tunable weights summing to a bounded adjustment
+    # range (e.g. ±0.3)". Defaults below sum to exactly `adjustment_bound`
+    # when every normalized signal is at its max (1.0), matching that stated
+    # intent; `adjustment_bound` is *also* enforced as an explicit clip in
+    # `reputation/scorer.py` (not just relied on via weight configuration),
+    # so a weight override or an out-of-range signal can never push a score
+    # outside the configured bound.
+    weight_domain_age: float = 0.10
+    weight_backlink_proxy: float = 0.10
+    weight_presence_frequency: float = 0.05
+    weight_legitimacy_flags: float = 0.05
+    adjustment_bound: float = 0.3
+
 
 class ClusteringSettings(BaseModel):
     similarity_threshold: float = 0.75

@@ -41,7 +41,12 @@ def _domain_from_url(url: str | None) -> str | None:
     if not url:
         return None
     netloc = urlparse(url).netloc
-    return netloc.removeprefix("www.") or None
+    # Lowercase + strip "www." to match the normalized domain form gdelt.py
+    # and rss.py already emit (Story 1.9 integration checkpoint) -- without
+    # this, dedup.py's cross-source-dedup same-domain guard (plain string
+    # equality on `domain`) can silently misfire against a mixed-case source
+    # href for the same real-world outlet.
+    return netloc.lower().removeprefix("www.") or None
 
 
 def _entry_published_at(entry: dict[str, Any]) -> datetime | None:

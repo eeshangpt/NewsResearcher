@@ -17,6 +17,11 @@ from __future__ import annotations
 
 from typing import Any
 
+from langchain_core.callbacks import CallbackManagerForLLMRun
+from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.messages import AIMessage, BaseMessage
+from langchain_core.outputs import ChatGeneration, ChatResult
+from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.postgres import PostgresSaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
@@ -57,11 +62,64 @@ def _make_passthrough_node(name: str):
     return _node
 
 
+class _StubSubtopicChatModel(BaseChatModel):
+    """Deterministic stand-in chat model for the `subtopic` node (Task 0.7.4).
+
+    The real Subtopic Agent (prompt, schema, `get_chat_model("subtopic")`)
+    lands in Phase 2 Task 2.2.1. Until then this is the minimal chat-model
+    call needed so the observability stack attached at the top-level
+    `graph.invoke()` call (cost callback, Langfuse, MLflow) has an actual LLM
+    invocation to capture end-to-end -- a real `ChatOpenAI` call would
+    require a live `OPENAI_API_KEY`, which Phase 0 must not depend on.
+    """
+
+    model_name: str = "stub-subtopic-model"
+
+    @property
+    def _llm_type(self) -> str:
+        return "stub-subtopic-chat-model"
+
+    def _generate(
+        self,
+        messages: list[BaseMessage],
+        stop: list[str] | None = None,
+        run_manager: CallbackManagerForLLMRun | None = None,
+        **kwargs: Any,
+    ) -> ChatResult:
+        message = AIMessage(
+            content="acknowledged",
+            usage_metadata={"input_tokens": 12, "output_tokens": 4, "total_tokens": 16},
+        )
+        return ChatResult(
+            generations=[ChatGeneration(message=message)],
+            llm_output={"model_name": self.model_name},
+        )
+
+
+def _make_subtopic_stub_node():
+    """The `subtopic` node's Phase 0 stand-in.
+
+    Still a no-op with respect to graph state -- the real subtopic-proposal
+    logic isn't built yet -- but exercises the observability path with one
+    stub chat-model call, per Task 0.7.4. Accepts `config` so the callbacks/
+    metadata attached at the top-level `graph.invoke()` call propagate to
+    this nested LLM call, the same pattern `cost_callback.py` documents.
+    """
+
+    def _node(state: GraphState, config: RunnableConfig) -> dict[str, Any]:
+        _StubSubtopicChatModel().invoke(f"Acknowledge topic: {state['topic']}", config=config)
+        return {}
+
+    _node.__name__ = "subtopic_node"
+    return _node
+
+
 def build_state_graph() -> StateGraph:
     """Assemble the full no-op node topology, uncompiled."""
     builder = StateGraph(GraphState)
     for name in NODE_ORDER:
-        builder.add_node(name, _make_passthrough_node(name))
+        node_fn = _make_subtopic_stub_node() if name == "subtopic" else _make_passthrough_node(name)
+        builder.add_node(name, node_fn)
 
     builder.add_edge(START, NODE_ORDER[0])
     for upstream, downstream in zip(NODE_ORDER, NODE_ORDER[1:]):

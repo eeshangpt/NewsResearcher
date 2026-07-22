@@ -28,6 +28,9 @@ logs/
 docs/
 archive/
 
+# MLflow local file-store tracking backend (Settings.mlflow_tracking_uri)
+mlruns/
+
 # Agent Specific files
 CLAUDE.md
 NOTES.md

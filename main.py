@@ -1,6 +1,3 @@
-def main():
-    print("Hello from newsresearch!")
+from newsresearch.cli import app
 
-
-if __name__ == "__main__":
-    main()
+app()

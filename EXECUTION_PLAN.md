@@ -275,7 +275,7 @@ Acceptance: `data/trusted_outlets.yaml` exists with domain→tier entries, loada
       Acceptance: file parses via `pyyaml`; each entry maps a domain to a tier string; loader test confirms structure.
       Depends on: none
 
-**Story 1.2 — GDELT DOC 2.0 client fetches and paginates beyond the 250-record cap**
+**Story 1.2 — GDELT DOC 2.0 client fetches and paginates beyond the 250-record cap** ✅ tech-lead approved, ready to merge (branch `task/gdelt-doc-client`)
 Acceptance: a query expected to exceed 250 raw results returns a combined list larger than 250 via sub-window paging, with 429 backoff.
 - [ ] Task 1.2.1 (orig. Task 2, part a): `sourcing/gdelt.py` — single-window keyword+date-range query, JSON mode.
       Acceptance: returns parsed article dicts (title, url, domain, published date) from a real GDELT call under 250 results.
@@ -284,7 +284,7 @@ Acceptance: a query expected to exceed 250 raw results returns a combined list l
       Acceptance: a lookback range known to exceed 250 raw hits returns >250 combined results via internal sub-window splitting; a simulated 429 triggers backoff-and-retry rather than immediate failure.
       Depends on: 1.2.1
 
-**Story 1.3 — RSS sourcing and Google News backfill exist as structurally separate modules**
+**Story 1.3 — RSS sourcing and Google News backfill exist as structurally separate modules** ✅ tech-lead approved, ready to merge (branch `story/rss-google-news-backfill`)
 Acceptance: `sourcing/rss.py` fetches trusted-feed articles by keyword/date; `sourcing/google_news_backfill.py` is independently callable and structurally isolated (NFR-3).
 - [ ] Task 1.3.1 (orig. Task 3, part a): `sourcing/rss.py` — fetch official RSS feeds for trusted-tier outlets from `data/trusted_outlets.yaml`, filter by keyword/date.
       Acceptance: given a keyword + lookback window, returns article dicts from at least 2 real trusted-outlet RSS feeds, correctly filtered.
@@ -293,14 +293,15 @@ Acceptance: `sourcing/rss.py` fetches trusted-feed articles by keyword/date; `so
       Acceptance: has its own public function callable independently of `rss.py`/`gdelt.py`; import-graph check confirms `gdelt.py`/`rss.py` never import from it (only the orchestrator does).
       Depends on: Task 1.0.1 (feedparser/httpx)
 
-**Story 1.4 — Deduplication removes exact-URL and cross-source near-duplicate articles**
+**Story 1.4 — Deduplication removes exact-URL and cross-source near-duplicate articles** ✅ tech-lead approved, ready to merge (branch `task/dedup-sourcing`)
 Acceptance: `sourcing/dedup.py` collapses normalized-identical URLs and rapidfuzz-similar cross-domain titles (wire-story dupes).
-- [ ] Task 1.4.1 (orig. Task 4, part a): URL normalization + exact-match drop (strip tracking params, trailing slash, scheme-normalize).
+- [x] Task 1.4.1 (orig. Task 4, part a): URL normalization + exact-match drop (strip tracking params, trailing slash, scheme-normalize).
       Acceptance: unit test with `http://x.com/a?utm_source=y` and `https://x.com/a/` confirms only one survives.
       Depends on: Task 1.0.1 (no new dep beyond stdlib/httpx already added)
-- [ ] Task 1.4.2 (orig. Task 4, part b): `rapidfuzz` title-similarity cross-source dedup.
+- [x] Task 1.4.2 (orig. Task 4, part b): `rapidfuzz` title-similarity cross-source dedup.
       Acceptance: unit test with two near-identical titles from different domains above threshold confirms one is dropped; a below-threshold pair both survive.
       Depends on: 1.4.1, Task 1.0.1 (rapidfuzz)
+      Reuses `Settings.clustering.similarity_threshold` (pre-provisioned for exactly this, per TRD.md line 88) rather than a new config field.
 
 **Story 1.5 — GDELT/RSS presence-frequency reputation signal (build and trust first, no external dependency)**
 Acceptance: `reputation/signals.py`'s presence-frequency collector computes a per-domain frequency score from Phase 1's own fetch results, zero additional network calls.
@@ -308,7 +309,7 @@ Acceptance: `reputation/signals.py`'s presence-frequency collector computes a pe
       Acceptance: given a fixed list of (domain, source_type) fetch results, returns a normalized per-domain frequency score deterministically; covered by a unit test with fixed input, no live call.
       Depends on: 1.2.2 (GDELT results shape), 1.3.1 (RSS results shape), 1.4.2 (operates on the deduped set, per stated task order)
 
-**Story 1.6 — Domain-age, backlink-proxy, and HTTPS/about-page signals, each soft-failing independently**
+**Story 1.6 — Domain-age, backlink-proxy, and HTTPS/about-page signals, each soft-failing independently** ✅ tech-lead approved, ready to merge (branch `story/domain-reputation-signals`)
 Acceptance: three collectors in `reputation/signals.py` each return a normalized value or neutral/`None` on failure, never raising.
 
 *FLAGGED FEASIBILITY RISKS (carried forward from EXECUTION_PLAN / PRD risk table, not footnotes):*
@@ -336,6 +337,7 @@ Acceptance: `reputation/scorer.py` computes the TRD 4.2 formula with `Settings`-
       Depends on: 1.5.1, 1.6.1, 1.6.2, 1.6.3, Phase 0 Task 0.3.1 (`Settings.reputation.*` weights)
 - [ ] Task 1.7.2 (orig. Task 7, part b): `reputation/cache.py` — `domain_reputation` table read/write, staleness-window check, manual-invalidation function.
       Acceptance: `testcontainers`-backed integration test writes a score, reads it back within the staleness window (cache hit, no recompute), confirms manual invalidation forces recompute; a `freezegun`-controlled clock verifies the staleness-window boundary precisely.
+      **Known gotcha (found during Story 1.3, verified by tech-lead 2026-07-22):** `freeze_time` triggers a fresh lazy import of `langfuse.api`'s Pydantic models while time is frozen, and pydantic-core's schema generation chokes on it — confirmed to reproduce only when the full suite runs (langfuse must already be loaded by an earlier test, e.g. `test_config.py`/`test_langfuse_setup.py`, before `freeze_time` does its module-attribute scan); running `tests/test_rss.py` alone does not trigger it, which is why this is easy to miss in isolation. Any test using `freeze_time` alongside langfuse-touching code needs `freeze_time(..., ignore=["langfuse"])`. Since Story 1.3 and this task are now two independent occurrences of the same paper cut, and `tests/conftest.py` does not yet exist: **Task 1.7.2's implementer should add one** with an autouse fixture (or `freezegun.config.configure(default_ignore_list=["langfuse"])` at collection time) so future `freeze_time` users don't each have to rediscover and repeat the `ignore=` kwarg.
       Depends on: Phase 0 Task 0.4.2 (`init_db`/schema for the `domain_reputation` table), 1.7.1
 
 **Story 1.8 — Backfill trigger logic invokes Google News RSS only as a non-load-bearing fallback**
@@ -349,6 +351,7 @@ Acceptance: `agents/sourcing_agent.py(keywords: list[str], lookback_days: int) -
 - [ ] Task 1.9.1 (orig. Task 9): wire `agents/sourcing_agent.py`: query → backfill-if-below-min-count → dedup → score → filter by `Settings.reputation.min_score_threshold`.
       Acceptance: calling it against real GDELT/RSS returns `ScoredArticle` objects each above `Settings.reputation.min_score_threshold`, no duplicate URLs/near-dupe titles present. This is the Phase 1 phase-level Done-when target itself.
       Depends on: 1.2.2, 1.3.1, 1.3.2, 1.4.2, 1.7.1, 1.7.2, 1.8.1
+      **Integration checkpoint (tech-lead review, Task 1.4.2):** `dedup.py`'s cross-source-only guard compares `article["domain"]` by plain string equality; confirm at wiring time that `gdelt.py` (1.2.x) and `rss.py`/`google_news_backfill.py` (1.3.x) emit `domain` in a consistent normalized form (lowercase, no `www.` prefix) for the same outlet — otherwise the same-domain exemption can silently misfire in either direction. Fix at the article-dict-construction site in the affected sourcing client, not by adding normalization logic to `dedup.py` (keep dedup's input contract a plain string-equality comparison). Also worth an empirical look once real titles flow through: `dedup_by_title_similarity` uses `rapidfuzz.fuzz.ratio` (character-edit-distance); real cross-outlet wire-story headlines often reorder clauses more than they edit characters, so `fuzz.token_sort_ratio`/`token_set_ratio` may catch more true dupes if 1.11.1's spot-check shows under-matching — file that as a tuning follow-up against Task 1.4.2 specifically, not against "Phase 1" generally, same convention as the Tranco signal note above.
 
 **Story 1.10 — Manual dev CLI for sourcing inspection**
 Acceptance: `newsresearch dev sourcing-test "<keywords>"` runs the sourcing agent and prints a human-readable article+score listing.

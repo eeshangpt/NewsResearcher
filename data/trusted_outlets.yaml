@@ -1,0 +1,31 @@
+# Seed whitelist for reputation scoring's base_tier_score (TRD 4.2).
+#
+# Flat mapping of domain -> tier string. Tiers, v1:
+#   wire  - global wire services with no editorial slant of their own,
+#           the highest-trust tier (Reuters, AP, AFP, UPI).
+#   major - major international/national outlets with established
+#           editorial standards and fact-checking desks.
+#
+# This is a hand-curated v1 seed list of uncontroversial, well-known
+# outlets, not an exhaustive registry. `reputation/scorer.py` (Phase 1,
+# separate task) is expected to treat domains absent from this file as
+# "no tier" rather than erroring.
+reuters.com: wire
+apnews.com: wire
+afp.com: wire
+upi.com: wire
+bbc.com: major
+bbc.co.uk: major
+theguardian.com: major
+nytimes.com: major
+washingtonpost.com: major
+npr.org: major
+aljazeera.com: major
+wsj.com: major
+ft.com: major
+economist.com: major
+cnn.com: major
+bloomberg.com: major
+abcnews.go.com: major
+cbsnews.com: major
+nbcnews.com: major

@@ -76,7 +76,7 @@ def test_outlet_rss_feeds_only_maps_known_trusted_domains():
 
 
 @respx.mock
-@freeze_time("2026-07-22 12:00:00", ignore=["langfuse"])
+@freeze_time("2026-07-22 12:00:00")
 def test_fetch_trusted_rss_filters_by_keyword_and_lookback_across_two_feeds():
     respx.get(FEEDS_UNDER_TEST["bbc.com"]).mock(return_value=httpx.Response(200, content=BBC_FEED))
     respx.get(FEEDS_UNDER_TEST["theguardian.com"]).mock(
@@ -97,7 +97,7 @@ def test_fetch_trusted_rss_filters_by_keyword_and_lookback_across_two_feeds():
 
 
 @respx.mock
-@freeze_time("2026-07-22 12:00:00", ignore=["langfuse"])
+@freeze_time("2026-07-22 12:00:00")
 def test_fetch_trusted_rss_drops_non_matching_keyword_and_stale_entries():
     respx.get(FEEDS_UNDER_TEST["bbc.com"]).mock(return_value=httpx.Response(200, content=BBC_FEED))
     respx.get(FEEDS_UNDER_TEST["theguardian.com"]).mock(
@@ -112,7 +112,7 @@ def test_fetch_trusted_rss_drops_non_matching_keyword_and_stale_entries():
 
 
 @respx.mock
-@freeze_time("2026-07-22 12:00:00", ignore=["langfuse"])
+@freeze_time("2026-07-22 12:00:00")
 def test_fetch_trusted_rss_accepts_a_list_of_keywords_matched_with_or_semantics():
     respx.get(FEEDS_UNDER_TEST["bbc.com"]).mock(return_value=httpx.Response(200, content=BBC_FEED))
     respx.get(FEEDS_UNDER_TEST["theguardian.com"]).mock(
@@ -128,7 +128,7 @@ def test_fetch_trusted_rss_accepts_a_list_of_keywords_matched_with_or_semantics(
 
 
 @respx.mock
-@freeze_time("2026-07-22 12:00:00", ignore=["langfuse"])
+@freeze_time("2026-07-22 12:00:00")
 def test_fetch_trusted_rss_skips_a_failing_feed_and_still_returns_the_others():
     respx.get(FEEDS_UNDER_TEST["bbc.com"]).mock(return_value=httpx.Response(500))
     respx.get(FEEDS_UNDER_TEST["theguardian.com"]).mock(

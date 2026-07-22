@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
 import pytest
 from mlflow.tracking import MlflowClient
 from testcontainers.postgres import PostgresContainer
 from typer.testing import CliRunner
 
+from newsresearch.agents.sourcing_agent import ScoredArticle
 from newsresearch.cli import app
 from newsresearch.observability.mlflow_setup import EXPERIMENT_NAME
 from newsresearch.persistence.db import init_db
@@ -85,5 +88,58 @@ def test_run_requires_database_url(tmp_path, monkeypatch):
     monkeypatch.delenv("NEWSRESEARCH_DATABASE_URL", raising=False)
 
     result = runner.invoke(app, ["run", "test topic"])
+
+    assert result.exit_code != 0
+
+
+# Story 1.10 -- `dev sourcing-test` is a thin CLI wrapper over
+# `agents/sourcing_agent.py` (already end-to-end verified against real
+# GDELT/RSS by Story 1.9's own live test). Mocking `sourcing_agent` here
+# keeps this hermetic while still exercising the CLI's own plumbing: arg
+# parsing, keyword splitting, pool lifecycle, and output formatting.
+def test_dev_sourcing_test_invokes_sourcing_agent_and_exits_0(cli_env):
+    scored = ScoredArticle(
+        article={"title": "Example", "url": "https://example.com/a", "domain": "example.com"},
+        reputation_score=0.87,
+        reputation_tier="major",
+    )
+    with patch("newsresearch.cli.sourcing_agent", return_value=[scored]) as mock_sourcing_agent:
+        result = runner.invoke(app, ["dev", "sourcing-test", "climate policy"])
+
+    assert result.exit_code == 0
+    mock_sourcing_agent.assert_called_once()
+    called_keywords, called_lookback_days = mock_sourcing_agent.call_args[0]
+    assert called_keywords == ["climate", "policy"]
+    assert called_lookback_days == 7
+    assert "https://example.com/a" in result.stdout
+    assert "example.com" in result.stdout
+    assert "0.87" in result.stdout
+    assert "major" in result.stdout
+
+
+def test_dev_sourcing_test_prints_no_results_message_when_empty(cli_env):
+    with patch("newsresearch.cli.sourcing_agent", return_value=[]):
+        result = runner.invoke(app, ["dev", "sourcing-test", "quiet topic"])
+
+    assert result.exit_code == 0
+    assert "No articles" in result.stdout
+
+
+def test_dev_sourcing_test_accepts_lookback_days_option(cli_env):
+    with patch("newsresearch.cli.sourcing_agent", return_value=[]) as mock_sourcing_agent:
+        result = runner.invoke(
+            app, ["dev", "sourcing-test", "climate", "--lookback-days", "3"]
+        )
+
+    assert result.exit_code == 0
+    _, called_lookback_days = mock_sourcing_agent.call_args[0]
+    assert called_lookback_days == 3
+
+
+def test_dev_sourcing_test_requires_database_url(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("NEWSRESEARCH_DATABASE_URL", raising=False)
+
+    result = runner.invoke(app, ["dev", "sourcing-test", "climate policy"])
 
     assert result.exit_code != 0

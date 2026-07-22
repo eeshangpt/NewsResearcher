@@ -14,14 +14,76 @@ from __future__ import annotations
 import csv
 import logging
 import math
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import TypedDict
+from typing import Iterable, TypedDict
 
 import httpx
 import whois
 
 logger = logging.getLogger(__name__)
+
+
+# --- Task 1.5.1: GDELT/RSS presence-frequency signal ------------------------
+
+
+class FetchResult(TypedDict):
+    domain: str
+    source_type: str
+
+
+def get_presence_frequency_scores(fetch_results: Iterable[FetchResult]) -> dict[str, float]:
+    """Per-domain presence-frequency score from Phase 1's own fetch results.
+
+    Zero external dependency, pure and deterministic: this is Phase 1's
+    cheapest reputation signal (EXECUTION_PLAN Story 1.5, "build and trust
+    this one first") since it's derived entirely from the `domain`/
+    `source_type` fields already emitted by `sourcing/gdelt.py`,
+    `sourcing/rss.py`, and `sourcing/google_news_backfill.py` -- no extra
+    network call.
+
+    Scoring approach: for each domain, count the number of *distinct*
+    `source_type`s it appeared under in this batch (e.g. a domain surfaced by
+    both GDELT and RSS scores higher than one surfaced by only one of them),
+    then normalize against the number of distinct source types present in the
+    whole batch. Distinct-source-type coverage is deliberately used instead
+    of raw appearance count, because a domain with many articles from a
+    single source type isn't a stronger legitimacy signal than one
+    corroborated independently across source types (TRD 4.2's stated
+    intuition) -- a domain repeatedly hit by one noisy feed shouldn't
+    outscore one confirmed by two independent sources.
+
+    Normalizing against the batch's own distinct-source-type count (rather
+    than a fixed universe of 3 known source types) keeps the score meaningful
+    when Google News backfill wasn't triggered for a given subtopic fetch
+    (Story 1.8): if only GDELT+RSS ran, a domain appearing in both is the
+    batch's maximum achievable coverage and scores 1.0, rather than being
+    capped at 2/3 for a backfill call that never happened.
+
+    Returns an empty dict for an empty input. A domain is only present in the
+    result if it appeared at least once in `fetch_results`; there is no
+    entry, and no `None`, for domains outside the batch -- callers wanting
+    a neutral default for absent domains should apply that at the call site
+    (matching the fail-open convention of the other Story 1.6 signals).
+    """
+    domain_source_types: dict[str, set[str]] = defaultdict(set)
+    all_source_types: set[str] = set()
+
+    for result in fetch_results:
+        domain = result["domain"].strip().lower()
+        source_type = result["source_type"]
+        domain_source_types[domain].add(source_type)
+        all_source_types.add(source_type)
+
+    if not all_source_types:
+        return {}
+
+    denominator = len(all_source_types)
+    return {
+        domain: len(source_types) / denominator
+        for domain, source_types in domain_source_types.items()
+    }
 
 
 # --- Task 1.6.1: WHOIS domain-age signal -----------------------------------

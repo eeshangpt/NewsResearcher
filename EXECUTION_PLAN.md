@@ -98,7 +98,7 @@ main.py                        # thin: `from newsresearch.cli import app; app()`
 
 ### Phase 0 — Story/Task Breakdown (PM decomposition)
 
-**Status as of last update:** Stories 0.1, 0.2, 0.3, 0.4, 0.5, and 0.6 are implemented and merged to `master`. Story 0.7 has been implemented on branch `story/phase0-observability` but is **not merged** — it was built unrequested (out of sequence, ahead of being asked for) and is paused pending review before merge; see its status note below. Stories 0.8, 0.9, and 0.10 are not started. Work is currently paused.
+**Status as of last update:** Stories 0.1–0.7 are implemented and merged to `master` (Story 0.7's `story/phase0-observability` branch was merged via PR #6 after review). `uv run ruff check .` and `uv run pytest` both currently pass clean (26 passed, 1 deselected live test) against everything merged so far — Story 0.9's baseline is effectively already satisfied by what 0.1–0.7 landed, subject to re-confirmation once Story 0.8 adds `cli.py`. Story 0.8 (CLI harness) and Task 0.7.4 (wiring the three observability callbacks into it) are the only code remaining; Story 0.10 is the final walkthrough once those land. The CI-scoping open item (see below) remains an explicit, non-blocking open decision.
 
 Repo-state check confirmed: no `newsresearch/` package, no `docker-compose.yml`, no `deploy/`, no `tests/` — nothing below has been built yet. The numbered Tasks above are preserved as-is except where a task bundled more than one independently-verifiable outcome; those are split below and cross-referenced back to their original task number for traceability. Splits: original Task 3 (docker-compose.yml) → app-Postgres service and Langfuse stack are separately verifiable; original Task 9 (`llm/models.py`) → `get_chat_model` and `get_embeddings` are separately verifiable; original Task 10 (observability) → three distinct modules plus a separate wiring step.
 
@@ -167,21 +167,18 @@ Acceptance: `get_chat_model(stage)` returns `BaseChatModel` for every `Settings.
       Depends on: none
       Note: added `sentence-transformers` as an explicit dependency beyond Story 0.1's original list — required at construction time by `HuggingFaceEmbeddings`, not pulled in transitively as assumed.
 
-**Story 0.7 — Observability stack verified end-to-end through a stub LLM call** ⚠️ IMPLEMENTED, NOT MERGED — built unrequested/out of sequence, paused pending review
+**Story 0.7 — Observability stack verified end-to-end through a stub LLM call** ✅ MERGED (`master`, PR #6)
 Acceptance: one stub LLM call through the graph produces a `run_costs` row, a visible Langfuse trace, and an MLflow run — simultaneously, from one top-level `graph.invoke()`.
-Branch: `story/phase0-observability` (pushed, PR not opened/merged). Flagged for review before merge because: (a) it was built without being asked for, ahead of Story 0.8 which it partially depends on; (b) it modifies the already-merged `persistence/schema.sql` from Story 0.4 — bumps `schema_version` 1→2 and adds `run_costs.latency_ms` via idempotent `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` (the column the Cross-Cutting Concerns row shape requires but Story 0.4 had omitted); (c) `cost_callback.py`'s per-token pricing table has real rates for only two models, placeholders otherwise — not yet trustworthy for real cost figures.
+Note: this was originally built unrequested/out of sequence (ahead of Story 0.8, which Task 0.7.4 depends on); it was reviewed and merged as-is. `cost_callback.py`'s per-token pricing table still has real rates for only two models, placeholders otherwise — not yet trustworthy for real cost figures, tracked as a known gap rather than a blocker.
 - [x] Task 0.7.1 (orig. Task 10, split a): `observability/cost_callback.py` — `BaseCallbackHandler` capturing `{run_id, stage, model, input_tokens, output_tokens, estimated_cost, latency_ms}`, writes to `run_costs`, fails soft independent of Langfuse reachability.
       Acceptance: unit test with a mocked LLM call asserts a fully-populated `run_costs` row is written; simulated DB-write failure logs-and-continues, never raises.
       Depends on: 0.4.2, 0.6.1
-      Status: implemented on `story/phase0-observability`, not merged.
 - [x] Task 0.7.2 (orig. Task 10, split b): `observability/langfuse_setup.py` — `CallbackHandler` factory, tags traces with `run_id` + `subtopic_id`.
       Acceptance: a stub call attached with this handler produces a trace visible at `localhost:3000` tagged with the given `run_id`.
       Depends on: 0.2.2, 0.3.2
-      Status: implemented on `story/phase0-observability`, not merged. Verified against the real self-hosted Langfuse instance (disposable throwaway user/org/API keys, nothing committed) rather than mocked.
 - [x] Task 0.7.3 (orig. Task 10, split c): `observability/mlflow_setup.py` — run lifecycle helpers keyed by `run_id`, `./mlruns` file-store backend.
       Acceptance: start/end helpers around a stub invocation produce exactly one MLflow run under `./mlruns` tagged with `run_id`.
       Depends on: 0.3.2
-      Status: implemented on `story/phase0-observability`, not merged.
 - [ ] Task 0.7.4 (orig. Task 10, wiring clause + Task 11's callback half): wire all three callbacks into `cli.py`'s top-level `graph.invoke(state, config={"callbacks": [...]})`.
       Acceptance: `uv run newsresearch run "test topic"` (with a real/stubbed chat-model call in one node) produces all three artifacts from Story 0.7's acceptance in one command.
       Depends on: 0.7.1, 0.7.2, 0.7.3, 0.8.1

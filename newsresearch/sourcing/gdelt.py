@@ -157,8 +157,10 @@ def query_window(
 
     Raises `ValueError` if `max_records` exceeds GDELT's 250-record cap
     (use `query_range()` to page over sub-windows instead), and `GDELTError`
-    if retries are exhausted or the API returns a non-JSON, non-rate-limit
-    body.
+    if retries are exhausted, the API returns a non-JSON, non-rate-limit
+    body, an HTTP error status, or a network-level failure (timeout,
+    connection error, etc.) -- `GDELTError` is the single, complete signal
+    for "this GDELT call failed for any operational reason."
     """
     if max_records > GDELT_MAX_RECORDS_PER_CALL:
         raise ValueError(
@@ -180,28 +182,34 @@ def query_window(
     http_client = client or httpx.Client(timeout=30.0)
     try:
         response: httpx.Response | None = None
-        for attempt in range(1, max_retries + 2):
-            response = http_client.get(GDELT_DOC_API_URL, params=params)
-            if not _is_rate_limited(response):
-                break
-            if attempt > max_retries:
-                raise GDELTError(
-                    f"GDELT DOC 2.0 API still rate-limited after {max_retries} retries "
-                    f"for window {start.isoformat()}..{end.isoformat()} "
-                    f"(last status {response.status_code})"
+        try:
+            for attempt in range(1, max_retries + 2):
+                response = http_client.get(GDELT_DOC_API_URL, params=params)
+                if not _is_rate_limited(response):
+                    break
+                if attempt > max_retries:
+                    raise GDELTError(
+                        f"GDELT DOC 2.0 API still rate-limited after {max_retries} retries "
+                        f"for window {start.isoformat()}..{end.isoformat()} "
+                        f"(last status {response.status_code})"
+                    )
+                delay = _retry_after_seconds(response, attempt, backoff_seconds)
+                logger.warning(
+                    "gdelt: rate-limited (status=%d, attempt %d/%d), backing off %.1fs",
+                    response.status_code,
+                    attempt,
+                    max_retries,
+                    delay,
                 )
-            delay = _retry_after_seconds(response, attempt, backoff_seconds)
-            logger.warning(
-                "gdelt: rate-limited (status=%d, attempt %d/%d), backing off %.1fs",
-                response.status_code,
-                attempt,
-                max_retries,
-                delay,
-            )
-            time.sleep(delay)
+                time.sleep(delay)
 
-        assert response is not None  # loop always runs at least once
-        response.raise_for_status()
+            assert response is not None  # loop always runs at least once
+            response.raise_for_status()
+        except httpx.HTTPError as exc:
+            raise GDELTError(
+                f"GDELT DOC 2.0 API request failed for window "
+                f"{start.isoformat()}..{end.isoformat()}: {exc}"
+            ) from exc
 
         try:
             payload = response.json()

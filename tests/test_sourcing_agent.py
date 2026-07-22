@@ -27,6 +27,7 @@ from newsresearch.agents.sourcing_agent import ScoredArticle, sourcing_agent
 from newsresearch.config import Settings
 from newsresearch.persistence.db import init_db
 from newsresearch.reputation import cache
+from newsresearch.sourcing.gdelt import GDELTError
 
 # --- fixtures -----------------------------------------------------------------
 
@@ -223,6 +224,31 @@ def test_sourcing_agent_survives_backfill_failure_nfr3(
     mock_backfill_fetch.assert_called_once()
     assert len(result) == 1
     assert result[0].article["domain"] == "reuters.com"
+
+
+@NEUTRAL_SIGNALS
+@patch("newsresearch.sourcing.rss.fetch_trusted_rss")
+@patch("newsresearch.sourcing.gdelt.fetch")
+def test_sourcing_agent_survives_gdelt_failure(mock_gdelt_fetch, mock_rss_fetch, pool):
+    mock_gdelt_fetch.side_effect = GDELTError("simulated GDELT rate-limit exhaustion")
+    mock_rss_fetch.return_value = [
+        _article(
+            "RSS-sourced wire report",
+            "https://reuters.com/rss-only1",
+            "reuters.com",
+            source_type="rss",
+        ),
+    ]
+    # Low enough that the single surviving RSS article already meets it, so
+    # backfill doesn't also trigger -- isolates the GDELT-failure path.
+    settings = Settings(sourcing={"min_primary_article_count": 1})
+
+    result = sourcing_agent(["ceasefire"], lookback_days=7, pool=pool, settings=settings)
+
+    mock_gdelt_fetch.assert_called_once()
+    assert len(result) == 1
+    assert result[0].article["domain"] == "reuters.com"
+    assert result[0].article["source_type"] == "rss"
 
 
 # --- pool lifecycle ------------------------------------------------------------

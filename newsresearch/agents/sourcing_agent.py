@@ -13,6 +13,13 @@ This is the Phase 1 phase-level "Done when" target itself
 Subtopic Agent yet -- that's Phase 2), calling `sourcing_agent(...)` against
 real GDELT/RSS returns a deduplicated, reputation-scored, threshold-filtered
 article list.
+
+Both GDELT and Google News backfill are soft-fail (Story 1.12, hardening
+GDELT to match the backfill precedent established in Story 1.8): a
+`GDELTError`/backfill failure is logged and swallowed, and the pipeline
+continues with whatever primary/backfill sources did succeed. RSS is not
+wrapped -- it hasn't shown a failure mode in this codebase's tests and
+doesn't need one.
 """
 
 from __future__ import annotations
@@ -29,6 +36,7 @@ from newsresearch.reputation import cache, scorer, signals
 from newsresearch.sourcing import dedup as dedup_module
 from newsresearch.sourcing import gdelt, rss
 from newsresearch.sourcing.backfill_trigger import maybe_backfill
+from newsresearch.sourcing.gdelt import GDELTError
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +135,16 @@ def sourcing_agent(
         pool = init_db(settings.database_url)
 
     try:
-        gdelt_articles = gdelt.fetch(keywords, lookback_days)
+        try:
+            gdelt_articles = gdelt.fetch(keywords, lookback_days)
+        except GDELTError:
+            logger.warning(
+                "sourcing_agent: gdelt.fetch failed; continuing with RSS (+backfill-if-triggered) "
+                "results only",
+                exc_info=True,
+            )
+            gdelt_articles = []
+
         rss_articles = rss.fetch_trusted_rss(keywords, lookback_days)
         primary_articles = gdelt_articles + rss_articles
         logger.info(

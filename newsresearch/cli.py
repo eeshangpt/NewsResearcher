@@ -130,11 +130,12 @@ def sourcing_test(
     try:
         results = sourcing_agent(keywords.split(), lookback_days, pool=pool, settings=settings)
     except GDELTError as exc:
-        # GDELT/RSS are primary sources (unlike Google News backfill, NFR-3
-        # only covers that) so `sourcing_agent` is allowed to let a GDELT
-        # hard-fail propagate -- this is dev-UX polish only: a readable
-        # diagnostic + non-zero exit at the CLI layer instead of a raw
-        # traceback, not a change to that soft-fail/hard-fail contract.
+        # Story 1.12 made `sourcing_agent` soft-fail GDELT (log a warning,
+        # continue with RSS(+backfill)-only results) -- so this branch is
+        # now unreachable for the GDELT case in normal operation. Left in
+        # place as defensive dead code (not deleted) rather than assuming
+        # with full confidence that no other path could ever raise
+        # `GDELTError` through this CLI command.
         typer.echo(f"GDELT error: {exc}", err=True)
         raise typer.Exit(code=1) from exc
     finally:

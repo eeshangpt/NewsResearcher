@@ -98,7 +98,16 @@ main.py                        # thin: `from newsresearch.cli import app; app()`
 
 ### Phase 0 — Story/Task Breakdown (PM decomposition)
 
-**Status as of last update:** Stories 0.1–0.7 are implemented and merged to `master` (Story 0.7's `story/phase0-observability` branch was merged via PR #6 after review). `uv run ruff check .` and `uv run pytest` both currently pass clean (26 passed, 1 deselected live test) against everything merged so far — Story 0.9's baseline is effectively already satisfied by what 0.1–0.7 landed, subject to re-confirmation once Story 0.8 adds `cli.py`. Story 0.8 (CLI harness) and Task 0.7.4 (wiring the three observability callbacks into it) are the only code remaining; Story 0.10 is the final walkthrough once those land. The CI-scoping open item (see below) remains an explicit, non-blocking open decision.
+**Status as of last update: Phase 0 code is complete and merged; one Done-when bullet is BLOCKED pending a human/UI step.** Stories 0.1–0.9 are implemented and merged to `master` (Story 0.7 via PR #6, Story 0.8 + Task 0.7.4 together via PR #7, branch `story/phase0-cli-dev-harness`). `acceptance-verifier` ran the Story 0.10 walkthrough independently (re-deriving from live repo/infra state, not trusting prior self-reports) and returned a **BLOCKED** verdict:
+- `docker compose ps` — all 7 services (`postgres`, `langfuse-postgres`, `clickhouse`, `redis`, `minio`, `langfuse-web`, `langfuse-worker`) healthy. **MET.**
+- `uv run newsresearch run "..."` exits 0 (re-confirmed independently by the verifier with its own fresh run). **MET.**
+- `\dt` against the app Postgres shows all 9 TRD tables + `run_costs` + `schema_version` (`version=2`, per Story 0.7's migration) + the 4 LangGraph checkpoint tables. **MET.**
+- `Settings()` loads cleanly from `.env.example`-shaped env vars. **MET.**
+- `uv run ruff check .` and `uv run pytest` both pass clean on `master` (30 passed, 1 deselected live test). **MET.**
+- The observability triad (one stub LLM call → `run_costs` row + Langfuse trace + MLflow run, all from the *same* run_id): **BLOCKED, not met.** Correction to an inaccurate claim in a prior version of this note: no single run_id has actually been shown to produce all three artifacts together. Every run made from this environment (mine and the verifier's) used an invalid/placeholder Langfuse secret key — no `.env` is committed and Postgres only stores hashed secrets, so no valid key is retrievable headlessly — meaning the Langfuse export correctly soft-fails (`401`, exit 0 anyway) but no trace is produced for those run_ids. Separately, two *real* Langfuse traces do exist in ClickHouse (from earlier agent runs made with a genuine, now-discarded disposable API key), but neither of those run_ids has a matching MLflow run, and their timestamps predate the final merged CLI wiring. The soft-fail behavior itself is correctly verified (twice, independently); the triad-in-one-run claim is not.
+  **Action needed to close this out:** log into the Langfuse UI at `http://localhost:3000` (existing accounts: `eeshangpt+langfuse@gmail.com`, or the disposable `backend-agent@example.com`), generate a fresh API key pair, export `LANGFUSE_PUBLIC_KEY`/`LANGFUSE_SECRET_KEY`, run `uv run newsresearch run "<topic>"` once, and confirm that one run_id has a `run_costs` row, a Langfuse trace, and an MLflow run all together. This is a manual/UI step no agent can do headlessly.
+
+The CI-scoping decision below remains a separate, explicitly non-blocking open item, deferred to whenever `project-manager`/`tech-lead` picks it up.
 
 Repo-state check confirmed: no `newsresearch/` package, no `docker-compose.yml`, no `deploy/`, no `tests/` — nothing below has been built yet. The numbered Tasks above are preserved as-is except where a task bundled more than one independently-verifiable outcome; those are split below and cross-referenced back to their original task number for traceability. Splits: original Task 3 (docker-compose.yml) → app-Postgres service and Langfuse stack are separately verifiable; original Task 9 (`llm/models.py`) → `get_chat_model` and `get_embeddings` are separately verifiable; original Task 10 (observability) → three distinct modules plus a separate wiring step.
 
@@ -167,7 +176,7 @@ Acceptance: `get_chat_model(stage)` returns `BaseChatModel` for every `Settings.
       Depends on: none
       Note: added `sentence-transformers` as an explicit dependency beyond Story 0.1's original list — required at construction time by `HuggingFaceEmbeddings`, not pulled in transitively as assumed.
 
-**Story 0.7 — Observability stack verified end-to-end through a stub LLM call** ✅ MERGED (`master`, PR #6)
+**Story 0.7 — Observability stack verified end-to-end through a stub LLM call** ✅ CODE MERGED (`master`, PR #6) — ⚠️ end-to-end acceptance not yet actually demonstrated (see Task 0.7.4)
 Acceptance: one stub LLM call through the graph produces a `run_costs` row, a visible Langfuse trace, and an MLflow run — simultaneously, from one top-level `graph.invoke()`.
 Note: this was originally built unrequested/out of sequence (ahead of Story 0.8, which Task 0.7.4 depends on); it was reviewed and merged as-is. `cost_callback.py`'s per-token pricing table still has real rates for only two models, placeholders otherwise — not yet trustworthy for real cost figures, tracked as a known gap rather than a blocker.
 - [x] Task 0.7.1 (orig. Task 10, split a): `observability/cost_callback.py` — `BaseCallbackHandler` capturing `{run_id, stage, model, input_tokens, output_tokens, estimated_cost, latency_ms}`, writes to `run_costs`, fails soft independent of Langfuse reachability.
@@ -179,34 +188,35 @@ Note: this was originally built unrequested/out of sequence (ahead of Story 0.8,
 - [x] Task 0.7.3 (orig. Task 10, split c): `observability/mlflow_setup.py` — run lifecycle helpers keyed by `run_id`, `./mlruns` file-store backend.
       Acceptance: start/end helpers around a stub invocation produce exactly one MLflow run under `./mlruns` tagged with `run_id`.
       Depends on: 0.3.2
-- [ ] Task 0.7.4 (orig. Task 10, wiring clause + Task 11's callback half): wire all three callbacks into `cli.py`'s top-level `graph.invoke(state, config={"callbacks": [...]})`.
+- [x] Task 0.7.4 (orig. Task 10, wiring clause + Task 11's callback half): wire all three callbacks into `cli.py`'s top-level `graph.invoke(state, config={"callbacks": [...]})`.
       Acceptance: `uv run newsresearch run "test topic"` (with a real/stubbed chat-model call in one node) produces all three artifacts from Story 0.7's acceptance in one command.
       Depends on: 0.7.1, 0.7.2, 0.7.3, 0.8.1
-      Runtime note (backend-engineer, cross-track): checking this acceptance for real requires both devops Task 0.2.1 (app Postgres, for the `run_costs` row) and Task 0.2.2 (Langfuse stack, for the visible trace) up via `docker compose up -d` first — this is the single task where all of Story 0.2's infra must be live simultaneously.
-      Status: blocked on Story 0.8 (`cli.py` doesn't exist yet) — not started.
+      Status: code merged to `master` via PR #7 (branch `story/phase0-cli-dev-harness`), together with Story 0.8. **Acceptance criterion not yet actually demonstrated** — `acceptance-verifier` ran this independently and found that no single run_id has produced `run_costs` + Langfuse trace + MLflow run together: every headless run in this environment lacks a retrievable valid Langfuse secret key (soft-fails correctly, `401`, exit 0, but no trace), while the two real traces that do exist in ClickHouse (from an earlier disposable-key run) have no matching MLflow run and predate this PR's merge. The wiring code itself is verified correct (soft-fail behavior confirmed twice independently, `run_costs`+MLflow confirmed together from one run); only the three-artifacts-from-one-run acceptance check needs a human to close, via a real Langfuse API key generated through the UI. See the section-level status note above for the exact steps.
 
-**Story 0.8 — CLI dev harness runs the compiled no-op graph end-to-end**
+**Story 0.8 — CLI dev harness runs the compiled no-op graph end-to-end** ✅ MERGED (`master`, PR #7)
 Acceptance: `uv run newsresearch run "test topic"` executes the full no-op graph and exits 0.
-- [ ] Task 0.8.1 (orig. Task 11, minus callback wiring which moved to 0.7.4): `cli.py` — `typer` app, `run <topic>` command invoking the compiled graph; `main.py` reduced to `from newsresearch.cli import app; app()`.
+- [x] Task 0.8.1 (orig. Task 11, minus callback wiring which moved to 0.7.4): `cli.py` — `typer` app, `run <topic>` command invoking the compiled graph; `main.py` reduced to `from newsresearch.cli import app; app()`.
       Acceptance: `uv run newsresearch run "test topic"` invokes `graph.invoke()` on the Phase-0 no-op graph and exits 0.
       Depends on: 0.5.2
-      Runtime note (backend-engineer, cross-track): since the compiled graph uses a `PostgresSaver` checkpointer, this command needs devops Task 0.2.1's app Postgres reachable at `NEWSRESEARCH_DATABASE_URL`, not merely built.
+      Note: this task's implementation also touches the already-merged `graph/build.py` (Story 0.5) — the `subtopic` node became a small in-file stub `BaseChatModel` (not `llm.models.get_chat_model`, deliberately, so Phase 0 needs no real `OPENAI_API_KEY`) so there's an actual LLM call for Task 0.7.4's callbacks to capture. Flagged explicitly by the implementing agent rather than silently bundled; reviewed and merged as-is.
 
-**Story 0.9 — Testing/lint baseline passes**
+**Story 0.9 — Testing/lint baseline passes** ✅ VERIFIED (`master`)
 Acceptance: `pytest` (testcontainers-backed) and `ruff check` both pass against everything built in Phase 0.
-- [ ] Task 0.9.1: baseline tests — `Settings` load/precedence, schema idempotency, cost-callback correctness, graph compile+invoke.
+- [x] Task 0.9.1: baseline tests — `Settings` load/precedence, schema idempotency, cost-callback correctness, graph compile+invoke, CLI end-to-end.
       Acceptance: `uv run pytest` exits 0, using `testcontainers[postgres]` (no dependency on the dev compose stack being up).
       Depends on: 0.3.1, 0.4.1, 0.4.2, 0.7.1, 0.5.2
-- [ ] Task 0.9.2: `ruff` configuration + clean pass over `newsresearch/` as it stands.
+      Verified: 30 passed, 1 deselected (`@pytest.mark.live`) on `master` post-merge.
+- [x] Task 0.9.2: `ruff` configuration + clean pass over `newsresearch/` as it stands.
       Acceptance: `uv run ruff check .` exits 0.
       Depends on: 0.1–0.8 code tasks
+      Verified: clean on `master` post-merge.
 
-**Story 0.10 — Phase 0 Done-when verified end-to-end (integration/demo)**
-Acceptance: all five bullets in the phase-level "Done when" block above hold simultaneously on a clean checkout.
+**Story 0.10 — Phase 0 Done-when verified end-to-end (integration/demo)** ⚠️ BLOCKED — 5 of 6 bullets MET, 1 BLOCKED
+Acceptance: all six bullets in the phase-level "Done when" block above hold simultaneously on a clean checkout.
 - [ ] Task 0.10.1: manual end-to-end walkthrough of the exact Done-when command sequence.
       Acceptance: each bullet confirmed in order; any failure is filed against the specific task above, not against "Phase 0" generally.
       Depends on: 0.1–0.9 all complete
-      Cross-track note: this is the one task that requires both tracks' outputs simultaneously and live — devops Story 0.2 (`docker compose up -d`, both app Postgres and Langfuse stack healthy) plus every backend-engineer story 0.1/0.3–0.9 already merged. Whoever runs this walkthrough needs both agents' work done first; it is not solely a backend-engineer or solely a devops-engineer task.
+      Verdict (`acceptance-verifier`, run independently against live repo/infra state): docker-compose-healthy, CLI-exits-0, schema-completeness, `Settings()`-loads, and pytest+ruff all **MET**. The observability-triad-in-one-run bullet is **BLOCKED** — see Task 0.7.4's status note and the section-level status note above for the exact gap and the human action needed to close it. **Phase 0 is not fully done** until that one bullet is demonstrated; everything else genuinely is.
 
 **Open item flagged for `project-manager` scoping (not a Phase 0 task, do not silently add it here):** `devops-engineer`'s own scope doc calls out that CI (a pipeline running `uv run ruff check .` and `uv run pytest` on PRs, `testcontainers`-backed, `@pytest.mark.live` excluded) is not yet scoped as its own story anywhere in this plan. Phase 0's "Done when" only requires these commands to pass locally, not that CI exists — so this isn't blocking Phase 0 completion, but it should be decided explicitly (as its own Phase 0 story, or deferred to a later phase) rather than left implicit.
 

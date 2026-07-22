@@ -188,6 +188,28 @@ def test_query_window_raises_gdelt_error_on_non_json_response():
 
 
 @respx.mock
+def test_query_window_raises_gdelt_error_on_http_error_status():
+    respx.get(GDELT_DOC_API_URL).mock(return_value=httpx.Response(500, text="Internal Server Error"))
+
+    with pytest.raises(GDELTError) as exc_info:
+        query_window(
+            '"x"', datetime(2026, 7, 1, tzinfo=timezone.utc), datetime(2026, 7, 22, tzinfo=timezone.utc)
+        )
+    assert isinstance(exc_info.value.__cause__, httpx.HTTPError)
+
+
+@respx.mock
+def test_query_window_raises_gdelt_error_on_network_timeout():
+    respx.get(GDELT_DOC_API_URL).mock(side_effect=httpx.TimeoutException("timed out"))
+
+    with pytest.raises(GDELTError) as exc_info:
+        query_window(
+            '"x"', datetime(2026, 7, 1, tzinfo=timezone.utc), datetime(2026, 7, 22, tzinfo=timezone.utc)
+        )
+    assert isinstance(exc_info.value.__cause__, httpx.HTTPError)
+
+
+@respx.mock
 def test_query_range_single_window_under_cap_makes_exactly_one_request():
     route = respx.get(GDELT_DOC_API_URL).mock(
         return_value=httpx.Response(200, json=_articles_payload(42))

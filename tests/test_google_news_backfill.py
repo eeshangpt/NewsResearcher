@@ -69,3 +69,10 @@ def test_domain_from_url_strips_www_prefix():
     assert gnb._domain_from_url("https://www.reuters.com/world") == "reuters.com"
     assert gnb._domain_from_url("https://apnews.com/article") == "apnews.com"
     assert gnb._domain_from_url(None) is None
+
+
+def test_domain_from_url_lowercases_mixed_case_host():
+    # Story 1.9 integration checkpoint: gdelt.py/rss.py always emit a
+    # lowercase, no-`www.` domain -- this module must match that normalized
+    # form so dedup.py's same-domain string-equality guard doesn't misfire.
+    assert gnb._domain_from_url("https://WWW.Reuters.COM/world") == "reuters.com"

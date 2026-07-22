@@ -13,18 +13,19 @@ Two things the live API forces this module to handle explicitly:
   strong signal the true count is truncated, since GDELT gives no total-hits
   field) and recursively bisects that window until either the count drops
   below the cap or `min_window` is reached.
-- **Aggressive rate-limiting.** GDELT documents a "one request per 5
-  seconds" policy and returns HTTP 429 with a plain-text (non-JSON) body
-  when violated -- confirmed against the live API while building this
-  module, and observed to sometimes need noticeably longer than 5s in
-  practice. `query_window()` retries on 429 with exponential backoff rather
-  than failing immediately.
+- **Aggressive rate-limiting, signaled two different ways.** GDELT
+  documents a "one request per 5 seconds" policy and returns a real HTTP 429
+  when violated, but -- also confirmed against the live API while building
+  this module -- sometimes instead returns HTTP **200** with a plain-text
+  ("Please limit requests to one every 5 seconds...") body rather than a
+  429 or JSON. `query_window()` treats both as the same retryable
+  rate-limit condition and backs off exponentially rather than treating the
+  200-with-text-body case as a hard parse failure.
 
-`reputation/signals.py` (Story 1.5, separate task) will need a
-`source_type` tag per article to compute GDELT/RSS presence frequency --
-that convention is intentionally left for the Sourcing Agent (Task 1.9) or
-the reputation-signal task to settle across `gdelt.py`/`rss.py` rather than
-decided unilaterally here.
+Every returned article carries `"source_type": "gdelt"`, matching the
+convention `rss.py`/`google_news_backfill.py` already use (Story 1.3) so
+`reputation/signals.py`'s presence-frequency signal (Task 1.5.1) can key off
+`(domain, source_type)` across all three sourcing modules uniformly.
 """
 
 from __future__ import annotations
@@ -46,6 +47,12 @@ GDELT_MAX_RECORDS_PER_CALL = 250
 
 _GDELT_DATETIME_FORMAT = "%Y%m%d%H%M%S"
 _GDELT_SEENDATE_FORMAT = "%Y%m%dT%H%M%SZ"
+
+# Substring GDELT's plain-text rate-limit response contains, e.g. "Please
+# limit requests to one every 5 seconds or contact ...". Checked
+# case-insensitively against a 200 response's body -- GDELT's rate limit
+# isn't always signaled via a real HTTP 429 (confirmed live).
+_RATE_LIMIT_TEXT_MARKER = "limit requests"
 
 # GDELT's own documented rate limit is "one request per 5 seconds"; observed
 # in practice to sometimes require longer. Used both as the default delay
@@ -74,7 +81,8 @@ def _build_query(keywords: list[str]) -> str:
 
 
 def _parse_article(raw: dict) -> dict:
-    """Map a raw GDELT `articles[]` entry to `{title, url, domain, published_at}`."""
+    """Map a raw GDELT `articles[]` entry to
+    `{title, url, domain, published_at, source_type}`."""
     published_at = None
     seendate = raw.get("seendate")
     if seendate:
@@ -85,12 +93,27 @@ def _parse_article(raw: dict) -> dict:
         except ValueError:
             logger.warning("gdelt: unparseable seendate %r; leaving published_at=None", seendate)
 
+    domain = raw.get("domain")
+    if domain:
+        # Defensive normalization -- GDELT's own `domain` values are already
+        # clean (lowercase, no `www.`), but don't assume that holds forever.
+        domain = domain.strip().lower()
+
     return {
         "title": raw.get("title"),
         "url": raw.get("url"),
-        "domain": raw.get("domain"),
+        "domain": domain,
         "published_at": published_at,
+        "source_type": "gdelt",
     }
+
+
+def _is_rate_limited(response: httpx.Response) -> bool:
+    """True for a real HTTP 429, or GDELT's observed HTTP-200-with-plain-text
+    rate-limit body -- both are the same retryable condition."""
+    if response.status_code == 429:
+        return True
+    return _RATE_LIMIT_TEXT_MARKER in response.text.lower()
 
 
 def _retry_after_seconds(response: httpx.Response, attempt: int, base_delay: float) -> float:
@@ -117,13 +140,15 @@ def query_window(
 
     `query` is a raw GDELT query string (e.g. built via `_build_query()`).
     `start`/`end` bound the `startdatetime`/`enddatetime` params (UTC).
-    Retries on HTTP 429 with exponential backoff (`backoff_seconds` doubling
-    per attempt, capped at `max_retries`), honoring a `Retry-After` header if
-    the response includes one.
+    Retries with exponential backoff (`backoff_seconds` doubling per
+    attempt, capped at `max_retries`) on either a real HTTP 429 or GDELT's
+    HTTP-200-with-plain-text-rate-limit-body quirk (see module docstring),
+    honoring a `Retry-After` header if the response includes one.
 
     Raises `ValueError` if `max_records` exceeds GDELT's 250-record cap
     (use `query_range()` to page over sub-windows instead), and `GDELTError`
-    if retries are exhausted or the API returns a non-JSON body.
+    if retries are exhausted or the API returns a non-JSON, non-rate-limit
+    body.
     """
     if max_records > GDELT_MAX_RECORDS_PER_CALL:
         raise ValueError(
@@ -147,16 +172,18 @@ def query_window(
         response: httpx.Response | None = None
         for attempt in range(1, max_retries + 2):
             response = http_client.get(GDELT_DOC_API_URL, params=params)
-            if response.status_code != 429:
+            if not _is_rate_limited(response):
                 break
             if attempt > max_retries:
                 raise GDELTError(
-                    f"GDELT DOC 2.0 API still rate-limited (429) after {max_retries} retries "
-                    f"for window {start.isoformat()}..{end.isoformat()}"
+                    f"GDELT DOC 2.0 API still rate-limited after {max_retries} retries "
+                    f"for window {start.isoformat()}..{end.isoformat()} "
+                    f"(last status {response.status_code})"
                 )
             delay = _retry_after_seconds(response, attempt, backoff_seconds)
             logger.warning(
-                "gdelt: 429 rate-limited (attempt %d/%d), backing off %.1fs",
+                "gdelt: rate-limited (status=%d, attempt %d/%d), backing off %.1fs",
+                response.status_code,
                 attempt,
                 max_retries,
                 delay,
@@ -202,6 +229,13 @@ def query_range(
     `inter_request_delay` is slept between sequential sub-window requests to
     respect GDELT's documented rate limit; `query_window()`'s own 429
     backoff is the fallback if that's not sufficient in practice.
+
+    Note: adjacent sub-windows share their bisection instant as one
+    window's `enddatetime` and the next's `startdatetime`, so an article
+    seen at exactly that instant could in principle be returned by both
+    halves. Not de-duplicated here -- `dedup.py`'s exact-URL pass (Story
+    1.4), which every sourcing module's output already needs regardless,
+    absorbs this.
     """
     owns_client = client is None
     http_client = client or httpx.Client(timeout=30.0)

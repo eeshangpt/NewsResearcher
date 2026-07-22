@@ -79,6 +79,7 @@ def test_query_window_parses_real_captured_fixture_shape():
     assert first["url"] == CAPPED_250_FIXTURE["articles"][0]["url"]
     assert first["domain"] == "mikrometoxos.gr"
     assert first["published_at"] == datetime(2026, 7, 22, 12, 15, tzinfo=timezone.utc)
+    assert first["source_type"] == "gdelt"
 
 
 @respx.mock
@@ -109,6 +110,30 @@ def test_query_window_retries_after_a_429_then_succeeds():
     route = respx.get(GDELT_DOC_API_URL)
     route.side_effect = [
         httpx.Response(429, text="Please limit requests to one every 5 seconds"),
+        httpx.Response(200, json=_articles_payload(3)),
+    ]
+
+    articles = query_window(
+        '"x"', datetime(2026, 7, 1, tzinfo=timezone.utc), datetime(2026, 7, 22, tzinfo=timezone.utc)
+    )
+
+    assert len(articles) == 3
+    assert route.call_count == 2
+
+
+@respx.mock
+def test_query_window_retries_after_http_200_rate_limit_text_then_succeeds():
+    """GDELT sometimes signals its rate limit via HTTP 200 + plain-text body
+    (confirmed live) instead of a real 429 -- must retry, not hard-fail."""
+    route = respx.get(GDELT_DOC_API_URL)
+    route.side_effect = [
+        httpx.Response(
+            200,
+            text=(
+                "Please limit requests to one every 5 seconds or contact "
+                "kalev.leetaru5@gmail.com for larger queries."
+            ),
+        ),
         httpx.Response(200, json=_articles_payload(3)),
     ]
 

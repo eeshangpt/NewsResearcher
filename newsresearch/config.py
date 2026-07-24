@@ -82,6 +82,21 @@ class ClusteringSettings(BaseModel):
     # sweep: 0.554@28, 0.242@20, 0.0@12).
     kmeans_fallback_threshold: int = 20
 
+    # Task 2.2.3a (`notebooks/phase2-reconciliation-design.md`): candidate<->
+    # cluster-centroid cosine similarity to "claim" a cluster (else dropped),
+    # and candidate<->candidate cosine similarity to treat two claimants of
+    # the same cluster as one merged claim vs. distinct (split) claims.
+    # Both derived from an observed gap on the design doc's fixture, not
+    # guessed -- see that doc's "Threshold derivation" section.
+    reconciliation_match_threshold: float = 0.60
+    reconciliation_dup_threshold: float = 0.65
+
+    # Task 2.2.3a's distinctiveness-score formula weights (must sum to 1.0):
+    # `0.5*volume_norm + 0.5*avg_pairwise_distance`, an equal-weighting
+    # starting point per the design doc, not a tuned result.
+    distinctiveness_volume_weight: float = 0.5
+    distinctiveness_distance_weight: float = 0.5
+
 
 class SourcingSettings(BaseModel):
     # Below this many combined GDELT+RSS primary results, the sourcing

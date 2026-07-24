@@ -182,3 +182,39 @@ def test_propose_candidates_defaults_n_candidates_to_eight():
 
     signature = inspect.signature(propose_candidates)
     assert signature.parameters["n_candidates"].default == 8
+
+
+@patch("newsresearch.agents.subtopic_agent.get_langfuse_callback_handler")
+@patch("newsresearch.agents.subtopic_agent.get_chat_model")
+def test_propose_candidates_merges_ambient_config_callbacks(mock_get_chat_model, mock_get_langfuse):
+    """An ambient `config` passed in (e.g. forwarded from a LangGraph node,
+    the way `cost_callback.py` relies on for automatic propagation) must be
+    merged with, not replaced by, this call's own Langfuse callback -- both
+    should fire on the underlying model invocation.
+    """
+    mock_structured_model = _make_mock_structured_model()
+    mock_chat_model = MagicMock()
+    mock_chat_model.with_structured_output.return_value = mock_structured_model
+    mock_get_chat_model.return_value = mock_chat_model
+    langfuse_callback = MagicMock()
+    mock_get_langfuse.return_value = langfuse_callback
+
+    ambient_callback = MagicMock()
+    ambient_config = {
+        "callbacks": [ambient_callback],
+        "metadata": {"existing_key": "existing_value"},
+    }
+
+    propose_candidates(
+        "Middle East ceasefire negotiations", run_id="run-4", config=ambient_config
+    )
+
+    call_args, call_kwargs = mock_structured_model.call_args
+    config = call_kwargs.get("config")
+    assert config is not None
+    handlers = config["callbacks"].handlers
+    assert ambient_callback in handlers
+    assert langfuse_callback in handlers
+    assert config["metadata"]["existing_key"] == "existing_value"
+    assert config["metadata"]["run_id"] == "run-4"
+    assert config["metadata"]["stage"] == "subtopic"

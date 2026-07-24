@@ -18,6 +18,8 @@ from pathlib import Path
 from typing import Any
 
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableConfig
+from langchain_core.runnables.config import merge_configs
 from psycopg_pool import ConnectionPool
 
 from newsresearch.agents.sourcing_agent import sourcing_agent
@@ -35,6 +37,7 @@ def propose_candidates(
     *,
     run_id: str = "dev",
     settings: Settings | None = None,
+    config: RunnableConfig | None = None,
 ) -> SubtopicCandidateList:
     """Propose `n_candidates` candidate subtopics for `topic` (Task 2.2.1b).
 
@@ -53,6 +56,13 @@ def propose_candidates(
 
     Traced via Langfuse per the CLI's established `get_langfuse_callback_handler`
     + `trace_metadata` convention, tagged with `run_id` and `stage=subtopic`.
+    Accepts an ambient `config` (e.g. forwarded from a LangGraph node, per
+    `graph/build.py::_make_subtopic_stub_node`'s established pattern) and
+    merges it with the Langfuse callback/metadata this call attaches, via
+    `merge_configs`, rather than replacing it outright -- so any
+    already-attached callbacks (e.g. `cost_callback.py`'s handler, per its
+    own "no per-agent instrumentation code is needed" propagation claim)
+    still fire on this nested LLM call.
     """
     settings = settings or Settings()
 
@@ -61,11 +71,12 @@ def propose_candidates(
     model = get_chat_model("subtopic").with_structured_output(SubtopicCandidateList)
     chain = prompt | model
 
-    config = {
+    call_config: RunnableConfig = {
         "callbacks": [get_langfuse_callback_handler(settings)],
         "metadata": {**trace_metadata(run_id), "stage": "subtopic"},
     }
-    return chain.invoke({"topic": topic, "n_candidates": n_candidates}, config=config)
+    merged_config = merge_configs(config, call_config)
+    return chain.invoke({"topic": topic, "n_candidates": n_candidates}, config=merged_config)
 
 
 def broad_topic_fetch(

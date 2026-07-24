@@ -8,14 +8,20 @@ without touching `graph/build.py`'s NODE_ORDER topology (out of scope for
 this task; real wiring lands with Task 2.4.1's fan-out).
 """
 
+import json
+from pathlib import Path
+
+import numpy as np
 import pytest
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command
 from testcontainers.postgres import PostgresContainer
 
 from newsresearch.graph.build import build_checkpointer
-from newsresearch.graph.nodes.gate1 import gate1_node, make_gate1_node
+from newsresearch.graph.nodes.gate1 import gate1_node, make_gate1_node, make_real_reconcile
 from newsresearch.graph.state import GraphState
+
+FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
 @pytest.fixture(scope="module")
@@ -101,6 +107,72 @@ def test_gate1_edit_resume_calls_the_pluggable_reconcile_hook(postgres_url):
     assert calls == [edited_candidates]
     assert result["approved"] is True
     assert result["candidates"] == [{"label": "eu ai act", "article_count": 12}]
+
+
+def test_gate1_edit_resume_runs_real_reconciliation(postgres_url, monkeypatch):
+    """Task 2.3.1's real acceptance: an edit-resume re-triggers
+    `reconcile_subtopics` + `rank_and_cap_subtopics` on the edited candidate
+    set (via `make_real_reconcile`), not `stub_reconcile`'s identity
+    pass-through.
+
+    Uses the data-scientist's real committed fixtures --
+    `clustering_synthetic_topics.json`'s real embeddings as the broad-fetch
+    article set, `reconciliation_merge.json`'s candidate labels/embeddings --
+    with `subtopic_agent.embed` monkeypatched to return them directly (no
+    live embedding-model call), while `cluster()`'s real HDBSCAN and
+    `reconcile_subtopics`/`rank_and_cap_subtopics`'s real logic run
+    unmocked.
+    """
+    clustering = json.loads((FIXTURES_DIR / "clustering_synthetic_topics.json").read_text())
+    merge_fixture = json.loads((FIXTURES_DIR / "reconciliation_merge.json").read_text())
+
+    article_vectors = np.array(clustering["embeddings"])
+    # Edit-resume drops "US executive order on AI safety" -- 3 of the
+    # fixture's 4 candidates survive the edit.
+    edited_labels = merge_fixture["candidate_labels"][:-1]
+    candidate_vectors = np.array(merge_fixture["candidate_embeddings"][:-1])
+
+    def fake_embed(texts):
+        if len(texts) == len(article_vectors):
+            return article_vectors
+        if len(texts) == len(candidate_vectors):
+            return candidate_vectors
+        raise AssertionError(f"unexpected embed() call with {len(texts)} texts")
+
+    monkeypatch.setattr("newsresearch.agents.subtopic_agent.embed", fake_embed)
+
+    articles = [{"title": s} for s in clustering["sentences"]]
+    node = make_gate1_node(reconcile=make_real_reconcile(articles))
+    graph = _build_gate1_graph(postgres_url, node=node)
+    config = {"configurable": {"thread_id": "gate1-real-reconcile"}}
+
+    initial_state = {
+        **_initial_state(),
+        "candidates": [{"label": label, "article_count": 0} for label in merge_fixture["candidate_labels"]],
+        "excess": [],
+    }
+    graph.invoke(initial_state, config=config)
+
+    edited_candidates = [{"label": label} for label in edited_labels]
+    result = graph.invoke(
+        Command(resume={"action": "edit", "candidates": edited_candidates}),
+        config=config,
+    )
+
+    assert result["approved"] is True
+    # Not a passthrough: the two near-duplicate EU AI Act candidates merge
+    # into one subtopic with real, recomputed article counts/ordering --
+    # never the stub's unchanged 3-item edited list.
+    assert len(result["candidates"]) == 2
+    merged = next(c for c in result["candidates"] if c["action"] == "merge")
+    assert set(merged["merged_from"]) == {
+        "EU AI Act enforcement actions",
+        "European Union AI Act compliance crackdown",
+    }
+    for c in result["candidates"]:
+        assert c["article_count"] > 0
+        assert "distinctiveness_score" in c
+        assert "centroid" not in c
 
 
 def test_gate1_unrecognized_resume_action_raises(postgres_url):

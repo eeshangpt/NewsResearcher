@@ -57,6 +57,31 @@ class ClusteringSettings(BaseModel):
     similarity_threshold: float = 0.75
     subtopic_match_threshold: float = 0.8
 
+    # Task 2.1.2a/2.1.2b: data-scientist's sweep (`notebooks/phase2_clustering_eval.py`,
+    # `notebooks/phase2-clustering-recommendation.md`) against
+    # `tests/fixtures/clustering_synthetic_topics.json` found `min_cluster_size=4`
+    # the clear ARI peak (0.781 with sklearn's `HDBSCAN`). `min_samples` was
+    # re-validated against the real standalone `hdbscan` package (the TRD's
+    # named library, not yet installed when the data-scientist ran their
+    # sweep): the two libraries diverge here -- `min_samples=1` reproduces the
+    # sklearn-derived ARI=0.781, but `min_samples=2` (the data-scientist's
+    # original pick) collapses to ARI=0.324/2 clusters-found with the real
+    # `hdbscan` package. `min_samples=1` is used here instead of the
+    # originally-recommended 2, since it's the value that actually performs
+    # well against the library this project depends on.
+    hdbscan_min_cluster_size: int = 4
+    hdbscan_min_samples: int = 1
+
+    # Below this many vectors, HDBSCAN can't reliably discover cluster
+    # structure (density-based methods need enough points per cluster) --
+    # `cluster()` falls back to KMeans instead. Value per the data-scientist's
+    # subsample sweep: ARI already weak (0.24-0.55) by n=20-28 and collapses
+    # to 0 by n=12, so the fallback triggers before HDBSCAN is merely
+    # "a bit worse". Re-confirmed against the real `hdbscan` package at the
+    # corrected `min_samples=1` (same degradation curve as the sklearn-based
+    # sweep: 0.554@28, 0.242@20, 0.0@12).
+    kmeans_fallback_threshold: int = 20
+
 
 class SourcingSettings(BaseModel):
     # Below this many combined GDELT+RSS primary results, the sourcing

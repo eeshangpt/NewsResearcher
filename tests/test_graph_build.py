@@ -22,12 +22,26 @@ def test_graph_state_schemas_construct_with_all_named_fields():
         run_id="run-1",
         subtopics=["eu ai act", "us executive order"],
         approved=False,
+        candidates=[{"label": "eu ai act", "article_count": 12}],
+        excess=[{"label": "us executive order", "article_count": 3}],
     )
     assert state["topic"] == "AI regulation"
     assert state["subtopics"] == ["eu ai act", "us executive order"]
+    assert state["candidates"] == [{"label": "eu ai act", "article_count": 12}]
+    assert state["excess"] == [{"label": "us executive order", "article_count": 3}]
 
-    sub_state = SubtopicState(run_id="run-1", subtopic_id="sub-1", label="eu ai act")
+    sub_state = SubtopicState(
+        run_id="run-1",
+        subtopic_id="sub-1",
+        label="eu ai act",
+        cluster_report={
+            "cluster_sizes": [5, 3],
+            "sample_headlines": ["EU passes AI Act"],
+            "source_spread": {"reuters.com": 4, "apnews.com": 4},
+        },
+    )
     assert sub_state["subtopic_id"] == "sub-1"
+    assert sub_state["cluster_report"]["cluster_sizes"] == [5, 3]
 
 
 def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_url):

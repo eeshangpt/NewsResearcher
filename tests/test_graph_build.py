@@ -1,19 +1,9 @@
 import numpy as np
 import pytest
-from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command
 from testcontainers.postgres import PostgresContainer
 
-from newsresearch.graph.build import (
-    NODE_ORDER,
-    _make_clustering_node,
-    _make_fan_out_target_node,
-    _make_relay_router,
-    build_checkpointer,
-    build_graph,
-    fan_out_router,
-)
-from newsresearch.graph.nodes.gate2 import gate2_node
+from newsresearch.graph.build import NODE_ORDER, build_graph
 from newsresearch.graph.state import GraphState, SubtopicState
 
 # Hermetic `testcontainers[postgres]` per Story 0.4's own precedent, so this
@@ -102,10 +92,11 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
     those three downstream nodes actually ran once per candidate -- with a
     distinct `subtopic_id` -- rather than once overall.
 
-    `clustering` is real (PR #32 rework), so its underlying sourcing call is
-    mocked here the same way `test_gate2.py`'s real-cluster-report test does
-    -- this test only needs to prove fan-out mechanics, not re-exercise live
-    GDELT/RSS.
+    `clustering` is real (PR #32 rework) and `gate2` is real (Task 2.6.2
+    follow-up), so this drives a full resume cycle: each branch parks at its
+    own real `interrupt()` before `gate2`'s `fan_trace` entry is written (see
+    `_make_gate2_node`), so the trace is only complete after resuming every
+    pending interrupt.
     """
     monkeypatch.setattr(
         "newsresearch.agents.topical_clustering_agent.sourcing_agent",
@@ -132,7 +123,9 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
     }
     config = {"configurable": {"thread_id": "fanout-test"}}
 
-    result = graph.invoke(initial_state, config=config)
+    interrupted = graph.invoke(initial_state, config=config)
+    resume_map = {i.id: {"action": "continue"} for i in interrupted["__interrupt__"]}
+    result = graph.invoke(Command(resume=resume_map), config=config)
 
     fan_trace = result["fan_trace"]
     subtopic_ids_seen = {subtopic_id for _, subtopic_id, _ in fan_trace}
@@ -145,24 +138,22 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
         assert node_subtopic_ids == subtopic_ids_seen
 
 
-def test_clustering_runs_exactly_once_per_branch_across_gate2_interrupt_and_resume(
+def test_clustering_runs_exactly_once_per_branch_through_real_build_graph_gate2(
     postgres_url, monkeypatch
 ):
-    """PR #32 rework, required re-check.
+    """Follow-up to Task 2.6.2's review: re-run PR #32's call-counter proof
+    against the *actual* compiled `build_graph()` topology, now that `gate2`
+    is wired to the real, interrupting `gate2_node` (not a hand-assembled
+    `StateGraph` standing in for it).
 
     PR #32 was tech-lead-rejected for calling `topical_clustering_agent`
     *inside* `gate2_node`, before `interrupt()` -- LangGraph replays a node
     function from the top on every resume, so that call ran twice per Gate 2
-    pass. The fix moves the real work into `clustering` (one of
+    pass. The fix moved the real work into `clustering` (one of
     `FAN_OUT_TARGET_NODES`, `Send`-relayed exactly once per branch, never
-    replayed by a downstream interrupt/resume).
-
-    Production `build_graph()` still wires `gate2` as a passthrough stub
-    (real interrupt wiring into the compiled pipeline is a separate,
-    not-yet-scheduled task per `EXECUTION_PLAN.md` Task 2.6.2's own
-    scoping), so this test assembles `graph/build.py`'s real
-    `fan_out`/`sourcing`/`clustering` wiring together with the real
-    interrupting `gate2_node` directly, to prove the property PR #32 broke.
+    replayed by a downstream interrupt/resume) -- this test proves that
+    property still holds now that `gate2` itself is real, wired production
+    topology, not a synthetic stand-in.
     """
     call_counts: dict[str, int] = {}
 
@@ -178,24 +169,7 @@ def test_clustering_runs_exactly_once_per_branch_across_gate2_interrupt_and_resu
         "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
     )
 
-    builder = StateGraph(GraphState)
-    builder.add_node("fan_out", _make_fan_out_target_node("fan_out"))
-    builder.add_node("sourcing", _make_fan_out_target_node("sourcing"))
-    builder.add_node("clustering", _make_clustering_node(7))
-    builder.add_node("gate2", gate2_node)
-    builder.add_edge(START, "fan_out")
-    builder.add_conditional_edges("fan_out", fan_out_router, ["sourcing"])
-    builder.add_conditional_edges(
-        "sourcing", _make_relay_router("sourcing", "clustering"), ["clustering"]
-    )
-    builder.add_conditional_edges(
-        "clustering",
-        _make_relay_router("clustering", "gate2", carry_field="cluster_reports"),
-        ["gate2"],
-    )
-    builder.add_edge("gate2", END)
-
-    graph = builder.compile(checkpointer=build_checkpointer(postgres_url))
+    graph = build_graph(database_url=postgres_url)
 
     candidates = [
         {"label": "eu ai act", "article_count": 12},
@@ -226,6 +200,71 @@ def test_clustering_runs_exactly_once_per_branch_across_gate2_interrupt_and_resu
     # The bug PR #32 shipped: resuming a Gate 2 interrupt replays
     # `gate2_node` from the top, which re-ran `topical_clustering_agent`
     # (and its underlying sourcing call) a second time. Proving the count
-    # is still 1 per branch after resume is the actual regression check.
+    # is still 1 per branch after resume is the actual regression check --
+    # now against the real, compiled `build_graph()` output.
     assert call_counts == {"eu ai act": 1, "us executive order": 1}
     assert graph.get_state(config).next == ()
+
+
+def test_gate2_blocks_each_fanned_branch_independently_via_real_send(postgres_url, monkeypatch):
+    """Wave 1's `test_gate2_blocks_each_subtopic_branch_independently` proved
+    independent blocking with hand-built distinct `thread_id`s standing in
+    for distinct fanned-out branches. This re-verifies the same property
+    through the real `Send`-based fan-out (one shared `thread_id`, N
+    concurrently-pending Gate 2 interrupts): resuming one branch's interrupt
+    must not force its sibling's to resolve too.
+    """
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    graph = build_graph(database_url=postgres_url)
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+    ]
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "gate2-independent-run",
+        "subtopics": [],
+        "approved": True,
+        "candidates": candidates,
+        "excess": [],
+    }
+    config = {"configurable": {"thread_id": "gate2-independent-test"}}
+
+    result = graph.invoke(initial_state, config=config)
+    interrupts = result["__interrupt__"]
+    assert len(interrupts) == len(candidates)
+    assert graph.get_state(config).next == ("gate2", "gate2")
+
+    # Resume only the first branch's interrupt; the second's own id gets no
+    # resume value, so it must re-park at its own `interrupt()` rather than
+    # being forced through alongside the first.
+    first, second = interrupts
+    partial_result = graph.invoke(
+        Command(resume={first.id: {"action": "continue"}}), config=config
+    )
+
+    assert graph.get_state(config).next == ("gate2",)
+    gate2_trace = [entry for entry in partial_result["fan_trace"] if entry[0] == "gate2"]
+    assert len(gate2_trace) == 1
+
+    # Second branch still pending with its original interrupt id/payload --
+    # resuming it independently afterward completes the run.
+    still_pending = graph.get_state(config).tasks
+    assert any(t.interrupts and t.interrupts[0].id == second.id for t in still_pending)
+
+    final_result = graph.invoke(
+        Command(resume={second.id: {"action": "continue"}}), config=config
+    )
+    assert graph.get_state(config).next == ()
+    gate2_trace_final = [entry for entry in final_result["fan_trace"] if entry[0] == "gate2"]
+    subtopic_ids = {entry[1] for entry in gate2_trace_final}
+    assert len(subtopic_ids) == len(candidates)

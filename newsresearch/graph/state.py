@@ -7,7 +7,8 @@
 only the shape is defined here, not the fan-out logic itself.
 """
 
-from typing import TypedDict
+import operator
+from typing import Annotated, TypedDict
 
 
 class GraphState(TypedDict):
@@ -32,6 +33,19 @@ class GraphState(TypedDict):
     approved: bool
     candidates: list[dict]
     excess: list[dict]
+
+    # Task 2.4.1: accumulator every `Send`-fanned branch writes `(node_name,
+    # subtopic_id, label)` into as it passes through `graph/build.py`'s
+    # `sourcing`/`clustering`/`gate2` fan-out targets. `operator.add` lets
+    # concurrent branches merge their writes instead of colliding (plain,
+    # non-reducer fields can't hold N distinct per-branch values written in
+    # the same superstep -- LangGraph rejects that outright). This is also
+    # how each hop's routing rediscovers a branch's own identity to
+    # re-`Send` it forward -- see `graph/build.py::_make_relay_router` --
+    # and, incidentally, how a fan-out test can prove each downstream node
+    # actually ran once per approved candidate with a distinct
+    # `subtopic_id` (not once, per the task's acceptance).
+    fan_trace: Annotated[list[tuple[str, str, str]], operator.add]
 
 
 class SubtopicState(TypedDict):

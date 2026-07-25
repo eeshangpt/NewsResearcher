@@ -10,17 +10,20 @@ Wires the full TRD section 3.1 node topology as trivial passthrough nodes:
 per approved `GraphState.candidates` entry out of `fan_out`, and one relay
 `Send` per active branch at each subsequent hop -- see `_make_relay_router`
 -- each carrying a `SubtopicState`-shaped identity, `run_id`/`subtopic_id`/
-`label`, into its own concurrent branch). `Sourcing`/`Gate2` remain
-passthrough for now; they just record their own `(node_name, subtopic_id,
-label)` into `GraphState.fan_trace` when running inside a fanned branch, so
-fan-out mechanics are provable without any real node logic existing yet.
+`label`, into its own concurrent branch). `Sourcing` remains passthrough for
+now; it just records its own `(node_name, subtopic_id, label)` into
+`GraphState.fan_trace` when running inside a fanned branch, so fan-out
+mechanics are provable without any real node logic existing yet.
 `Clustering` is real (PR #32 tech-lead-rejected rework): it runs Task 2.5.1's
 `topical_clustering_agent` + Task 2.6.1's `build_gate2_report` exactly once
 per branch, upstream of `gate2`'s `interrupt()` -- see `_make_clustering_node`
 for why this can't live inside `gate2_node` itself (LangGraph replays a node
 function from the top on every resume, which would double real sourcing
 calls and risk overwriting a human-reviewed report with a re-run, possibly
-different, one). When `candidates` is empty (e.g. Phase 0's own
+different, one). `Gate2` is also real (Task 2.6.2 follow-up): `_make_gate2_node`
+wraps `graph.nodes.gate2.gate2_node`'s genuine `interrupt()` so a compiled
+`build_graph()` run actually blocks for human review per branch, not a
+passthrough stand-in. When `candidates` is empty (e.g. Phase 0's own
 no-op-topology test), `fan_out` falls back to a single ordinary edge into
 `sourcing`, so the pre-Phase-2 no-candidates path is unaffected. Compiled
 with `PostgresSaver` (not an in-memory checkpointer) so gate durability
@@ -46,6 +49,7 @@ from psycopg_pool import ConnectionPool
 
 from newsresearch.agents.topical_clustering_agent import topical_clustering_agent
 from newsresearch.config import Settings
+from newsresearch.graph.nodes.gate2 import gate2_node
 from newsresearch.graph.state import GraphState
 from newsresearch.reports.gate2_report import build_gate2_report
 
@@ -65,12 +69,12 @@ NODE_ORDER: list[str] = [
     "timeline",
 ]
 
-# The three passthrough nodes immediately downstream of `fan_out` -- entered
-# once per `Send`-fanned branch (or once, plainly, on the no-candidates
-# fallback path). They record their own visit into `fan_trace` instead of
-# staying a bare no-op, so fan-out mechanics are provable per Task 2.4.1's
-# acceptance criterion without any real per-subtopic logic (Story 2.5/2.6)
-# existing yet.
+# The three nodes immediately downstream of `fan_out` -- entered once per
+# `Send`-fanned branch (or once, plainly, on the no-candidates fallback
+# path). Membership here drives `_make_relay_router` wiring between
+# consecutive fan targets regardless of whether the node itself is still a
+# bare passthrough (`sourcing`) or real logic (`clustering`, `gate2`); every
+# member records its own visit into `fan_trace` on the branch's fanned path.
 FAN_OUT_TARGET_NODES: frozenset[str] = frozenset({"sourcing", "clustering", "gate2"})
 
 
@@ -154,6 +158,34 @@ def _make_clustering_node(
         }
 
     _node.__name__ = "clustering_node"
+    return _node
+
+
+def _make_gate2_node():
+    """Real `gate2` node (follow-up to Task 2.6.2's review): wraps
+    `graph.nodes.gate2.make_gate2_node`'s `gate2_node` so it slots into
+    `FAN_OUT_TARGET_NODES` the same way `_make_clustering_node` does --
+    a no-op on the plain, no-candidates fallback path (`subtopic_id` absent,
+    same guard as `_make_fan_out_target_node`/`_make_clustering_node`), a
+    real `interrupt()` once per `Send`-fanned branch otherwise.
+
+    `gate2_node` itself stays untouched: it already reads `state["cluster_report"]`
+    off whatever state it's given, which `_make_relay_router`'s clustering->gate2
+    hop already populates per-branch. This wrapper only adds the guard plus the
+    `fan_trace` bookkeeping every other `FAN_OUT_TARGET_NODES` node performs --
+    `interrupt()` aborts the node's execution before any `return`, so the
+    `fan_trace` write only actually lands once the branch resumes past Gate 2,
+    same one-write-per-completed-pass behavior as `_make_fan_out_target_node`.
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        subtopic_id = state.get("subtopic_id")
+        if subtopic_id is None:
+            return {}
+        result = gate2_node(state)
+        return {**result, "fan_trace": [("gate2", subtopic_id, state.get("label"))]}
+
+    _node.__name__ = "gate2_node"
     return _node
 
 
@@ -293,6 +325,8 @@ def build_state_graph(
             node_fn = _make_subtopic_stub_node()
         elif name == "clustering":
             node_fn = _make_clustering_node(lookback_days, pool=pool, settings=settings)
+        elif name == "gate2":
+            node_fn = _make_gate2_node()
         elif name in FAN_OUT_TARGET_NODES:
             node_fn = _make_fan_out_target_node(name)
         else:

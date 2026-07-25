@@ -1,7 +1,19 @@
+import numpy as np
 import pytest
+from langgraph.graph import END, START, StateGraph
+from langgraph.types import Command
 from testcontainers.postgres import PostgresContainer
 
-from newsresearch.graph.build import NODE_ORDER, build_graph
+from newsresearch.graph.build import (
+    NODE_ORDER,
+    _make_clustering_node,
+    _make_fan_out_target_node,
+    _make_relay_router,
+    build_checkpointer,
+    build_graph,
+    fan_out_router,
+)
+from newsresearch.graph.nodes.gate2 import gate2_node
 from newsresearch.graph.state import GraphState, SubtopicState
 
 # Hermetic `testcontainers[postgres]` per Story 0.4's own precedent, so this
@@ -81,7 +93,7 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
     assert len(rows) > 0
 
 
-def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url):
+def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url, monkeypatch):
     """Task 2.4.1: N approved candidates -> N `Send`-fanned branches, each
     carrying its own `subtopic_id` through `sourcing`/`clustering`/`gate2`.
 
@@ -89,7 +101,19 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
     `(node_name, subtopic_id)` into) is the observable proof that each of
     those three downstream nodes actually ran once per candidate -- with a
     distinct `subtopic_id` -- rather than once overall.
+
+    `clustering` is real (PR #32 rework), so its underlying sourcing call is
+    mocked here the same way `test_gate2.py`'s real-cluster-report test does
+    -- this test only needs to prove fan-out mechanics, not re-exercise live
+    GDELT/RSS.
     """
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
     graph = build_graph(database_url=postgres_url)
 
     candidates = [
@@ -119,3 +143,89 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
             subtopic_id for name, subtopic_id, _ in fan_trace if name == node_name
         }
         assert node_subtopic_ids == subtopic_ids_seen
+
+
+def test_clustering_runs_exactly_once_per_branch_across_gate2_interrupt_and_resume(
+    postgres_url, monkeypatch
+):
+    """PR #32 rework, required re-check.
+
+    PR #32 was tech-lead-rejected for calling `topical_clustering_agent`
+    *inside* `gate2_node`, before `interrupt()` -- LangGraph replays a node
+    function from the top on every resume, so that call ran twice per Gate 2
+    pass. The fix moves the real work into `clustering` (one of
+    `FAN_OUT_TARGET_NODES`, `Send`-relayed exactly once per branch, never
+    replayed by a downstream interrupt/resume).
+
+    Production `build_graph()` still wires `gate2` as a passthrough stub
+    (real interrupt wiring into the compiled pipeline is a separate,
+    not-yet-scheduled task per `EXECUTION_PLAN.md` Task 2.6.2's own
+    scoping), so this test assembles `graph/build.py`'s real
+    `fan_out`/`sourcing`/`clustering` wiring together with the real
+    interrupting `gate2_node` directly, to prove the property PR #32 broke.
+    """
+    call_counts: dict[str, int] = {}
+
+    def counting_sourcing_agent(keywords, lookback_days, **kwargs):
+        (label,) = keywords
+        call_counts[label] = call_counts.get(label, 0) + 1
+        return []
+
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent", counting_sourcing_agent
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    builder = StateGraph(GraphState)
+    builder.add_node("fan_out", _make_fan_out_target_node("fan_out"))
+    builder.add_node("sourcing", _make_fan_out_target_node("sourcing"))
+    builder.add_node("clustering", _make_clustering_node(7))
+    builder.add_node("gate2", gate2_node)
+    builder.add_edge(START, "fan_out")
+    builder.add_conditional_edges("fan_out", fan_out_router, ["sourcing"])
+    builder.add_conditional_edges(
+        "sourcing", _make_relay_router("sourcing", "clustering"), ["clustering"]
+    )
+    builder.add_conditional_edges(
+        "clustering",
+        _make_relay_router("clustering", "gate2", carry_field="cluster_reports"),
+        ["gate2"],
+    )
+    builder.add_edge("gate2", END)
+
+    graph = builder.compile(checkpointer=build_checkpointer(postgres_url))
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+    ]
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "gate2-real-run",
+        "subtopics": [],
+        "approved": True,
+        "candidates": candidates,
+        "excess": [],
+    }
+    config = {"configurable": {"thread_id": "gate2-real-test"}}
+
+    result = graph.invoke(initial_state, config=config)
+    interrupts = result["__interrupt__"]
+    assert len(interrupts) == len(candidates)
+
+    # Each branch's own sourcing call ran exactly once building the
+    # interrupt payload -- not yet twice, before any resume has happened.
+    assert call_counts == {"eu ai act": 1, "us executive order": 1}
+
+    resume_map = {i.id: {"action": "continue"} for i in interrupts}
+    graph.invoke(Command(resume=resume_map), config=config)
+
+    # The bug PR #32 shipped: resuming a Gate 2 interrupt replays
+    # `gate2_node` from the top, which re-ran `topical_clustering_agent`
+    # (and its underlying sourcing call) a second time. Proving the count
+    # is still 1 per branch after resume is the actual regression check.
+    assert call_counts == {"eu ai act": 1, "us executive order": 1}
+    assert graph.get_state(config).next == ()

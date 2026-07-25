@@ -10,16 +10,22 @@ Wires the full TRD section 3.1 node topology as trivial passthrough nodes:
 per approved `GraphState.candidates` entry out of `fan_out`, and one relay
 `Send` per active branch at each subsequent hop -- see `_make_relay_router`
 -- each carrying a `SubtopicState`-shaped identity, `run_id`/`subtopic_id`/
-`label`, into its own concurrent branch). `Sourcing`/`Clustering`/`Gate2`
-remain passthrough for now (real per-subtopic wiring is Story 2.5/2.6); they
-just record their own `(node_name, subtopic_id, label)` into
-`GraphState.fan_trace` when running inside a fanned branch, so fan-out
-mechanics are provable without any real node logic existing yet. When
-`candidates` is empty (e.g. Phase 0's own no-op-topology test), `fan_out`
-falls back to a single ordinary edge into `sourcing`, so the pre-Phase-2
-no-candidates path is unaffected. Compiled with `PostgresSaver` (not an
-in-memory checkpointer) so gate durability across process restarts — the
-entire point of using Postgres here — actually holds.
+`label`, into its own concurrent branch). `Sourcing`/`Gate2` remain
+passthrough for now; they just record their own `(node_name, subtopic_id,
+label)` into `GraphState.fan_trace` when running inside a fanned branch, so
+fan-out mechanics are provable without any real node logic existing yet.
+`Clustering` is real (PR #32 tech-lead-rejected rework): it runs Task 2.5.1's
+`topical_clustering_agent` + Task 2.6.1's `build_gate2_report` exactly once
+per branch, upstream of `gate2`'s `interrupt()` -- see `_make_clustering_node`
+for why this can't live inside `gate2_node` itself (LangGraph replays a node
+function from the top on every resume, which would double real sourcing
+calls and risk overwriting a human-reviewed report with a re-run, possibly
+different, one). When `candidates` is empty (e.g. Phase 0's own
+no-op-topology test), `fan_out` falls back to a single ordinary edge into
+`sourcing`, so the pre-Phase-2 no-candidates path is unaffected. Compiled
+with `PostgresSaver` (not an in-memory checkpointer) so gate durability
+across process restarts — the entire point of using Postgres here — actually
+holds.
 """
 
 from __future__ import annotations
@@ -38,8 +44,10 @@ from langgraph.types import Send
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
+from newsresearch.agents.topical_clustering_agent import topical_clustering_agent
 from newsresearch.config import Settings
 from newsresearch.graph.state import GraphState
+from newsresearch.reports.gate2_report import build_gate2_report
 
 # TRD 3.1 pipeline order, Subtopic through Timeline, as no-op node names.
 NODE_ORDER: list[str] = [
@@ -107,6 +115,48 @@ def _make_fan_out_target_node(name: str):
     return _node
 
 
+def _make_clustering_node(
+    lookback_days: int, *, pool: ConnectionPool | None = None, settings: Settings | None = None
+):
+    """Real `clustering` node (Task 2.5.1 + Task 2.6.1, PR #32 rework).
+
+    Runs `topical_clustering_agent` (per-subtopic sourcing + coarse
+    clustering) then `build_gate2_report` (zero-LLM aggregation) for the
+    branch's own `subtopic_id`/`label`. `clustering` is one of
+    `FAN_OUT_TARGET_NODES`, entered exactly once per `Send`-fanned branch --
+    never replayed by a downstream Gate 2 `interrupt()`/resume, unlike code
+    that ran *inside* `gate2_node` itself would be.
+
+    Writes the report into the reducer-safe `cluster_reports` accumulator
+    (not a plain field: concurrent branches racing in the same superstep
+    can't share one non-reducer channel) alongside the usual `fan_trace`
+    entry; `_make_relay_router`'s clustering->gate2 hop then folds the
+    branch's own entry into that branch's outgoing `Send` payload as a plain
+    `cluster_report` field, so `gate2_node` (`graph/nodes/gate2.py`) can read
+    it straight off its own per-branch state with no recomputation.
+
+    On the plain, no-candidates fallback path `subtopic_id` is absent and
+    this behaves like a no-op passthrough, same as `_make_fan_out_target_node`.
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        subtopic_id = state.get("subtopic_id")
+        if subtopic_id is None:
+            return {}
+        label = state.get("label", "")
+        clustering_result = topical_clustering_agent(
+            subtopic_id, label, lookback_days, pool=pool, settings=settings
+        )
+        report = build_gate2_report(clustering_result)
+        return {
+            "fan_trace": [("clustering", subtopic_id, label)],
+            "cluster_reports": [(subtopic_id, report)],
+        }
+
+    _node.__name__ = "clustering_node"
+    return _node
+
+
 def fan_out_router(state: GraphState) -> list[Send] | str:
     """Conditional edge out of `fan_out`: Task 2.4.1's real `Send`-based
     fan-out.
@@ -135,7 +185,7 @@ def fan_out_router(state: GraphState) -> list[Send] | str:
     ]
 
 
-def _make_relay_router(source_name: str, target_name: str):
+def _make_relay_router(source_name: str, target_name: str, *, carry_field: str | None = None):
     """Conditional edge between two `FAN_OUT_TARGET_NODES`, keeping a
     `Send`-fanned run's N branches distinct across multiple hops.
 
@@ -145,6 +195,13 @@ def _make_relay_router(source_name: str, target_name: str):
     message per branch into `target_name`. Falls back to a plain edge when
     there's nothing to relay (`source_name` never fanned -- the no-candidates
     path), so it's a no-op unless fan-out is actually happening.
+
+    `carry_field`, when given, names a `(subtopic_id, value)`-tuple reducer
+    field (e.g. `cluster_reports`) whose per-branch entry gets folded into
+    that branch's outgoing `Send` payload as a plain `cluster_report` field
+    -- this is how `clustering`'s real per-branch output reaches `gate2`'s
+    own state without ever being written back to a shared, collision-prone
+    channel.
     """
 
     def _router(state: GraphState) -> list[Send] | str:
@@ -156,10 +213,14 @@ def _make_relay_router(source_name: str, target_name: str):
         if not branches:
             return target_name
 
-        return [
-            Send(target_name, {"run_id": state["run_id"], "subtopic_id": subtopic_id, "label": label})
-            for subtopic_id, label in branches
-        ]
+        carried = dict(state.get(carry_field, [])) if carry_field else {}
+        sends = []
+        for subtopic_id, label in branches:
+            payload = {"run_id": state["run_id"], "subtopic_id": subtopic_id, "label": label}
+            if carry_field:
+                payload["cluster_report"] = carried.get(subtopic_id, {})
+            sends.append(Send(target_name, payload))
+        return sends
 
     return _router
 
@@ -216,12 +277,22 @@ def _make_subtopic_stub_node():
     return _node
 
 
-def build_state_graph() -> StateGraph:
-    """Assemble the full no-op node topology, uncompiled."""
+def build_state_graph(
+    *, lookback_days: int = 7, pool: ConnectionPool | None = None, settings: Settings | None = None
+) -> StateGraph:
+    """Assemble the full node topology, uncompiled.
+
+    `lookback_days`/`pool`/`settings` are forwarded to the real `clustering`
+    node (Task 2.5.1's `topical_clustering_agent` call); `lookback_days`
+    defaults to 7, matching `cli.py`'s own default -- no per-run tunable
+    exists for this yet, and inventing one is out of this task's scope.
+    """
     builder = StateGraph(GraphState)
     for name in NODE_ORDER:
         if name == "subtopic":
             node_fn = _make_subtopic_stub_node()
+        elif name == "clustering":
+            node_fn = _make_clustering_node(lookback_days, pool=pool, settings=settings)
         elif name in FAN_OUT_TARGET_NODES:
             node_fn = _make_fan_out_target_node(name)
         else:
@@ -237,8 +308,13 @@ def build_state_graph() -> StateGraph:
         elif upstream in FAN_OUT_TARGET_NODES and downstream in FAN_OUT_TARGET_NODES:
             # Relay hop between two fan-out branch nodes (sourcing ->
             # clustering, clustering -> gate2): keeps each branch's identity
-            # distinct across the hop, see `_make_relay_router`.
-            builder.add_conditional_edges(upstream, _make_relay_router(upstream, downstream), [downstream])
+            # distinct across the hop, see `_make_relay_router`. The
+            # clustering->gate2 hop also carries the real `cluster_report`
+            # `clustering` just computed forward into `gate2`'s own state.
+            carry_field = "cluster_reports" if upstream == "clustering" else None
+            builder.add_conditional_edges(
+                upstream, _make_relay_router(upstream, downstream, carry_field=carry_field), [downstream]
+            )
         else:
             builder.add_edge(upstream, downstream)
     builder.add_edge(NODE_ORDER[-1], END)
@@ -266,13 +342,21 @@ def build_checkpointer(database_url: str) -> PostgresSaver:
     return checkpointer
 
 
-def build_graph(database_url: str | None = None) -> CompiledStateGraph:
-    """Compile the no-op pipeline graph with a durable `PostgresSaver`.
+def build_graph(
+    database_url: str | None = None,
+    *,
+    lookback_days: int = 7,
+    pool: ConnectionPool | None = None,
+    settings: Settings | None = None,
+) -> CompiledStateGraph:
+    """Compile the pipeline graph with a durable `PostgresSaver`.
 
     `database_url` defaults to `Settings().database_url`
-    (`NEWSRESEARCH_DATABASE_URL`) when not given explicitly.
+    (`NEWSRESEARCH_DATABASE_URL`) when not given explicitly. `lookback_days`/
+    `pool`/`settings` are forwarded to `build_state_graph`'s real
+    `clustering` node.
     """
-    settings = Settings()
+    settings = settings or Settings()
     resolved_url = database_url or settings.database_url
     if not resolved_url:
         raise ValueError(
@@ -281,4 +365,6 @@ def build_graph(database_url: str | None = None) -> CompiledStateGraph:
         )
 
     checkpointer = build_checkpointer(resolved_url)
-    return build_state_graph().compile(checkpointer=checkpointer)
+    return build_state_graph(lookback_days=lookback_days, pool=pool, settings=settings).compile(
+        checkpointer=checkpointer
+    )

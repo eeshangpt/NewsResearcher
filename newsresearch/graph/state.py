@@ -47,6 +47,16 @@ class GraphState(TypedDict):
     # `subtopic_id` (not once, per the task's acceptance).
     fan_trace: Annotated[list[tuple[str, str, str]], operator.add]
 
+    # Gate 2 real-clustering rework (PR #32 tech-lead-rejected re-fix):
+    # bridges the `clustering` node's real `cluster_report` output
+    # (computed exactly once per `Send`-fanned branch) across to
+    # `_make_relay_router`'s clustering->gate2 hop, which folds each
+    # branch's own entry into that branch's outgoing `Send` payload as a
+    # plain `cluster_report` field -- reducer-safe for the same reason as
+    # `fan_trace`: concurrent branches write this in the same superstep and
+    # a plain field can't hold N distinct values.
+    cluster_reports: Annotated[list[tuple[str, dict]], operator.add]
+
 
 class SubtopicState(TypedDict):
     """Per-subtopic sub-state for Phase 2's `Send`-based fan-out.

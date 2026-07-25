@@ -79,3 +79,43 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
             "SELECT thread_id FROM checkpoints WHERE thread_id = %s", ("test",)
         ).fetchall()
     assert len(rows) > 0
+
+
+def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url):
+    """Task 2.4.1: N approved candidates -> N `Send`-fanned branches, each
+    carrying its own `subtopic_id` through `sourcing`/`clustering`/`gate2`.
+
+    `fan_trace` (a `GraphState` accumulator every fanned branch writes
+    `(node_name, subtopic_id)` into) is the observable proof that each of
+    those three downstream nodes actually ran once per candidate -- with a
+    distinct `subtopic_id` -- rather than once overall.
+    """
+    graph = build_graph(database_url=postgres_url)
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+        {"label": "china ai regulation", "article_count": 5},
+    ]
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "fanout-run",
+        "subtopics": [],
+        "approved": True,
+        "candidates": candidates,
+        "excess": [],
+    }
+    config = {"configurable": {"thread_id": "fanout-test"}}
+
+    result = graph.invoke(initial_state, config=config)
+
+    fan_trace = result["fan_trace"]
+    subtopic_ids_seen = {subtopic_id for _, subtopic_id, _ in fan_trace}
+    assert len(subtopic_ids_seen) == len(candidates)
+
+    for node_name in ("sourcing", "clustering", "gate2"):
+        node_subtopic_ids = {
+            subtopic_id for name, subtopic_id, _ in fan_trace if name == node_name
+        }
+        assert node_subtopic_ids == subtopic_ids_seen

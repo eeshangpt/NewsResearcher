@@ -23,9 +23,17 @@ calls and risk overwriting a human-reviewed report with a re-run, possibly
 different, one). `Gate2` is also real (Task 2.6.2 follow-up): `_make_gate2_node`
 wraps `graph.nodes.gate2.gate2_node`'s genuine `interrupt()` so a compiled
 `build_graph()` run actually blocks for human review per branch, not a
-passthrough stand-in. When `candidates` is empty (e.g. Phase 0's own
+passthrough stand-in. `Gate1` is likewise real (Task 2.6.2 follow-up):
+`_make_gate1_node` wraps `graph.nodes.gate1.make_gate1_node`'s genuine
+`interrupt()`, binding the real `make_real_reconcile` hook to
+`state["articles"]` at invocation time -- see `_make_gate1_node` for why
+this can't be built once at graph-construction time the way `gate2_node`'s
+bare function is. When `candidates` is empty (e.g. Phase 0's own
 no-op-topology test), `fan_out` falls back to a single ordinary edge into
-`sourcing`, so the pre-Phase-2 no-candidates path is unaffected. Compiled
+`sourcing`, so the pre-Phase-2 no-candidates path is unaffected -- Gate 1
+itself still interrupts unconditionally either way (it has no such
+fallback), so every `graph.invoke()` now pauses there first regardless.
+Compiled
 with `PostgresSaver` (not an in-memory checkpointer) so gate durability
 across process restarts — the entire point of using Postgres here — actually
 holds.
@@ -49,6 +57,7 @@ from psycopg_pool import ConnectionPool
 
 from newsresearch.agents.topical_clustering_agent import topical_clustering_agent
 from newsresearch.config import Settings
+from newsresearch.graph.nodes.gate1 import make_gate1_node, make_real_reconcile
 from newsresearch.graph.nodes.gate2 import gate2_node
 from newsresearch.graph.state import GraphState
 from newsresearch.reports.gate2_report import build_gate2_report
@@ -116,6 +125,34 @@ def _make_fan_out_target_node(name: str):
         return {"fan_trace": [(name, subtopic_id, state.get("label"))]}
 
     _node.__name__ = f"{name}_node"
+    return _node
+
+
+def _make_gate1_node(*, settings: Settings | None = None):
+    """Real `gate1` node (follow-up to Task 2.6.2's review): wraps
+    `graph.nodes.gate1.make_gate1_node`'s genuine `interrupt()` so a compiled
+    `build_graph()` run actually blocks for Gate 1 human review, not the
+    generic `_make_passthrough_node` stand-in this slot used before.
+
+    `gate1_node`'s factory (`make_gate1_node(reconcile=...)`) is built at
+    *graph-construction* time in `gate1.py`'s own tests, but the real
+    `reconcile` hook (`make_real_reconcile`) needs `state["articles"]` --
+    the broad-fetch set the edited candidates were originally proposed
+    against -- which only exists once the graph actually runs, not at
+    build time. So this wrapper defers the factory call itself into the
+    node function, building a fresh `make_real_reconcile(state["articles"],
+    settings=settings)` closure on every invocation (matching
+    `test_gate1_edit_resume_runs_real_reconciliation`'s own pattern for
+    binding `articles`) -- gate1 isn't `Send`-fanned, so unlike
+    `_make_clustering_node`/`_make_gate2_node` there's no per-branch guard
+    needed here, just a single ordinary node.
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        reconcile = make_real_reconcile(state.get("articles", []), settings=settings)
+        return make_gate1_node(reconcile=reconcile)(state)
+
+    _node.__name__ = "gate1_node"
     return _node
 
 
@@ -323,6 +360,8 @@ def build_state_graph(
     for name in NODE_ORDER:
         if name == "subtopic":
             node_fn = _make_subtopic_stub_node()
+        elif name == "gate1":
+            node_fn = _make_gate1_node(settings=settings)
         elif name == "clustering":
             node_fn = _make_clustering_node(lookback_days, pool=pool, settings=settings)
         elif name == "gate2":

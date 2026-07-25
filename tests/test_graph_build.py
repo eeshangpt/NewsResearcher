@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import numpy as np
 import pytest
 from langgraph.types import Command
@@ -9,6 +12,8 @@ from newsresearch.graph.state import GraphState, SubtopicState
 # Hermetic `testcontainers[postgres]` per Story 0.4's own precedent, so this
 # test doesn't depend on the dev `docker compose up -d` stack being up (that
 # dependency is exercised separately, manually, per Story 0.5's runtime note).
+
+FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
 @pytest.fixture(scope="module")
@@ -55,10 +60,17 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
         "run_id": "test-run",
         "subtopics": [],
         "approved": False,
+        "candidates": [],
+        "excess": [],
     }
     config = {"configurable": {"thread_id": "test"}}
 
-    result = graph.invoke(initial_state, config=config)
+    # Gate 1 is now real (Task 2.6.2 follow-up): it interrupts
+    # unconditionally, even on this no-candidates topology-smoke-test path,
+    # so an approve-resume is required before the rest of NODE_ORDER runs.
+    interrupted = graph.invoke(initial_state, config=config)
+    assert "__interrupt__" in interrupted
+    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
 
     # No-op nodes return {} so the state should be unchanged coming out.
     assert result["topic"] == "test topic"
@@ -123,7 +135,11 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
     }
     config = {"configurable": {"thread_id": "fanout-test"}}
 
-    interrupted = graph.invoke(initial_state, config=config)
+    # Gate 1 is now real (Task 2.6.2 follow-up) and sits upstream of
+    # `fan_out`: approve-resume it first before the per-branch Gate 2
+    # interrupts this test actually exercises.
+    graph.invoke(initial_state, config=config)
+    interrupted = graph.invoke(Command(resume={"action": "approve"}), config=config)
     resume_map = {i.id: {"action": "continue"} for i in interrupted["__interrupt__"]}
     result = graph.invoke(Command(resume=resume_map), config=config)
 
@@ -186,7 +202,9 @@ def test_clustering_runs_exactly_once_per_branch_through_real_build_graph_gate2(
     }
     config = {"configurable": {"thread_id": "gate2-real-test"}}
 
-    result = graph.invoke(initial_state, config=config)
+    # Gate 1 is now real (Task 2.6.2 follow-up): approve-resume it first.
+    graph.invoke(initial_state, config=config)
+    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
     interrupts = result["__interrupt__"]
     assert len(interrupts) == len(candidates)
 
@@ -239,7 +257,9 @@ def test_gate2_blocks_each_fanned_branch_independently_via_real_send(postgres_ur
     }
     config = {"configurable": {"thread_id": "gate2-independent-test"}}
 
-    result = graph.invoke(initial_state, config=config)
+    # Gate 1 is now real (Task 2.6.2 follow-up): approve-resume it first.
+    graph.invoke(initial_state, config=config)
+    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
     interrupts = result["__interrupt__"]
     assert len(interrupts) == len(candidates)
     assert graph.get_state(config).next == ("gate2", "gate2")
@@ -268,3 +288,125 @@ def test_gate2_blocks_each_fanned_branch_independently_via_real_send(postgres_ur
     gate2_trace_final = [entry for entry in final_result["fan_trace"] if entry[0] == "gate2"]
     subtopic_ids = {entry[1] for entry in gate2_trace_final}
     assert len(subtopic_ids) == len(candidates)
+
+
+def test_gate1_approve_resume_proceeds_through_real_build_graph(postgres_url, monkeypatch):
+    """Follow-up to Task 2.6.2's review: `gate1` is now a real, interrupting
+    node in the actual compiled `build_graph()` topology (`_make_gate1_node`),
+    not the generic passthrough it was wired as before -- proves a plain
+    approve-resume blocks at Gate 1 first and then proceeds unchanged into
+    the rest of the topology (here, straight through to Gate 2's own
+    interrupts, one per approved candidate).
+    """
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+    graph = build_graph(database_url=postgres_url)
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+    ]
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "gate1-real-approve-run",
+        "subtopics": [],
+        "approved": False,
+        "candidates": candidates,
+        "excess": [],
+        "articles": [],
+    }
+    config = {"configurable": {"thread_id": "gate1-real-approve-test"}}
+
+    interrupted = graph.invoke(initial_state, config=config)
+    assert "__interrupt__" in interrupted
+    assert interrupted["__interrupt__"][0].value["candidates"] == candidates
+    assert graph.get_state(config).next == ("gate1",)
+
+    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
+
+    assert result["approved"] is True
+    assert result["candidates"] == candidates
+    # Approving proceeds straight past `fan_out` into Gate 2's own
+    # per-branch interrupts -- proof gate1 isn't dead-ending the run.
+    assert len(result["__interrupt__"]) == len(candidates)
+
+
+def test_gate1_edit_resume_runs_real_reconciliation_through_real_build_graph(
+    postgres_url, monkeypatch
+):
+    """Same acceptance as `test_gate1.py`'s
+    `test_gate1_edit_resume_runs_real_reconciliation`, now proven through the
+    actual compiled `build_graph()` topology instead of a hand-assembled
+    `StateGraph(GraphState)` standing in for it -- confirms `_make_gate1_node`
+    really does bind `make_real_reconcile` to `state["articles"]` at
+    invocation time rather than silently falling back to `stub_reconcile`'s
+    identity pass-through.
+    """
+    clustering = json.loads((FIXTURES_DIR / "clustering_synthetic_topics.json").read_text())
+    merge_fixture = json.loads((FIXTURES_DIR / "reconciliation_merge.json").read_text())
+
+    article_vectors = np.array(clustering["embeddings"])
+    # Edit-resume drops "US executive order on AI safety" -- 3 of the
+    # fixture's 4 candidates survive the edit.
+    edited_labels = merge_fixture["candidate_labels"][:-1]
+    candidate_vectors = np.array(merge_fixture["candidate_embeddings"][:-1])
+
+    def fake_embed(texts):
+        if len(texts) == len(article_vectors):
+            return article_vectors
+        if len(texts) == len(candidate_vectors):
+            return candidate_vectors
+        raise AssertionError(f"unexpected embed() call with {len(texts)} texts")
+
+    monkeypatch.setattr("newsresearch.agents.subtopic_agent.embed", fake_embed)
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    articles = [{"title": s} for s in clustering["sentences"]]
+    graph = build_graph(database_url=postgres_url)
+
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "gate1-real-edit-run",
+        "subtopics": [],
+        "approved": False,
+        "candidates": [{"label": label, "article_count": 0} for label in merge_fixture["candidate_labels"]],
+        "excess": [],
+        "articles": articles,
+    }
+    config = {"configurable": {"thread_id": "gate1-real-edit-test"}}
+
+    graph.invoke(initial_state, config=config)
+    edited_candidates = [{"label": label} for label in edited_labels]
+    result = graph.invoke(
+        Command(resume={"action": "edit", "candidates": edited_candidates}),
+        config=config,
+    )
+
+    assert result["approved"] is True
+    # Not a passthrough: the two near-duplicate EU AI Act candidates merge
+    # into one subtopic with real, recomputed article counts/ordering --
+    # never the edit-resume's unchanged 3-item edited list `stub_reconcile`
+    # would have produced.
+    assert len(result["candidates"]) == 2
+    merged = next(c for c in result["candidates"] if c["action"] == "merge")
+    assert set(merged["merged_from"]) == {
+        "EU AI Act enforcement actions",
+        "European Union AI Act compliance crackdown",
+    }
+    for c in result["candidates"]:
+        assert c["article_count"] > 0
+        assert "distinctiveness_score" in c
+        assert "centroid" not in c

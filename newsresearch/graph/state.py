@@ -34,6 +34,15 @@ class GraphState(TypedDict):
     candidates: list[dict]
     excess: list[dict]
 
+    # Gate 1 production-wiring follow-up (Task 2.6.2 review): the
+    # broad-fetch article set `candidates`/`excess` were originally proposed
+    # against (`agents/subtopic_agent.py::broad_topic_fetch`), threaded
+    # through so a real Gate 1 edit-resume can re-run `make_real_reconcile`
+    # against it. The `subtopic` node stays a Phase 0 stub in `graph/build.py`
+    # (real Subtopic Agent wiring is a separate follow-up), so this is
+    # populated directly on the initial `graph.invoke()` state for now.
+    articles: list[dict]
+
     # Task 2.4.1: accumulator every `Send`-fanned branch writes `(node_name,
     # subtopic_id, label)` into as it passes through `graph/build.py`'s
     # `sourcing`/`clustering`/`gate2` fan-out targets. `operator.add` lets

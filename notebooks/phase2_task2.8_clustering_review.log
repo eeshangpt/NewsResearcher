@@ -1,0 +1,367 @@
+[1m[33mwarning[39m[0m[1m:[0m [1m`VIRTUAL_ENV=/home/eeshan/Documents/NewsResearch/.venv` does not match the project environment path `.venv` and will be ignored; use `--active` to target the active environment instead[0m
+
+=== s1: 'OpenAI GPT-5 release' (lookback=14d) ===
+gdelt: rate-limited (status=429, attempt 1/5), backing off 5.0s
+gdelt: rate-limited (status=429, attempt 2/5), backing off 10.0s
+gdelt: rate-limited (status=429, attempt 3/5), backing off 20.0s
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9475.02it/s]
+total_articles=32
+n_clusters=4 noise=11
+  cluster 0 (n=4):
+    - OpenAI says its AI technology acted on its own in an 'unprecedented' hack of another company  [apnews.com]
+    - Researchers Build WordPress Exploit Using OpenAI's GPT  [infosecurity-magazine.com]
+    - Meet GPT-Red: an LLM super-hacker OpenAI built to make its models safer  [technologyreview.com]
+    - OpenAI's GPT-5.6 Sol and unreleased AI models break out of testing environment in 'unprecedented cyb  [tomshardware.com]
+  cluster 1 (n=5):
+    - Moonshot's open-source Kimi K3 model beats Anthropic's Fable 5 on this benchmark  [zdnet.com]
+    - Can Domestic AI Models Compete with OpenAI Fable 5? Full Hands-On Test & Performance Comparison of K  [eu.36kr.com]
+    - China's 2.8-trillion-parameter Kimi K3 beats Claude Fable 5 in Frontend Code Arena benchmark— Moonsh  [tomshardware.com]
+    - Kimi K3 Beats Claude Opus 4.8, But Not Fable 5 or GPT 5.6 Sol  [techloy.com]
+    - What is Kimi K3? China’s new AI model aces Claude Fable 5 and GPT-5.6  [financialexpress.com]
+  cluster 2 (n=8):
+    - Get started with OpenAI GPT-5.6 Sol, Terra, and Luna on Amazon Bedrock | Artificial Intelligence  [aws.amazon.com]
+    - OpenAI releases GPT-5.6 Sol amid national security delays  [northeasttimes.com]
+    - OpenAI New GPT 5.5 Is A New Kind Of Intelligence (Nothing Comes Close) High Potential (pU8ThPkP5j)  [mshale.com]
+    - OpenAI Releases GPT-5.6 After Government Review, Intensifying AI Competition  [inews.zoombangla.com]
+    - GPT-6 Rumors: Is OpenAI Preparing a “Mythos-Level” AI Model? Can GPT-6 Beat Anthropic’s Mythos?  [thewincentral.com]
+    - OpenAI Releases GPT-5.6 to Public After Government Review  [inews.zoombangla.com]
+  cluster 3 (n=4):
+    - OpenAI Knew GPT-5 Posed Bioweapon Risk and Downgraded the Rating Anyway  [techtimes.com]
+    - OpenAI acknowledges GPT-5.6 may accidentally delete files, calls it an ‘honest mistake’  [infoworld.com]
+    - OpenAI’s GPT-5.6 Sol users report missing files, deleted databases: Here’s what we know  [indianexpress.com]
+    - OpenAI's GPT-5 was labelled a high-risk AI model over biohazard concerns  [businesstoday.in]
+  noise (n=11):
+    - OpenAI and Hugging Face partner to address security incident during model evaluation  [openai.com]
+    - AI Chatbots Know How to Make Deadly Biological Weapons. Some Will Teach You.  [wsj.com]
+    - Why is OpenAI selling a ChatGPT basketball?  [techcrunch.com]
+    - Sonnet 5 vs GPT-5.6 vs Gemini 3.1 Pro: 58% Cheaper [2026]  [tech-insider.org]
+    - Anthropic turns Fable 5 into a premium feature – OpenAI spreads GPT-5.6 wider  [trendingtopics.eu]
+    - Claude Mythos 5 Blackout: GPT-5.6 Capped at 20 Firms [2026]  [tech-insider.org]
+-- wrote /tmp/clustering_sample_results.json (1 subtopic(s) so far)
+
+=== s2: 'Russia Ukraine ceasefire negotiations' (lookback=14d) ===
+Error trying to connect to socket: closing socket - timed out
+Error trying to connect to socket: closing socket - timed out
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 7493.21it/s]
+total_articles=8
+n_clusters=3 noise=0
+  cluster 0 (n=3):
+    - War in Ukraine | Global Conflict Tracker  [cfr.org]
+    - Europe could help get Ukraine and Russia to the negotiating table  [ft.com]
+    - Ukraine and Russia must return to negotiating table - permanent US rep at United Nations  [en.interfax.com.ua]
+  cluster 1 (n=2):
+    - New inquiry: Russia  [committees.parliament.uk]
+    - How shadow envoys are quietly helping Russia come in from the cold  [thetimes.com]
+  cluster 2 (n=3):
+    - Kremlin says there's no immediate prospect of resuming peace talks with Ukraine  [reuters.com]
+    - Kazakh president urges Ukraine ceasefire  [donga.com]
+    - Klimkin: Trump Will Push for a Ceasefire in Ukraine  [news.liga.net]
+-- wrote /tmp/clustering_sample_results.json (2 subtopic(s) so far)
+
+=== s3: 'Federal Reserve interest rate decision' (lookback=21d) ===
+gdelt: rate-limited (status=429, attempt 1/5), backing off 5.0s
+gdelt: rate-limited (status=429, attempt 2/5), backing off 10.0s
+gdelt: rate-limited (status=429, attempt 3/5), backing off 20.0s
+gdelt: rate-limited (status=429, attempt 4/5), backing off 40.0s
+signals: HTTPS/about-page check failed to reach domain=arynews.tv
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/newsresearch/reputation/signals.py", line 198, in check_https_and_about_page
+    response = httpx.head(f"https://{domain}/", timeout=timeout, follow_redirects=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 267, in head
+    return request(
+           ^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 109, in request
+    return client.request(
+           ^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout: timed out
+Error trying to connect to socket: closing socket - [Errno 104] Connection reset by peer
+Error trying to connect to socket: closing socket - timed out
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8812.46it/s]
+total_articles=11
+n_clusters=5 noise=0
+  cluster 0 (n=3):
+    - Wall Street Week Ahead : Fed decision , big tech earnings and Middle East conflict in focus  [livemint.com]
+    - Markets Brace For Volatile Week , Oil Prices , US Fed Decision And Q1 Earnings To Set The Tone  [freepressjournal.in]
+    - US Fed decision , Q1 earnings , crude oil prices likely to drive D - Street next week  [prokerala.com]
+  cluster 1 (n=2):
+    - Gold falls 2 % as Middle East tensions fuel inflation fears , rate - hike bets  [livemint.com]
+    - Gold Price Surges Above $4 , 100 as Middle East Tensions Boost Safe - Haven Demand  [econotimes.com]
+  cluster 2 (n=3):
+    - U . S . stocks close mixed as chip stocks drop , oil prices plunge - Xinhua  [english.news.cn]
+    - Canadian dollar hits near two - week low as oil prices drop ; speculators ⁠trim bearish bets  [theglobeandmail.com]
+    - Global oil prices spike above $100 after Red Sea attacks  [4029tv.com]
+  cluster 3 (n=1):
+    - Japanese Yen Holds Steady as Intervention Hopes Grow Ahead of U . S . CPI Data  [econotimes.com]
+  cluster 4 (n=2):
+    - Gold next test : Fed verdict , crude oil and geopolitical tensions in focus  [timesofindia.indiatimes.com]
+    - US Fed action , oil swings to test bullion as traders eye West Asia risks : Analysts  [economictimes.indiatimes.com]
+-- wrote /tmp/clustering_sample_results.json (3 subtopic(s) so far)
+
+=== s4: 'Tesla quarterly earnings' (lookback=21d) ===
+gdelt: rate-limited (status=429, attempt 1/5), backing off 5.0s
+signals: HTTPS/about-page check failed to reach domain=phemex.com
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/newsresearch/reputation/signals.py", line 198, in check_https_and_about_page
+    response = httpx.head(f"https://{domain}/", timeout=timeout, follow_redirects=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 267, in head
+    return request(
+           ^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 109, in request
+    return client.request(
+           ^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout: timed out
+Error trying to connect to socket: closing socket - timed out
+signals: HTTPS/about-page check failed to reach domain=washingtonpost.com
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 126, in read
+    with map_exceptions(exc_map):
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/newsresearch/reputation/signals.py", line 198, in check_https_and_about_page
+    response = httpx.head(f"https://{domain}/", timeout=timeout, follow_redirects=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 267, in head
+    return request(
+           ^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_api.py", line 109, in request
+    return client.request(
+           ^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 825, in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/home/eeshan/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: The read operation timed out
+Error trying to connect to socket: closing socket - timed out
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8064.76it/s]
+total_articles=39
+n_clusters=2 noise=1
+  cluster 0 (n=8):
+    - 特斯拉第二季度财报 ： 全球多地交付量创新高 ， 营收同比增长26 %   [finance.sina.com.cn]
+    - 财报 、 地缘与通胀交织 ： 美股三大主线解析  [bank.jrj.com.cn]
+    - 暴跌57 %！ 特斯拉Q2营业利润大跳水 ： 利润率只剩1 . 4 %   [finance.sina.com.cn]
+    - 特斯拉财报会实录 ： 大举押注机器人 、 自动驾驶与储能 资本开支持续扩张 _ 东方财富网  [finance.eastmoney.com]
+    - 马斯克称特斯拉 ( TSLA . US ) 获美光  可观配额 ， AI浪潮下存储芯片已成车企争抢战略物资 - 财经 - 金融界  [finance.jrj.com.cn]
+    - 马斯克 ： 美光保障内存芯片供应 回避特斯拉与SpaceX合并 - 业界动态 - ITBear科技资讯  [itbear.com.cn]
+  cluster 1 (n=30):
+    - 财报前夕再布局 特斯拉Robotaxi服务扩展至奥兰多和坦帕两地 - 业界动态 - ITBear科技资讯  [itbear.com.cn]
+    - Earnings at Musk's Tesla fall as spending on research cuts into profit from selling cars  [pbs.org]
+    - Tesla Profit Falls Even as Car Sales Rebound  [nytimes.com]
+    - Tesla Plunges Most in a Year on Investor Angst Over AI Spending  [bloomberg.com]
+    - Should You Buy Tesla Stock Before Earnings on July 22?  [fool.com]
+    - As Musk pivots beyond cars, Tesla’s autos engine is under strain  [reuters.com]
+  noise (n=1):
+    - US stock market to Kospi : Here world equity heatmap you should know before opening of the Indian st  [livemint.com]
+-- wrote /tmp/clustering_sample_results.json (4 subtopic(s) so far)
+
+=== s5: 'solar panel manufacturing' (lookback=30d) ===
+gdelt: rate-limited (status=429, attempt 1/5), backing off 5.0s
+gdelt: rate-limited (status=429, attempt 2/5), backing off 10.0s
+gdelt: rate-limited (status=429, attempt 3/5), backing off 20.0s
+gdelt: rate-limited (status=429, attempt 4/5), backing off 40.0s
+gdelt: rate-limited (status=429, attempt 5/5), backing off 80.0s
+sourcing_agent: gdelt.fetch failed; continuing with RSS (+backfill-if-triggered) results only
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/newsresearch/agents/sourcing_agent.py", line 139, in sourcing_agent
+    gdelt_articles = gdelt.fetch(keywords, lookback_days)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/newsresearch/sourcing/gdelt.py", line 360, in fetch
+    return query_range(
+           ^^^^^^^^^^^^
+  File "/tmp/ds-run-master/newsresearch/sourcing/gdelt.py", line 261, in query_range
+    return _query_range_recursive(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/newsresearch/sourcing/gdelt.py", line 287, in _query_range_recursive
+    articles = query_window(
+               ^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/newsresearch/sourcing/gdelt.py", line 191, in query_window
+    raise GDELTError(
+newsresearch.sourcing.gdelt.GDELTError: GDELT DOC 2.0 API still rate-limited after 5 retries for window 2026-06-28T11:52:14.285006+00:00..2026-07-28T11:52:14.285006+00:00 (last status 429)
+Error trying to connect to socket: closing socket - [Errno 111] Connection refused
+Error trying to connect to socket: closing socket - timed out
+Error trying to connect to socket: closing socket - timed out
+Error trying to connect to socket: closing socket - timed out
+signals: WHOIS lookup failed for domain=taiyangnews.info
+Traceback (most recent call last):
+  File "/tmp/ds-run-master/newsresearch/reputation/signals.py", line 103, in get_domain_age_years
+    record = whois.whois(domain, timeout=timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ds-run-master/.venv/lib/python3.11/site-packages/whois/__init__.py", line 78, in whois
+    raise WhoisError("Whois command returned no output")
+whois.exceptions.WhoisError: Whois command returned no output
+Error trying to connect to socket: closing socket - timed out
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9292.01it/s]
+total_articles=40
+n_clusters=2 noise=22
+  cluster 0 (n=13):
+    - India's solar push idles factories unable to shake reliance on China  [reuters.com]
+    - India's Solar Manufacturing Push Backfires as Panel Factories Shut Down  [oilprice.com]
+    - Reshoring Solar Manufacturing For Energy (National) Security  [forbes.com]
+    - Judge affirms ruling prohibiting solar panel manufacturing in Fort Mill  [wsoctv.com]
+    - Can India, Europe produce solar energy without China?  [dw.com]
+    - Houston Attracts New Solar Manufacturing Investment  [houston.org]
+  cluster 1 (n=5):
+    - Canadian Solar ramps HJT solar cell manufacturing in Indiana  [solarpowerworldonline.com]
+    - CS PowerTech opens first phase of HJT solar cell plant  [solarbuildermag.com]
+    - Canadian Solar's Arm Opens First Phase of US Solar Cell Manufacturing Facility in Indiana  [saurenergy.com]
+    - CS PowerTech Opens First U.S. HJT Solar Cell Manufacturing Facility in Indiana, Targeting Over 6 GWp  [solarquarter.com]
+    - Canadian Solar Opens 6 GW HJT Cell Plant In Indiana  [taiyangnews.info]
+  noise (n=22):
+    - DYCM’s journey to panel manufacturing leads to California  [solarpowerworldonline.com]
+    - The new Global Reality for PV Module Manufacturers - 2026  [enerdata.net]
+    - Comstock to recycle scrap material from Illuminate USA’s Ohio solar panel factory  [solarpowerworldonline.com]
+    - Judge upholds York County BZA ruling in Silfab Solar zoning dispute  [wbtv.com]
+    - ES Foundry Completes 2 GW Greenwood Factory Expansion, Bringing Total U.S. Solar Cell Capacity to 3   [prnewswire.com]
+    - Judge upholds 2024 York County zoning ruling in Silfab Solar dispute: What to know  [wbtv.com]
+-- wrote /tmp/clustering_sample_results.json (5 subtopic(s) so far)
+
+Done.

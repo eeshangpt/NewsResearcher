@@ -9,7 +9,8 @@ from langgraph.types import Command
 from testcontainers.postgres import PostgresContainer
 
 from newsresearch.agents.sourcing_agent import ScoredArticle
-from newsresearch.graph.build import NODE_ORDER, build_graph
+from newsresearch.graph import build as build_module
+from newsresearch.graph.build import NODE_ORDER, build_checkpointer, build_graph, build_state_graph
 from newsresearch.graph.state import GraphState, SubtopicState
 from newsresearch.llm.schemas import SubtopicCandidate, SubtopicCandidateList
 
@@ -549,3 +550,229 @@ def test_subtopic_node_populates_candidates_excess_articles_through_real_build_g
         assert c["article_count"] > 0
         assert "distinctiveness_score" in c
         assert "centroid" not in c
+
+
+# --- Task 2.3.2 re-check: kill-restart durability against REAL fan-out data
+# (PR #29's review flagged this pending until gate1/gate2/subtopic were all
+# real in build_graph()'s compiled topology -- true as of PR #34/#35/#36).
+# All three scenarios below simulate "kill" the same way `test_gate1.py`'s
+# original durability test does: discard the in-process graph/checkpointer
+# object entirely (`del graph`) and build a brand-new
+# `ConnectionPool`/`PostgresSaver`/compiled graph from scratch against the
+# same real Postgres URL before resuming -- not merely pausing in place.
+
+
+def test_kill_mid_fan_out_reexecutes_only_the_incomplete_branch(postgres_url, monkeypatch):
+    """Scenario 1 (PR #29 review note): kill after `fan_out` schedules N
+    `Send`s but before all N `sourcing` tasks complete.
+
+    Makes one branch's `sourcing` node raise (simulating the process dying
+    mid-superstep) while the other two succeed; LangGraph's pending-writes
+    mechanism should retain those two branches' already-committed writes so
+    a restart's resume only re-executes the failed branch's `sourcing`, not
+    the ones that already got through -- and `fan_trace` should show each
+    branch's `sourcing` entry exactly once, never doubled.
+    """
+    should_fail = {"boom": True}
+    original_factory = build_module._make_fan_out_target_node
+
+    def flaky_factory(name: str):
+        if name != "sourcing":
+            return original_factory(name)
+
+        def _node(state):
+            subtopic_id = state.get("subtopic_id")
+            if subtopic_id is None:
+                return {}
+            if state.get("label") == "boom-label" and should_fail["boom"]:
+                raise RuntimeError("simulated kill mid-fan-out")
+            return {"fan_trace": [("sourcing", subtopic_id, state.get("label"))]}
+
+        _node.__name__ = "sourcing_node"
+        return _node
+
+    monkeypatch.setattr(build_module, "_make_fan_out_target_node", flaky_factory)
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+        {"label": "boom-label", "article_count": 5},
+    ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+
+    config = {"configurable": {"thread_id": "kill-mid-fan-out-test"}}
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "kill-mid-fan-out-run",
+        "subtopics": [],
+        "approved": True,
+    }
+
+    graph = build_graph(database_url=postgres_url)
+    graph.invoke(initial_state, config=config)
+    with pytest.raises(RuntimeError, match="simulated kill mid-fan-out"):
+        graph.invoke(Command(resume={"action": "approve"}), config=config)
+    del graph  # simulate the process dying mid-superstep
+
+    should_fail["boom"] = False  # the retried branch now succeeds
+    restarted_graph = build_graph(database_url=postgres_url)
+    result = restarted_graph.invoke(None, config=config)
+
+    assert restarted_graph.get_state(config).next == ("gate2", "gate2", "gate2")
+    sourcing_ids = [
+        subtopic_id for name, subtopic_id, _ in result["fan_trace"] if name == "sourcing"
+    ]
+    # Exactly one `sourcing` entry per branch -- the two that already
+    # succeeded pre-kill were not re-executed and double-counted, and the
+    # failed branch's retry contributed exactly one entry, not zero.
+    assert sorted(sourcing_ids) == sorted({f"kill-mid-fan-out-run-sub{i}" for i in range(3)})
+    assert len(sourcing_ids) == 3
+
+
+def test_kill_between_clustering_and_gate2_hops_reconstructs_all_branches(
+    postgres_url, monkeypatch
+):
+    """Scenario 2 (PR #29 review note): kill after `clustering`'s
+    `fan_trace`/`cluster_reports` writes land (that superstep committed) but
+    before `_make_relay_router` schedules `gate2`'s `Send`s.
+
+    Uses `interrupt_after=["clustering"]` to pause exactly at that hop
+    boundary (LangGraph's own supported way to stop between supersteps,
+    standing in for a kill landing there) -- then discards that
+    graph/checkpointer object and resumes with a plain, un-interrupted
+    `build_graph()`, proving the restart correctly reconstructs all N
+    branches from `fan_trace` and carries them through to N independent
+    Gate 2 interrupts.
+    """
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+        {"label": "china ai regulation", "article_count": 5},
+    ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+
+    config = {"configurable": {"thread_id": "kill-between-hops-test"}}
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "kill-between-hops-run",
+        "subtopics": [],
+        "approved": True,
+    }
+
+    checkpointer = build_checkpointer(postgres_url)
+    paused_graph = build_state_graph().compile(
+        checkpointer=checkpointer, interrupt_after=["clustering"]
+    )
+    paused_graph.invoke(initial_state, config=config)
+    paused_result = paused_graph.invoke(Command(resume={"action": "approve"}), config=config)
+
+    # Confirms the pause actually landed where intended: all 3 branches'
+    # `clustering` writes are in, none have reached `gate2` yet.
+    clustering_ids = {
+        subtopic_id for name, subtopic_id, _ in paused_result["fan_trace"] if name == "clustering"
+    }
+    assert len(clustering_ids) == len(candidates)
+    assert not any(name == "gate2" for name, _, _ in paused_result["fan_trace"])
+    del paused_graph, checkpointer  # simulate the process dying between hops
+
+    restarted_graph = build_graph(database_url=postgres_url)
+    result = restarted_graph.invoke(None, config=config)
+
+    interrupts = result["__interrupt__"]
+    assert len(interrupts) == len(candidates)
+    assert restarted_graph.get_state(config).next == ("gate2", "gate2", "gate2")
+
+    resume_map = {i.id: {"action": "continue"} for i in interrupts}
+    final_result = restarted_graph.invoke(Command(resume=resume_map), config=config)
+    gate2_ids = {
+        subtopic_id for name, subtopic_id, _ in final_result["fan_trace"] if name == "gate2"
+    }
+    assert gate2_ids == clustering_ids
+
+
+def test_kill_while_parked_at_gate2_does_not_replay_or_resume_sibling_branches(
+    postgres_url, monkeypatch
+):
+    """Scenario 3 (PR #29 review note): kill while one of N branches is
+    parked at the real Gate 2 `interrupt()`.
+
+    Extends the already-merged
+    `test_gate2_blocks_each_fanned_branch_independently_via_real_send` with a
+    restart in between the two branches' resumes: since `PostgresSaver`
+    checkpoints per-thread (not per-branch), resuming the first branch's
+    interrupt on a freshly-built graph/checkpointer object must not replay
+    or force-resume the still-pending sibling.
+    """
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    candidates = [
+        {"label": "eu ai act", "article_count": 12},
+        {"label": "us executive order", "article_count": 8},
+    ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+
+    config = {"configurable": {"thread_id": "kill-at-gate2-test"}}
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "kill-at-gate2-run",
+        "subtopics": [],
+        "approved": True,
+    }
+
+    graph = build_graph(database_url=postgres_url)
+    graph.invoke(initial_state, config=config)
+    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
+    interrupts = result["__interrupt__"]
+    assert len(interrupts) == len(candidates)
+    first, second = interrupts
+    del graph  # simulate the process dying with both branches parked at gate2
+
+    restarted_graph = build_graph(database_url=postgres_url)
+    restarted_state = restarted_graph.get_state(config)
+    assert restarted_state.next == ("gate2", "gate2")
+    pending_ids = {t.interrupts[0].id for t in restarted_state.tasks if t.interrupts}
+    assert pending_ids == {first.id, second.id}
+
+    partial_result = restarted_graph.invoke(
+        Command(resume={first.id: {"action": "continue"}}), config=config
+    )
+    assert restarted_graph.get_state(config).next == ("gate2",)
+    gate2_trace = [entry for entry in partial_result["fan_trace"] if entry[0] == "gate2"]
+    assert len(gate2_trace) == 1
+
+    del restarted_graph  # kill again, second branch still pending
+    second_restart = build_graph(database_url=postgres_url)
+    still_pending = second_restart.get_state(config).tasks
+    assert any(t.interrupts and t.interrupts[0].id == second.id for t in still_pending)
+
+    final_result = second_restart.invoke(
+        Command(resume={second.id: {"action": "continue"}}), config=config
+    )
+    assert second_restart.get_state(config).next == ()
+    gate2_trace_final = [entry for entry in final_result["fan_trace"] if entry[0] == "gate2"]
+    subtopic_ids = {entry[1] for entry in gate2_trace_final}
+    assert len(subtopic_ids) == len(candidates)

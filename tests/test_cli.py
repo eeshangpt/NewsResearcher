@@ -1,12 +1,17 @@
 from unittest.mock import patch
 
 import pytest
+from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.messages import AIMessage
+from langchain_core.outputs import ChatGeneration, ChatResult
+from langchain_core.runnables import RunnableLambda
 from mlflow.tracking import MlflowClient
 from testcontainers.postgres import PostgresContainer
 from typer.testing import CliRunner
 
 from newsresearch.agents.sourcing_agent import ScoredArticle
 from newsresearch.cli import app
+from newsresearch.llm.schemas import SubtopicCandidateList
 from newsresearch.observability.mlflow_setup import EXPERIMENT_NAME
 from newsresearch.persistence.db import init_db
 from newsresearch.sourcing.gdelt import GDELTError
@@ -19,6 +24,36 @@ from newsresearch.sourcing.gdelt import GDELTError
 # trace delivery is verified manually against the live stack per Task 0.7.4.
 
 runner = CliRunner()
+
+
+class _FakeSubtopicChatModel(BaseChatModel):
+    """Real `BaseChatModel` stand-in for `run`'s now-real `subtopic` node
+    (Story 2.2 production wiring) -- fires genuine `on_chat_model_start`/
+    `on_llm_end` callbacks (same usage-metadata shape/values Task 0.7.4's
+    original stub used) so `test_run_writes_a_fully_populated_run_costs_row`
+    keeps proving the cost-callback plumbing end-to-end, while
+    `with_structured_output` short-circuits to a fixed candidate list so
+    `propose_candidates` doesn't need a real `OPENAI_API_KEY`.
+    """
+
+    model_name: str = "stub-subtopic-model"
+
+    @property
+    def _llm_type(self) -> str:
+        return "stub-subtopic-chat-model"
+
+    def _generate(self, messages, stop=None, run_manager=None, **kwargs) -> ChatResult:
+        message = AIMessage(
+            content="acknowledged",
+            usage_metadata={"input_tokens": 12, "output_tokens": 4, "total_tokens": 16},
+        )
+        return ChatResult(
+            generations=[ChatGeneration(message=message)],
+            llm_output={"model_name": self.model_name},
+        )
+
+    def with_structured_output(self, schema, **kwargs):
+        return self | RunnableLambda(lambda _: SubtopicCandidateList(candidates=[]))
 
 
 @pytest.fixture(scope="module")
@@ -35,6 +70,23 @@ def cli_env(tmp_path, monkeypatch, postgres_url):
     monkeypatch.setenv("LANGFUSE_SECRET_KEY", "sk-test-dummy")
     monkeypatch.setenv("LANGFUSE_HOST", "http://localhost:9")
     monkeypatch.setenv("MLFLOW_TRACKING_URI", str(tmp_path / "mlruns"))
+
+    # `run`'s `subtopic` node is now real (Story 2.2 production wiring): mock
+    # its LLM/sourcing/reconciliation calls so the CLI e2e tests stay
+    # hermetic (no OpenAI key, no live GDELT/RSS), same convention
+    # `test_graph_build.py`'s `_stub_subtopic_pipeline` already established.
+    monkeypatch.setattr(
+        "newsresearch.agents.subtopic_agent.get_chat_model", lambda stage: _FakeSubtopicChatModel()
+    )
+    monkeypatch.setattr("newsresearch.graph.build.broad_topic_fetch", lambda *a, **kw: [])
+    monkeypatch.setattr(
+        "newsresearch.graph.build.reconcile_subtopics",
+        lambda *a, **kw: {"reconciled": [], "total_articles": 0},
+    )
+    monkeypatch.setattr(
+        "newsresearch.graph.build.rank_and_cap_subtopics",
+        lambda *a, **kw: {"candidates": [], "excess": []},
+    )
     return postgres_url
 
 

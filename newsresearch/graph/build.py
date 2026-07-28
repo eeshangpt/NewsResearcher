@@ -33,6 +33,13 @@ no-op-topology test), `fan_out` falls back to a single ordinary edge into
 `sourcing`, so the pre-Phase-2 no-candidates path is unaffected -- Gate 1
 itself still interrupts unconditionally either way (it has no such
 fallback), so every `graph.invoke()` now pauses there first regardless.
+`Subtopic` is also real now (Story 2.2 production-wiring follow-up):
+`_make_subtopic_node` composes `agents/subtopic_agent.py`'s already-merged
+`propose_candidates` -> `broad_topic_fetch` -> `reconcile_subtopics` ->
+`rank_and_cap_subtopics` pipeline, unconditionally, once per invocation,
+upstream of `gate1`/fan-out -- not per fanned branch. It's the sole writer
+of `candidates`/`excess`/`articles` now; the invoke-time seed those three
+fields used as a stopgap before this node existed is gone from `cli.py`.
 Compiled
 with `PostgresSaver` (not an in-memory checkpointer) so gate durability
 across process restarts — the entire point of using Postgres here — actually
@@ -43,10 +50,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from langchain_core.callbacks import CallbackManagerForLLMRun
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.messages import AIMessage, BaseMessage
-from langchain_core.outputs import ChatGeneration, ChatResult
 from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.postgres import PostgresSaver
 from langgraph.graph import END, START, StateGraph
@@ -55,6 +58,12 @@ from langgraph.types import Send
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
+from newsresearch.agents.subtopic_agent import (
+    broad_topic_fetch,
+    propose_candidates,
+    rank_and_cap_subtopics,
+    reconcile_subtopics,
+)
 from newsresearch.agents.topical_clustering_agent import topical_clustering_agent
 from newsresearch.config import Settings
 from newsresearch.graph.nodes.gate1 import make_gate1_node, make_real_reconcile
@@ -294,53 +303,45 @@ def _make_relay_router(source_name: str, target_name: str, *, carry_field: str |
     return _router
 
 
-class _StubSubtopicChatModel(BaseChatModel):
-    """Deterministic stand-in chat model for the `subtopic` node (Task 0.7.4).
+def _make_subtopic_node(
+    lookback_days: int, *, pool: ConnectionPool | None = None, settings: Settings | None = None
+):
+    """Real `subtopic` node (Story 2.2 production-wiring follow-up).
 
-    The real Subtopic Agent (prompt, schema, `get_chat_model("subtopic")`)
-    lands in Phase 2 Task 2.2.1. Until then this is the minimal chat-model
-    call needed so the observability stack attached at the top-level
-    `graph.invoke()` call (cost callback, Langfuse, MLflow) has an actual LLM
-    invocation to capture end-to-end -- a real `ChatOpenAI` call would
-    require a live `OPENAI_API_KEY`, which Phase 0 must not depend on.
-    """
+    Runs the full Task 2.2 pipeline unconditionally, once per graph
+    invocation, upstream of `gate1`/`fan_out` (not per fanned branch):
+    `propose_candidates` (LLM-driven candidate proposal), `broad_topic_fetch`
+    (Phase 1's `sourcing_agent` reused for a broad, topic-scoped article
+    set), `reconcile_subtopics` (embed+cluster the broad set, merge/split/
+    drop candidates against it), then `rank_and_cap_subtopics`
+    (distinctiveness ranking + `Settings.pipeline.max_subtopics` cap) --
+    all four already-merged Story 2.2 functions (`agents/subtopic_agent.py`),
+    just composed here instead of stubbed.
 
-    model_name: str = "stub-subtopic-model"
+    Writes `candidates`/`excess` for `gate1` to present, and `articles` --
+    this node's own `broad_topic_fetch` output is now the sole writer of
+    `GraphState.articles` (see `graph/state.py`'s field comment); the
+    invoke-time seed `cli.py`/some tests used as a Gate-1-production-wiring
+    stopgap before a real subtopic node existed is dead now and has been
+    removed there.
 
-    @property
-    def _llm_type(self) -> str:
-        return "stub-subtopic-chat-model"
-
-    def _generate(
-        self,
-        messages: list[BaseMessage],
-        stop: list[str] | None = None,
-        run_manager: CallbackManagerForLLMRun | None = None,
-        **kwargs: Any,
-    ) -> ChatResult:
-        message = AIMessage(
-            content="acknowledged",
-            usage_metadata={"input_tokens": 12, "output_tokens": 4, "total_tokens": 16},
-        )
-        return ChatResult(
-            generations=[ChatGeneration(message=message)],
-            llm_output={"model_name": self.model_name},
-        )
-
-
-def _make_subtopic_stub_node():
-    """The `subtopic` node's Phase 0 stand-in.
-
-    Still a no-op with respect to graph state -- the real subtopic-proposal
-    logic isn't built yet -- but exercises the observability path with one
-    stub chat-model call, per Task 0.7.4. Accepts `config` so the callbacks/
-    metadata attached at the top-level `graph.invoke()` call propagate to
-    this nested LLM call, the same pattern `cost_callback.py` documents.
+    Forwards the ambient `config` into `propose_candidates`'s own LLM call
+    (`merge_configs`, not a fresh config) per the repo's config-propagation
+    convention, so cost/Langfuse tracing still attach.
     """
 
     def _node(state: GraphState, config: RunnableConfig) -> dict[str, Any]:
-        _StubSubtopicChatModel().invoke(f"Acknowledge topic: {state['topic']}", config=config)
-        return {}
+        topic = state["topic"]
+        run_id = state.get("run_id", "dev")
+        candidate_list = propose_candidates(
+            topic, run_id=run_id, settings=settings, config=config
+        )
+        articles = broad_topic_fetch(topic, lookback_days, pool=pool, settings=settings)
+        reconciled = reconcile_subtopics(articles, candidate_list.candidates, settings=settings)
+        capped = rank_and_cap_subtopics(
+            reconciled["reconciled"], reconciled["total_articles"], settings=settings
+        )
+        return {"candidates": capped["candidates"], "excess": capped["excess"], "articles": articles}
 
     _node.__name__ = "subtopic_node"
     return _node
@@ -359,7 +360,7 @@ def build_state_graph(
     builder = StateGraph(GraphState)
     for name in NODE_ORDER:
         if name == "subtopic":
-            node_fn = _make_subtopic_stub_node()
+            node_fn = _make_subtopic_node(lookback_days, pool=pool, settings=settings)
         elif name == "gate1":
             node_fn = _make_gate1_node(settings=settings)
         elif name == "clustering":

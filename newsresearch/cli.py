@@ -87,16 +87,13 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
         "run_id": run_id,
         "subtopics": [],
         "approved": False,
-        "candidates": [],
-        "excess": [],
-        "articles": [],
     }
     config = {
         "configurable": {"thread_id": run_id},
         "callbacks": [cost_callback, langfuse_callback],
-        # Phase 0 only makes one stub LLM call (the `subtopic` node, Task
-        # 0.7.4) so a single "stage" for the whole invocation is accurate;
-        # per-node stage tagging is a Phase 1+ concern once real agents exist.
+        # The real `subtopic` node (Story 2.2 production wiring) makes the
+        # only LLM call before Gate 1; per-node stage tagging beyond that is
+        # a Phase 2+ concern for later nodes as they land.
         "metadata": {**trace_metadata(run_id), "stage": "subtopic"},
     }
 
@@ -106,12 +103,11 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
         settings=settings,
     ):
         result = graph.invoke(initial_state, config=config)
-        # Gate 1 is now real (Task 2.6.2 follow-up): it interrupts
-        # unconditionally, even with no real Subtopic Agent candidates yet
-        # (empty `candidates`/`excess` above). Auto-approving here keeps this
-        # throwaway-quality dev harness's "no-op graph end-to-end" contract --
-        # an interactive approve/edit prompt is Story 0.8 CLI work, not this
-        # task's scope.
+        # Gate 1 interrupts unconditionally after the real `subtopic` node
+        # populates `candidates`/`excess` for real. Auto-approving here keeps
+        # this throwaway-quality dev harness's "no-op graph end-to-end"
+        # contract -- an interactive approve/edit prompt is Story 0.8 CLI
+        # work, not this task's scope.
         if "__interrupt__" in result:
             result = graph.invoke(Command(resume={"action": "approve"}), config=config)
 

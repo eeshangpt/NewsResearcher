@@ -1,13 +1,17 @@
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import MagicMock
 
 import numpy as np
 import pytest
 from langgraph.types import Command
 from testcontainers.postgres import PostgresContainer
 
+from newsresearch.agents.sourcing_agent import ScoredArticle
 from newsresearch.graph.build import NODE_ORDER, build_graph
 from newsresearch.graph.state import GraphState, SubtopicState
+from newsresearch.llm.schemas import SubtopicCandidate, SubtopicCandidateList
 
 # Hermetic `testcontainers[postgres]` per Story 0.4's own precedent, so this
 # test doesn't depend on the dev `docker compose up -d` stack being up (that
@@ -20,6 +24,33 @@ FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 def postgres_url():
     with PostgresContainer("postgres:16-alpine") as postgres:
         yield postgres.get_connection_url().replace("postgresql+psycopg2", "postgresql")
+
+
+def _stub_subtopic_pipeline(monkeypatch, *, candidates, excess=None, articles=None):
+    """Stub the real `subtopic` node's four `agents/subtopic_agent.py` calls
+    (as imported into `graph/build.py`) so tests can drive `build_graph()`'s
+    real subtopic -> gate1 sequence with deterministic `candidates`/`excess`/
+    `articles`, without `propose_candidates`/`broad_topic_fetch` hitting real
+    OpenAI/GDELT/RSS. `rank_and_cap_subtopics` is stubbed to directly return
+    the desired final `candidates`/`excess` -- `propose_candidates`/
+    `reconcile_subtopics`'s stubbed return values are only plumbing to keep
+    `_make_subtopic_node`'s call chain from erroring, their content is unused.
+    """
+    monkeypatch.setattr(
+        "newsresearch.graph.build.propose_candidates",
+        lambda *a, **kw: SimpleNamespace(candidates=[]),
+    )
+    monkeypatch.setattr(
+        "newsresearch.graph.build.broad_topic_fetch", lambda *a, **kw: articles or []
+    )
+    monkeypatch.setattr(
+        "newsresearch.graph.build.reconcile_subtopics",
+        lambda *a, **kw: {"reconciled": [], "total_articles": 0},
+    )
+    monkeypatch.setattr(
+        "newsresearch.graph.build.rank_and_cap_subtopics",
+        lambda *a, **kw: {"candidates": candidates, "excess": excess or []},
+    )
 
 
 def test_graph_state_schemas_construct_with_all_named_fields():
@@ -51,7 +82,8 @@ def test_graph_state_schemas_construct_with_all_named_fields():
     assert sub_state["cluster_report"]["cluster_sizes"] == [5, 3]
 
 
-def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_url):
+def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_url, monkeypatch):
+    _stub_subtopic_pipeline(monkeypatch, candidates=[], excess=[], articles=[])
     graph = build_graph(database_url=postgres_url)
 
     initial_state: GraphState = {
@@ -60,8 +92,6 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
         "run_id": "test-run",
         "subtopics": [],
         "approved": False,
-        "candidates": [],
-        "excess": [],
     }
     config = {"configurable": {"thread_id": "test"}}
 
@@ -117,21 +147,21 @@ def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url
     monkeypatch.setattr(
         "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
     )
-    graph = build_graph(database_url=postgres_url)
 
     candidates = [
         {"label": "eu ai act", "article_count": 12},
         {"label": "us executive order", "article_count": 8},
         {"label": "china ai regulation", "article_count": 5},
     ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+    graph = build_graph(database_url=postgres_url)
+
     initial_state: GraphState = {
         "topic": "AI regulation",
         "canonical_topic": "ai regulation",
         "run_id": "fanout-run",
         "subtopics": [],
         "approved": True,
-        "candidates": candidates,
-        "excess": [],
     }
     config = {"configurable": {"thread_id": "fanout-test"}}
 
@@ -185,20 +215,19 @@ def test_clustering_runs_exactly_once_per_branch_through_real_build_graph_gate2(
         "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
     )
 
-    graph = build_graph(database_url=postgres_url)
-
     candidates = [
         {"label": "eu ai act", "article_count": 12},
         {"label": "us executive order", "article_count": 8},
     ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+    graph = build_graph(database_url=postgres_url)
+
     initial_state: GraphState = {
         "topic": "AI regulation",
         "canonical_topic": "ai regulation",
         "run_id": "gate2-real-run",
         "subtopics": [],
         "approved": True,
-        "candidates": candidates,
-        "excess": [],
     }
     config = {"configurable": {"thread_id": "gate2-real-test"}}
 
@@ -240,20 +269,19 @@ def test_gate2_blocks_each_fanned_branch_independently_via_real_send(postgres_ur
         "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
     )
 
-    graph = build_graph(database_url=postgres_url)
-
     candidates = [
         {"label": "eu ai act", "article_count": 12},
         {"label": "us executive order", "article_count": 8},
     ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates)
+    graph = build_graph(database_url=postgres_url)
+
     initial_state: GraphState = {
         "topic": "AI regulation",
         "canonical_topic": "ai regulation",
         "run_id": "gate2-independent-run",
         "subtopics": [],
         "approved": True,
-        "candidates": candidates,
-        "excess": [],
     }
     config = {"configurable": {"thread_id": "gate2-independent-test"}}
 
@@ -305,21 +333,20 @@ def test_gate1_approve_resume_proceeds_through_real_build_graph(postgres_url, mo
     monkeypatch.setattr(
         "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
     )
-    graph = build_graph(database_url=postgres_url)
 
     candidates = [
         {"label": "eu ai act", "article_count": 12},
         {"label": "us executive order", "article_count": 8},
     ]
+    _stub_subtopic_pipeline(monkeypatch, candidates=candidates, articles=[])
+    graph = build_graph(database_url=postgres_url)
+
     initial_state: GraphState = {
         "topic": "AI regulation",
         "canonical_topic": "ai regulation",
         "run_id": "gate1-real-approve-run",
         "subtopics": [],
         "approved": False,
-        "candidates": candidates,
-        "excess": [],
-        "articles": [],
     }
     config = {"configurable": {"thread_id": "gate1-real-approve-test"}}
 
@@ -374,6 +401,30 @@ def test_gate1_edit_resume_runs_real_reconciliation_through_real_build_graph(
     )
 
     articles = [{"title": s} for s in clustering["sentences"]]
+    # `_stub_subtopic_pipeline`'s `fake_embed` mock above (monkeypatched onto
+    # `subtopic_agent.embed` directly) makes the *real* `reconcile_subtopics`
+    # safe to call, so only `propose_candidates`/`broad_topic_fetch` need
+    # stubbing here -- the subtopic node's own initial candidates/articles
+    # still land deterministically, matching this test's original
+    # invoke-time seed.
+    monkeypatch.setattr(
+        "newsresearch.graph.build.propose_candidates",
+        lambda *a, **kw: SimpleNamespace(candidates=[]),
+    )
+    monkeypatch.setattr("newsresearch.graph.build.broad_topic_fetch", lambda *a, **kw: articles)
+    monkeypatch.setattr(
+        "newsresearch.graph.build.reconcile_subtopics",
+        lambda *a, **kw: {"reconciled": [], "total_articles": 0},
+    )
+    monkeypatch.setattr(
+        "newsresearch.graph.build.rank_and_cap_subtopics",
+        lambda *a, **kw: {
+            "candidates": [
+                {"label": label, "article_count": 0} for label in merge_fixture["candidate_labels"]
+            ],
+            "excess": [],
+        },
+    )
     graph = build_graph(database_url=postgres_url)
 
     initial_state: GraphState = {
@@ -382,9 +433,6 @@ def test_gate1_edit_resume_runs_real_reconciliation_through_real_build_graph(
         "run_id": "gate1-real-edit-run",
         "subtopics": [],
         "approved": False,
-        "candidates": [{"label": label, "article_count": 0} for label in merge_fixture["candidate_labels"]],
-        "excess": [],
-        "articles": articles,
     }
     config = {"configurable": {"thread_id": "gate1-real-edit-test"}}
 
@@ -407,6 +455,97 @@ def test_gate1_edit_resume_runs_real_reconciliation_through_real_build_graph(
         "European Union AI Act compliance crackdown",
     }
     for c in result["candidates"]:
+        assert c["article_count"] > 0
+        assert "distinctiveness_score" in c
+        assert "centroid" not in c
+
+
+def test_subtopic_node_populates_candidates_excess_articles_through_real_build_graph(
+    postgres_url, monkeypatch
+):
+    """Story 2.2 production-wiring follow-up: the real `subtopic` node
+    (`_make_subtopic_node`) composes `propose_candidates` ->
+    `broad_topic_fetch` -> `reconcile_subtopics` -> `rank_and_cap_subtopics`
+    for real, unconditionally, upstream of Gate 1 -- proven through the
+    actual compiled `build_graph()`, mocking only the external boundaries
+    (`get_chat_model`, `sourcing_agent`, `embed`) the same way
+    `test_subtopic_agent.py`/`test_gate1_edit_resume_runs_real_reconciliation_
+    through_real_build_graph` already do, not the whole node.
+    """
+    clustering = json.loads((FIXTURES_DIR / "clustering_synthetic_topics.json").read_text())
+    merge_fixture = json.loads((FIXTURES_DIR / "reconciliation_merge.json").read_text())
+
+    article_vectors = np.array(clustering["embeddings"])
+    candidate_vectors = np.array(merge_fixture["candidate_embeddings"])
+    articles = [{"title": s} for s in clustering["sentences"]]
+    candidate_list = SubtopicCandidateList(
+        candidates=[
+            SubtopicCandidate(label=label, rationale="rationale")
+            for label in merge_fixture["candidate_labels"]
+        ]
+    )
+
+    def fake_embed(texts):
+        if len(texts) == len(article_vectors):
+            return article_vectors
+        if len(texts) == len(candidate_vectors):
+            return candidate_vectors
+        raise AssertionError(f"unexpected embed() call with {len(texts)} texts")
+
+    mock_chat_model = MagicMock()
+    mock_chat_model.with_structured_output.return_value = lambda *a, **kw: candidate_list
+    monkeypatch.setattr(
+        "newsresearch.agents.subtopic_agent.get_chat_model", lambda stage: mock_chat_model
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.subtopic_agent.get_langfuse_callback_handler",
+        lambda settings: MagicMock(),
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.subtopic_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [
+            ScoredArticle(article=a, reputation_score=1.0, reputation_tier="major")
+            for a in articles
+        ],
+    )
+    monkeypatch.setattr("newsresearch.agents.subtopic_agent.embed", fake_embed)
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    graph = build_graph(database_url=postgres_url)
+    initial_state: GraphState = {
+        "topic": "AI regulation",
+        "canonical_topic": "ai regulation",
+        "run_id": "subtopic-real-run",
+        "subtopics": [],
+        "approved": False,
+    }
+    config = {"configurable": {"thread_id": "subtopic-real-test"}}
+
+    interrupted = graph.invoke(initial_state, config=config)
+    assert "__interrupt__" in interrupted
+    assert graph.get_state(config).next == ("gate1",)
+
+    state = graph.get_state(config).values
+    assert state["articles"] == articles
+
+    # Real reconciliation collapsed the fixture's 2 near-duplicate EU AI Act
+    # candidates into 1 merged subtopic -- 3 subtopics total (down from 4
+    # candidates), never the raw, unreconciled candidate list a passthrough
+    # `subtopic` node would have left behind.
+    all_subtopics = state["candidates"] + state["excess"]
+    assert len(all_subtopics) == 3
+    merged = next(c for c in all_subtopics if c["action"] == "merge")
+    assert set(merged["merged_from"]) == {
+        "EU AI Act enforcement actions",
+        "European Union AI Act compliance crackdown",
+    }
+    for c in all_subtopics:
         assert c["article_count"] > 0
         assert "distinctiveness_score" in c
         assert "centroid" not in c

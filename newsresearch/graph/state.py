@@ -14,16 +14,13 @@ from typing import Annotated, TypedDict
 class GraphState(TypedDict):
     """Top-level pipeline state.
 
-    `candidates`/`excess` are Phase 2 Gate 1 additions (Task 2.3.1), stubbed
-    for now: Task 2.2.4 (rank/cap/excess-retention) doesn't exist yet, so
-    these are populated with a stand-in shape until then. Each dict is
-    shaped `{"label": str, "article_count": int}`, matching the TRD's
-    description of the Subtopic Agent's real output ("label + supporting
-    article count + distinctiveness score", TRD sec. "Subtopic Agent")
-    minus the distinctiveness score, which Task 2.2.4 will add later as a
-    field-population change, not a payload-shape rework. `candidates` is
-    the ranked/capped list; `excess` is the "also detected" set retained
-    separately per the same task.
+    `candidates`/`excess` are Phase 2 Gate 1 additions (Task 2.3.1), now
+    populated for real by the `subtopic` node
+    (`graph/build.py::_make_subtopic_node`, Story 2.2 production wiring):
+    each is `agents/subtopic_agent.py::rank_and_cap_subtopics`'s real output
+    shape (label + article count + distinctiveness score, per TRD's Subtopic
+    Agent description), not a stand-in. `candidates` is the ranked/capped
+    list; `excess` is the "also detected" set retained separately.
     """
 
     topic: str
@@ -38,9 +35,10 @@ class GraphState(TypedDict):
     # broad-fetch article set `candidates`/`excess` were originally proposed
     # against (`agents/subtopic_agent.py::broad_topic_fetch`), threaded
     # through so a real Gate 1 edit-resume can re-run `make_real_reconcile`
-    # against it. The `subtopic` node stays a Phase 0 stub in `graph/build.py`
-    # (real Subtopic Agent wiring is a separate follow-up), so this is
-    # populated directly on the initial `graph.invoke()` state for now.
+    # against it. The real `subtopic` node (Story 2.2 production wiring,
+    # `graph/build.py::_make_subtopic_node`) is now this field's sole
+    # writer -- its own `broad_topic_fetch` call's output -- replacing the
+    # invoke-time seed a stub `subtopic` node used to require.
     articles: list[dict]
 
     # Task 2.4.1: accumulator every `Send`-fanned branch writes `(node_name,

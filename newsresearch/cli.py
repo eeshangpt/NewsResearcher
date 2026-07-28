@@ -18,6 +18,7 @@ import uuid
 from datetime import datetime, timezone
 
 import typer
+from langgraph.types import Command
 from psycopg_pool import ConnectionPool
 
 from newsresearch.agents.sourcing_agent import sourcing_agent
@@ -86,6 +87,9 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
         "run_id": run_id,
         "subtopics": [],
         "approved": False,
+        "candidates": [],
+        "excess": [],
+        "articles": [],
     }
     config = {
         "configurable": {"thread_id": run_id},
@@ -102,6 +106,14 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
         settings=settings,
     ):
         result = graph.invoke(initial_state, config=config)
+        # Gate 1 is now real (Task 2.6.2 follow-up): it interrupts
+        # unconditionally, even with no real Subtopic Agent candidates yet
+        # (empty `candidates`/`excess` above). Auto-approving here keeps this
+        # throwaway-quality dev harness's "no-op graph end-to-end" contract --
+        # an interactive approve/edit prompt is Story 0.8 CLI work, not this
+        # task's scope.
+        if "__interrupt__" in result:
+            result = graph.invoke(Command(resume={"action": "approve"}), config=config)
 
     typer.echo(f"run_id={run_id} topic={result['topic']!r} completed.")
 

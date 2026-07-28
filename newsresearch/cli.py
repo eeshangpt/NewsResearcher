@@ -64,6 +64,75 @@ def _record_run(pool: ConnectionPool, run_id: str) -> None:
         )
 
 
+def _render_gate1(value: dict) -> None:
+    typer.echo("\n=== Gate 1: Subtopic Candidates ===")
+    for i, candidate in enumerate(value.get("candidates", [])):
+        typer.echo(f"  [{i}] {candidate['label']} (articles={candidate.get('article_count', '?')})")
+    excess = value.get("excess") or []
+    if excess:
+        typer.echo("--- Also detected (excess) ---")
+        for candidate in excess:
+            typer.echo(f"  - {candidate['label']}")
+
+
+def _prompt_gate1(value: dict) -> dict:
+    """Render Gate 1's candidate/excess payload and prompt for approve/edit.
+
+    Edit keeps this minimal (throwaway dev UX per `CLAUDE.md`): pick which
+    candidates to keep by index, dropping the rest. `gate1_node`'s `edit`
+    action only needs each surviving candidate's `label` to re-trigger real
+    reconciliation (`make_real_reconcile`), so passing the kept candidate
+    dicts through unchanged is enough.
+    """
+    candidates = value.get("candidates", [])
+    _render_gate1(value)
+    action = typer.prompt("Approve as-is or edit? [a/e]", default="a").strip().lower()
+    if not action.startswith("e"):
+        return {"action": "approve"}
+
+    keep = typer.prompt(
+        "Comma-separated indices to KEEP (blank = keep all)", default=""
+    ).strip()
+    if keep:
+        keep_indices = {int(i) for i in keep.split(",")}
+        edited = [c for i, c in enumerate(candidates) if i in keep_indices]
+    else:
+        edited = candidates
+    return {"action": "edit", "candidates": edited}
+
+
+def _prompt_gate2(cluster_report: dict) -> dict:
+    """Render a per-subtopic Gate 2 cluster report and prompt to continue."""
+    typer.echo("\n=== Gate 2: Cluster Report ===")
+    typer.echo(f"cluster_sizes={cluster_report.get('cluster_sizes')}")
+    typer.echo(f"source_spread={cluster_report.get('source_spread')}")
+    for headline in cluster_report.get("sample_headlines", []):
+        typer.echo(f"  - {headline}")
+    typer.prompt("Press enter to continue", default="", show_default=False)
+    return {"action": "continue"}
+
+
+def _resume_payloads(interrupts) -> dict:
+    """Build one resume payload per pending interrupt, keyed by interrupt id.
+
+    Works uniformly for Gate 1 (a single pending interrupt) and Gate 2's N
+    concurrent per-subtopic interrupts (Task 2.4.1's fan-out): LangGraph
+    only requires interrupt-id keys once more than one interrupt is pending
+    (`langgraph.pregel._loop`), so a single-entry id-keyed map resumes Gate 1
+    just as well as an unkeyed `{"action": ...}` would.
+    """
+    payloads = {}
+    for intr in interrupts:
+        value = intr.value
+        if "candidates" in value:
+            payloads[intr.id] = _prompt_gate1(value)
+        elif "cluster_report" in value:
+            payloads[intr.id] = _prompt_gate2(value["cluster_report"])
+        else:
+            raise ValueError(f"unrecognized interrupt payload: {value!r}")
+    return payloads
+
+
 @app.command()
 def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> None:
     """Run the Phase-0 no-op graph end-to-end for TOPIC, with observability attached."""
@@ -104,12 +173,16 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
     ):
         result = graph.invoke(initial_state, config=config)
         # Gate 1 interrupts unconditionally after the real `subtopic` node
-        # populates `candidates`/`excess` for real. Auto-approving here keeps
-        # this throwaway-quality dev harness's "no-op graph end-to-end"
-        # contract -- an interactive approve/edit prompt is Story 0.8 CLI
-        # work, not this task's scope.
-        if "__interrupt__" in result:
-            result = graph.invoke(Command(resume={"action": "approve"}), config=config)
+        # populates `candidates`/`excess`; approving/editing there fans out
+        # into one independent Gate 2 interrupt per approved subtopic
+        # (Task 2.4.1). Loop until no interrupts remain -- each pass renders
+        # every currently-pending interrupt (Gate 1's single one, then Gate
+        # 2's N per-subtopic ones) and resumes them all in one
+        # `Command(resume=...)` call, per-branch.
+        while "__interrupt__" in result:
+            result = graph.invoke(
+                Command(resume=_resume_payloads(result["__interrupt__"])), config=config
+            )
 
     typer.echo(f"run_id={run_id} topic={result['topic']!r} completed.")
 

@@ -1,5 +1,8 @@
+import json
+from pathlib import Path
 from unittest.mock import patch
 
+import numpy as np
 import pytest
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import AIMessage
@@ -24,6 +27,7 @@ from newsresearch.sourcing.gdelt import GDELTError
 # trace delivery is verified manually against the live stack per Task 0.7.4.
 
 runner = CliRunner()
+FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
 
 class _FakeSubtopicChatModel(BaseChatModel):
@@ -90,16 +94,21 @@ def cli_env(tmp_path, monkeypatch, postgres_url):
     return postgres_url
 
 
+# `cli_env`'s default subtopic-pipeline stubs produce an empty `candidates`
+# list, so Gate 1's own render/prompt still fires (it interrupts
+# unconditionally) but `fan_out` falls back to its no-candidates path --
+# `fan_out_router` -- with no Gate 2 interrupts to resume. One "a\n" (approve)
+# is enough stdin for these baseline plumbing tests.
 def test_run_invokes_the_graph_end_to_end_and_exits_0(cli_env):
-    result = runner.invoke(app, ["run", "test topic"])
+    result = runner.invoke(app, ["run", "test topic"], input="a\n")
 
-    assert result.exit_code == 0
+    assert result.exit_code == 0, result.output
     assert "completed" in result.stdout
 
 
 def test_run_writes_a_fully_populated_run_costs_row(cli_env):
-    result = runner.invoke(app, ["run", "test topic"])
-    assert result.exit_code == 0
+    result = runner.invoke(app, ["run", "test topic"], input="a\n")
+    assert result.exit_code == 0, result.output
     run_id = result.stdout.split("run_id=")[1].split(" ")[0]
 
     pool = init_db(cli_env)
@@ -119,8 +128,8 @@ def test_run_writes_a_fully_populated_run_costs_row(cli_env):
 
 
 def test_run_produces_exactly_one_mlflow_run_tagged_with_run_id(cli_env):
-    result = runner.invoke(app, ["run", "test topic"])
-    assert result.exit_code == 0
+    result = runner.invoke(app, ["run", "test topic"], input="a\n")
+    assert result.exit_code == 0, result.output
     run_id = result.stdout.split("run_id=")[1].split(" ")[0]
 
     # `mlflow_run` (invoked inside the CLI command) already called
@@ -143,6 +152,95 @@ def test_run_requires_database_url(tmp_path, monkeypatch):
     result = runner.invoke(app, ["run", "test topic"])
 
     assert result.exit_code != 0
+
+
+# Task 2.7.1 -- `run`'s Gate 1/Gate 2 stdin harness (replaces PR #35's
+# unconditional Gate 1 auto-approve stopgap). Mocking only external
+# boundaries (`topical_clustering_agent`'s `sourcing_agent`/`embed`), same
+# convention `test_graph_build.py`'s fan-out tests already established.
+def test_run_approve_path_renders_gate1_then_each_gate2_report_and_completes(cli_env, monkeypatch):
+    monkeypatch.setattr(
+        "newsresearch.graph.build.rank_and_cap_subtopics",
+        lambda *a, **kw: {
+            "candidates": [
+                {"label": "eu ai act", "article_count": 12},
+                {"label": "us executive order", "article_count": 8},
+            ],
+            "excess": [{"label": "china ai regulation", "article_count": 3}],
+        },
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    # Gate 1: approve ("a"). Two approved candidates fan out into two
+    # independent Gate 2 interrupts, each resumed by a blank "continue".
+    result = runner.invoke(app, ["run", "test topic"], input="a\n\n\n")
+
+    assert result.exit_code == 0, result.output
+    assert "Gate 1: Subtopic Candidates" in result.output
+    assert "eu ai act" in result.output
+    assert "us executive order" in result.output
+    assert "china ai regulation" in result.output  # excess rendered too
+    assert result.output.count("Gate 2: Cluster Report") == 2
+    assert "completed" in result.output
+
+
+def test_run_edit_path_reruns_real_reconciliation_with_a_visibly_different_candidate_set(
+    cli_env, monkeypatch
+):
+    clustering = json.loads((FIXTURES_DIR / "clustering_synthetic_topics.json").read_text())
+    merge_fixture = json.loads((FIXTURES_DIR / "reconciliation_merge.json").read_text())
+
+    article_vectors = np.array(clustering["embeddings"])
+    # Drop the last of 4 raw candidates via the CLI edit prompt; real
+    # reconciliation then merges two of the surviving three near-duplicate
+    # EU AI Act candidates into one, so exactly 2 land at Gate 2 -- proving
+    # the edit path re-triggers real reconciliation, not an identity
+    # pass-through of the edited list.
+    candidate_vectors = np.array(merge_fixture["candidate_embeddings"][:-1])
+
+    def fake_embed(texts):
+        if len(texts) == len(article_vectors):
+            return article_vectors
+        if len(texts) == len(candidate_vectors):
+            return candidate_vectors
+        raise AssertionError(f"unexpected embed() call with {len(texts)} texts")
+
+    monkeypatch.setattr("newsresearch.agents.subtopic_agent.embed", fake_embed)
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.sourcing_agent",
+        lambda keywords, lookback_days, **kwargs: [],
+    )
+    monkeypatch.setattr(
+        "newsresearch.agents.topical_clustering_agent.embed", lambda texts: np.empty((0, 2))
+    )
+
+    articles = [{"title": s} for s in clustering["sentences"]]
+    monkeypatch.setattr("newsresearch.graph.build.broad_topic_fetch", lambda *a, **kw: articles)
+    monkeypatch.setattr(
+        "newsresearch.graph.build.rank_and_cap_subtopics",
+        lambda *a, **kw: {
+            "candidates": [
+                {"label": label, "article_count": 0} for label in merge_fixture["candidate_labels"]
+            ],
+            "excess": [],
+        },
+    )
+
+    # Gate 1: edit ("e"), keep indices 0,1,2 -- drops the 4th raw candidate.
+    # Gate 2: two branches (post-merge), each resumed by a blank "continue".
+    result = runner.invoke(app, ["run", "test topic"], input="e\n0,1,2\n\n\n")
+
+    assert result.exit_code == 0, result.output
+    # Real reconciliation (not `stub_reconcile`'s identity pass-through): the
+    # 3 kept-by-index candidates merge down to 2 distinct subtopics before
+    # reaching Gate 2 -- an identity pass-through would have produced 3.
+    assert result.output.count("Gate 2: Cluster Report") == 2
 
 
 # Story 1.10 -- `dev sourcing-test` is a thin CLI wrapper over

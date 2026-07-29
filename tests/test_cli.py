@@ -243,6 +243,46 @@ def test_run_edit_path_reruns_real_reconciliation_with_a_visibly_different_candi
     assert result.output.count("Gate 2: Cluster Report") == 2
 
 
+# Task 2.8.3 -- `--thread-id` lets a killed/interrupted `run` be rejoined
+# instead of always minting a brand-new run (root cause of Task 2.8.2's
+# durability walkthrough failing at the CLI layer, though the underlying
+# `PostgresSaver` guarantee was already proven real by Task 2.3.2).
+def test_run_prints_run_id_before_the_first_gate_so_a_kill_still_has_something_to_resume(cli_env):
+    # Empty stdin starves Gate 1's prompt mid-render, aborting the process --
+    # simulating a Ctrl-C kill while parked at the gate. The `run_id` must
+    # already be on stdout by then (printed before `graph.invoke` is ever
+    # called), not just at completion.
+    result = runner.invoke(app, ["run", "test topic"], input="")
+
+    assert result.exit_code != 0
+    assert "run_id=run-" in result.output
+    assert "--thread-id=run-" in result.output
+
+
+def test_run_with_thread_id_resumes_a_killed_run_without_reseeding(cli_env):
+    started = runner.invoke(app, ["run", "test topic"], input="")
+    assert started.exit_code != 0
+    run_id = started.output.split("run_id=")[1].split(" ")[0]
+
+    resumed = runner.invoke(
+        app, ["run", "ignored topic", "--thread-id", run_id], input="a\n"
+    )
+
+    assert resumed.exit_code == 0, resumed.output
+    assert "(resuming)" in resumed.output
+    assert "Gate 1: Subtopic Candidates" in resumed.output
+    assert f"run_id={run_id} topic='test topic'" in resumed.output  # original topic, not reseeded
+    assert "completed" in resumed.output
+
+
+def test_run_with_unknown_thread_id_fails_readably_not_with_a_crash(cli_env):
+    result = runner.invoke(app, ["run", "test topic", "--thread-id", "run-does-not-exist"])
+
+    assert result.exit_code != 0
+    assert "No pending interrupt" in result.output
+    assert "Traceback" not in result.output
+
+
 # Story 1.10 -- `dev sourcing-test` is a thin CLI wrapper over
 # `agents/sourcing_agent.py` (already end-to-end verified against real
 # GDELT/RSS by Story 1.9's own live test). Mocking `sourcing_agent` here

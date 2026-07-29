@@ -107,6 +107,16 @@ class SourcingSettings(BaseModel):
     # trigger the unofficial-endpoint fallback needlessly (NFR-3).
     min_primary_article_count: int = 15
 
+    # Minimum seconds enforced between GDELT HTTP requests *across all
+    # concurrently-running Send-fanned branches in this process* (Task:
+    # GDELT rate-limit fix under concurrent fan-out). GDELT's own documented
+    # policy is "one request per 5 seconds" -- reuses the same value as
+    # `gdelt.DEFAULT_INTER_REQUEST_DELAY_SECONDS` (sequential sub-window
+    # pacing within a single branch) since both exist to respect the same
+    # documented per-IP limit; no reason for the cross-branch floor to be
+    # looser than the single-branch one.
+    gdelt_min_request_interval_seconds: float = 5.0
+
 
 class ModelSettings(BaseModel):
     # Placeholder model names per stage (TRD 2: small model for mechanical

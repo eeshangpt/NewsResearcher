@@ -7,6 +7,8 @@ building this module (`tests/fixtures/gdelt_doc2_capped_250_climate.json`).
 """
 
 import json
+import threading
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -14,15 +16,24 @@ import httpx
 import pytest
 import respx
 
+from newsresearch.config import Settings
+from newsresearch.sourcing import gdelt
 from newsresearch.sourcing.gdelt import (
     GDELT_DOC_API_URL,
     GDELT_MAX_RECORDS_PER_CALL,
     GDELTError,
+    _USER_AGENT,
     _build_query,
     fetch,
     query_range,
     query_window,
 )
+
+# Captured before the autouse `_no_real_sleep` fixture below patches
+# `gdelt.time.sleep` (which, since `gdelt.time` is the real stdlib `time`
+# module object, patches `time.sleep` globally for every test) -- needed to
+# restore genuine sleeping in the one test below that measures real timing.
+_REAL_SLEEP = time.sleep
 
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 CAPPED_250_FIXTURE = json.loads(
@@ -293,3 +304,57 @@ def test_fetch_computes_lookback_window_and_builds_query(monkeypatch):
     assert captured["query"] == '"climate change"'
     assert captured["end"] == fixed_now
     assert captured["start"] == fixed_now - timedelta(days=7)
+
+
+@respx.mock
+def test_query_window_sends_a_user_agent_header():
+    route = respx.get(GDELT_DOC_API_URL).mock(
+        return_value=httpx.Response(200, json=_articles_payload(1))
+    )
+
+    query_window(
+        '"x"', datetime(2026, 7, 1, tzinfo=timezone.utc), datetime(2026, 7, 22, tzinfo=timezone.utc)
+    )
+
+    assert route.calls.last.request.headers["User-Agent"] == _USER_AGENT
+
+
+@respx.mock
+def test_concurrent_gdelt_calls_respect_shared_min_interval(monkeypatch):
+    """The rate limiter is process-global: N branches calling query_window()
+    concurrently must still be spaced >= min_interval apart, not just calls
+    within a single caller."""
+    monkeypatch.setattr(gdelt, "_last_request_time", None)
+    # This test needs real sleeps to observe actual spacing -- undo the
+    # module's other autouse no-sleep fixture for just this test.
+    monkeypatch.setattr(gdelt.time, "sleep", _REAL_SLEEP)
+
+    respx.get(GDELT_DOC_API_URL).mock(return_value=httpx.Response(200, json=_articles_payload(1)))
+
+    min_interval = 0.1
+    settings = Settings()
+    settings.sourcing.gdelt_min_request_interval_seconds = min_interval
+
+    timestamps: list[float] = []
+    lock = threading.Lock()
+
+    def call():
+        query_window(
+            '"x"',
+            datetime(2026, 7, 1, tzinfo=timezone.utc),
+            datetime(2026, 7, 22, tzinfo=timezone.utc),
+            settings=settings,
+        )
+        with lock:
+            timestamps.append(time.monotonic())
+
+    threads = [threading.Thread(target=call) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+
+    timestamps.sort()
+    gaps = [b - a for a, b in zip(timestamps, timestamps[1:])]
+    assert len(gaps) == 3
+    assert all(gap >= min_interval * 0.9 for gap in gaps)

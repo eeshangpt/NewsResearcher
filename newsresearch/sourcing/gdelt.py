@@ -31,14 +31,25 @@ convention `rss.py`/`google_news_backfill.py` already use (Story 1.3) so
 from __future__ import annotations
 
 import logging
+import threading
 import time
 from datetime import datetime, timedelta, timezone
 
 import httpx
 
+from newsresearch.config import Settings
+
 logger = logging.getLogger(__name__)
 
 GDELT_DOC_API_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+
+# GDELT has no documented API-key/registration path that would let requests
+# self-identify; a bare httpx default sends no User-Agent at all, which some
+# rate-limiting/WAF layers treat more suspiciously than a normal browser UA.
+_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+)
 
 # Confirmed against the live API: requesting more than this raises a
 # plain-text "A maximum of 250 records can be returned." error even though
@@ -59,6 +70,35 @@ _RATE_LIMIT_TEXT_MARKER = "limit requests"
 # between sequential sub-window requests and as the base of the 429
 # exponential-backoff schedule.
 DEFAULT_INTER_REQUEST_DELAY_SECONDS = 5.0
+
+
+# Cross-branch rate limiter (Task: fix real GDELT rate-limiting under
+# concurrent per-subtopic fan-out). LangGraph's `Send`-based fan-out runs
+# each branch's sync node function concurrently via a thread pool within one
+# process, so each branch's own query_window()/query_range() backoff looks
+# correct in isolation but N branches can still burst past GDELT's real
+# per-IP window. `threading.Lock` (not `asyncio.Lock`) is correct here:
+# `sourcing_agent()` and gdelt.py are plain sync functions invoked by
+# LangGraph's thread-pool-based fan-out, not asyncio tasks.
+# ponytail: single process-wide lock serializes ALL GDELT calls to one at a
+# time, not just enforcing a floor between them; fine at this call volume,
+# revisit with a token bucket if GDELT calls ever need to overlap in-flight.
+_rate_limit_lock = threading.Lock()
+_last_request_time: float | None = None
+
+
+def _throttle(min_interval: float) -> None:
+    """Block until at least `min_interval` seconds have passed since the
+    last GDELT request made by *any* thread in this process."""
+    global _last_request_time
+    with _rate_limit_lock:
+        now = time.monotonic()
+        if _last_request_time is not None:
+            wait = min_interval - (now - _last_request_time)
+            if wait > 0:
+                time.sleep(wait)
+                now = time.monotonic()
+        _last_request_time = now
 
 
 class GDELTError(Exception):
@@ -145,6 +185,7 @@ def query_window(
     client: httpx.Client | None = None,
     max_retries: int = 5,
     backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
+    settings: Settings | None = None,
 ) -> list[dict]:
     """Query one GDELT DOC 2.0 window (<= 250 records) in JSON article-list mode.
 
@@ -178,12 +219,16 @@ def query_window(
         "sort": "datedesc",
     }
 
+    settings = settings if settings is not None else Settings()
+    min_interval = settings.sourcing.gdelt_min_request_interval_seconds
+
     owns_client = client is None
-    http_client = client or httpx.Client(timeout=30.0)
+    http_client = client or httpx.Client(timeout=30.0, headers={"User-Agent": _USER_AGENT})
     try:
         response: httpx.Response | None = None
         try:
             for attempt in range(1, max_retries + 2):
+                _throttle(min_interval)
                 response = http_client.get(GDELT_DOC_API_URL, params=params)
                 if not _is_rate_limited(response):
                     break
@@ -234,6 +279,7 @@ def query_range(
     backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     inter_request_delay: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     min_window: timedelta = timedelta(days=1),
+    settings: Settings | None = None,
 ) -> list[dict]:
     """Query a date range, paginating over sub-windows past GDELT's 250-record cap.
 
@@ -256,7 +302,7 @@ def query_range(
     absorbs this.
     """
     owns_client = client is None
-    http_client = client or httpx.Client(timeout=30.0)
+    http_client = client or httpx.Client(timeout=30.0, headers={"User-Agent": _USER_AGENT})
     try:
         return _query_range_recursive(
             query,
@@ -267,6 +313,7 @@ def query_range(
             backoff_seconds=backoff_seconds,
             inter_request_delay=inter_request_delay,
             min_window=min_window,
+            settings=settings,
         )
     finally:
         if owns_client:
@@ -283,9 +330,16 @@ def _query_range_recursive(
     backoff_seconds: float,
     inter_request_delay: float,
     min_window: timedelta,
+    settings: Settings | None,
 ) -> list[dict]:
     articles = query_window(
-        query, start, end, client=client, max_retries=max_retries, backoff_seconds=backoff_seconds
+        query,
+        start,
+        end,
+        client=client,
+        max_retries=max_retries,
+        backoff_seconds=backoff_seconds,
+        settings=settings,
     )
 
     hit_cap = len(articles) >= GDELT_MAX_RECORDS_PER_CALL
@@ -321,6 +375,7 @@ def _query_range_recursive(
         backoff_seconds=backoff_seconds,
         inter_request_delay=inter_request_delay,
         min_window=min_window,
+        settings=settings,
     )
     time.sleep(inter_request_delay)
     second_half = _query_range_recursive(
@@ -332,6 +387,7 @@ def _query_range_recursive(
         backoff_seconds=backoff_seconds,
         inter_request_delay=inter_request_delay,
         min_window=min_window,
+        settings=settings,
     )
     return first_half + second_half
 
@@ -346,6 +402,7 @@ def fetch(
     backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     inter_request_delay: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     min_window: timedelta = timedelta(days=1),
+    settings: Settings | None = None,
 ) -> list[dict]:
     """Fetch GDELT articles for `keywords` over the last `lookback_days` days.
 
@@ -366,4 +423,5 @@ def fetch(
         backoff_seconds=backoff_seconds,
         inter_request_delay=inter_request_delay,
         min_window=min_window,
+        settings=settings,
     )

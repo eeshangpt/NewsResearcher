@@ -96,18 +96,19 @@ def cli_env(tmp_path, monkeypatch, postgres_url):
 
 # `cli_env`'s default subtopic-pipeline stubs produce an empty `candidates`
 # list, so Gate 1's own render/prompt still fires (it interrupts
-# unconditionally) but `fan_out` falls back to its no-candidates path --
-# `fan_out_router` -- with no Gate 2 interrupts to resume. One "a\n" (approve)
-# is enough stdin for these baseline plumbing tests.
+# unconditionally) and `fan_out` falls back to its no-candidates path --
+# `fan_out_router` -- which still surfaces a real (empty) Gate 2 report
+# (bugfix: it used to silently skip Gate 2 on this path). "a\n\n" is Gate 1's
+# approve plus Gate 2's "press enter to continue".
 def test_run_invokes_the_graph_end_to_end_and_exits_0(cli_env):
-    result = runner.invoke(app, ["run", "test topic"], input="a\n")
+    result = runner.invoke(app, ["run", "test topic"], input="a\n\n")
 
     assert result.exit_code == 0, result.output
     assert "completed" in result.stdout
 
 
 def test_run_writes_a_fully_populated_run_costs_row(cli_env):
-    result = runner.invoke(app, ["run", "test topic"], input="a\n")
+    result = runner.invoke(app, ["run", "test topic"], input="a\n\n")
     assert result.exit_code == 0, result.output
     run_id = result.stdout.split("run_id=")[1].split(" ")[0]
 
@@ -128,7 +129,7 @@ def test_run_writes_a_fully_populated_run_costs_row(cli_env):
 
 
 def test_run_produces_exactly_one_mlflow_run_tagged_with_run_id(cli_env):
-    result = runner.invoke(app, ["run", "test topic"], input="a\n")
+    result = runner.invoke(app, ["run", "test topic"], input="a\n\n")
     assert result.exit_code == 0, result.output
     run_id = result.stdout.split("run_id=")[1].split(" ")[0]
 
@@ -265,7 +266,7 @@ def test_run_with_thread_id_resumes_a_killed_run_without_reseeding(cli_env):
     run_id = started.output.split("run_id=")[1].split(" ")[0]
 
     resumed = runner.invoke(
-        app, ["run", "ignored topic", "--thread-id", run_id], input="a\n"
+        app, ["run", "ignored topic", "--thread-id", run_id], input="a\n\n"
     )
 
     assert resumed.exit_code == 0, resumed.output

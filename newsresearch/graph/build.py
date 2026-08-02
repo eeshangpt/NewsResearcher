@@ -208,26 +208,32 @@ def _make_clustering_node(
 
 
 def _make_gate2_node():
-    """Real `gate2` node (follow-up to Task 2.6.2's review): wraps
-    `graph.nodes.gate2.make_gate2_node`'s `gate2_node` so it slots into
-    `FAN_OUT_TARGET_NODES` the same way `_make_clustering_node` does --
-    a no-op on the plain, no-candidates fallback path (`subtopic_id` absent,
-    same guard as `_make_fan_out_target_node`/`_make_clustering_node`), a
-    real `interrupt()` once per `Send`-fanned branch otherwise.
+    """Real `gate2` node (follow-up to Task 2.6.2's review, plus a bugfix:
+    Gate 2 must always surface, even with zero approved subtopics).
 
-    `gate2_node` itself stays untouched: it already reads `state["cluster_report"]`
-    off whatever state it's given, which `_make_relay_router`'s clustering->gate2
-    hop already populates per-branch. This wrapper only adds the guard plus the
-    `fan_trace` bookkeeping every other `FAN_OUT_TARGET_NODES` node performs --
-    `interrupt()` aborts the node's execution before any `return`, so the
-    `fan_trace` write only actually lands once the branch resumes past Gate 2,
-    same one-write-per-completed-pass behavior as `_make_fan_out_target_node`.
+    On a real `Send`-fanned branch (`subtopic_id` present), behaves as
+    before: a real per-branch `interrupt()`, with a `fan_trace` write once
+    the branch resumes past it.
+
+    On the plain, no-candidates fallback path (`subtopic_id` absent -- e.g.
+    Gate 1 was approved with zero candidates because sourcing came back too
+    thin to propose any subtopic), this used to silently no-op, which meant
+    the whole run fell straight through to `END` without ever pausing at
+    Gate 2 -- no report, not even an empty one, contradicting the gate
+    contract every other path honors. It now still calls the real
+    `gate2_node`/`interrupt()` once, with a synthesized empty cluster report
+    (`build_gate2_report({})`, the same zero-LLM aggregation every other
+    branch uses, just over no clusters) so a human still sees and confirms
+    "nothing was found" instead of the run finishing invisibly. There's no
+    real per-branch identity here, so `fan_trace` isn't written on this path
+    (matching `_make_fan_out_target_node`/`_make_clustering_node`'s own
+    no-op-on-fan_trace behavior when `subtopic_id` is absent).
     """
 
     def _node(state: dict[str, Any]) -> dict[str, Any]:
         subtopic_id = state.get("subtopic_id")
         if subtopic_id is None:
-            return {}
+            return gate2_node({"cluster_report": build_gate2_report({})})
         result = gate2_node(state)
         return {**result, "fan_trace": [("gate2", subtopic_id, state.get("label"))]}
 

@@ -183,8 +183,8 @@ def query_window(
     *,
     max_records: int = GDELT_MAX_RECORDS_PER_CALL,
     client: httpx.Client | None = None,
-    max_retries: int = 5,
-    backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
+    max_retries: int | None = None,
+    backoff_seconds: float | None = None,
     settings: Settings | None = None,
 ) -> list[dict]:
     """Query one GDELT DOC 2.0 window (<= 250 records) in JSON article-list mode.
@@ -195,6 +195,11 @@ def query_window(
     attempt, capped at `max_retries`) on either a real HTTP 429 or GDELT's
     HTTP-200-with-plain-text-rate-limit-body quirk (see module docstring),
     honoring a `Retry-After` header if the response includes one.
+    `max_retries`/`backoff_seconds` default to `Settings.sourcing.gdelt_max_retries`/
+    `gdelt_backoff_base_seconds` when not given explicitly, so the retry
+    budget is tunable without a code change (see those settings' own
+    comments for why: GDELT can enforce an IP-level cooldown that outlasts
+    the default schedule).
 
     Raises `ValueError` if `max_records` exceeds GDELT's 250-record cap
     (use `query_range()` to page over sub-windows instead), and `GDELTError`
@@ -221,6 +226,10 @@ def query_window(
 
     settings = settings if settings is not None else Settings()
     min_interval = settings.sourcing.gdelt_min_request_interval_seconds
+    if max_retries is None:
+        max_retries = settings.sourcing.gdelt_max_retries
+    if backoff_seconds is None:
+        backoff_seconds = settings.sourcing.gdelt_backoff_base_seconds
 
     owns_client = client is None
     http_client = client or httpx.Client(timeout=30.0, headers={"User-Agent": _USER_AGENT})
@@ -236,7 +245,13 @@ def query_window(
                     raise GDELTError(
                         f"GDELT DOC 2.0 API still rate-limited after {max_retries} retries "
                         f"for window {start.isoformat()}..{end.isoformat()} "
-                        f"(last status {response.status_code})"
+                        f"(last status {response.status_code}). Every attempt in this window "
+                        "was rate-limited, not just the first -- this looks like a sustained "
+                        "IP-level cooldown/block from GDELT (observed in practice to sometimes "
+                        "outlast this schedule's total wait), not ordinary transient congestion. "
+                        "No code change shortens a block GDELT itself imposes; if this persists, "
+                        "wait longer before retrying or raise Settings.sourcing.gdelt_max_retries/"
+                        "gdelt_backoff_base_seconds."
                     )
                 delay = _retry_after_seconds(response, attempt, backoff_seconds)
                 logger.warning(
@@ -275,8 +290,8 @@ def query_range(
     end: datetime,
     *,
     client: httpx.Client | None = None,
-    max_retries: int = 5,
-    backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
+    max_retries: int | None = None,
+    backoff_seconds: float | None = None,
     inter_request_delay: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     min_window: timedelta = timedelta(days=1),
     settings: Settings | None = None,
@@ -326,8 +341,8 @@ def _query_range_recursive(
     end: datetime,
     *,
     client: httpx.Client,
-    max_retries: int,
-    backoff_seconds: float,
+    max_retries: int | None,
+    backoff_seconds: float | None,
     inter_request_delay: float,
     min_window: timedelta,
     settings: Settings | None,
@@ -398,8 +413,8 @@ def fetch(
     *,
     end: datetime | None = None,
     client: httpx.Client | None = None,
-    max_retries: int = 5,
-    backoff_seconds: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
+    max_retries: int | None = None,
+    backoff_seconds: float | None = None,
     inter_request_delay: float = DEFAULT_INTER_REQUEST_DELAY_SECONDS,
     min_window: timedelta = timedelta(days=1),
     settings: Settings | None = None,

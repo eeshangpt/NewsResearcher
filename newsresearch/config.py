@@ -117,6 +117,19 @@ class SourcingSettings(BaseModel):
     # looser than the single-branch one.
     gdelt_min_request_interval_seconds: float = 5.0
 
+    # How many times `gdelt.query_window()` retries a 429/rate-limit-text
+    # response before raising `GDELTError`, and the base (attempt-1) delay
+    # of its exponential backoff. Both used to be hardcoded function-default
+    # literals with no `Settings` knob at all -- confirmed live (see PR
+    # fixing bug where a single, non-concurrent request still exhausted all
+    # retries) that GDELT can enforce an IP-level cooldown lasting well
+    # past the default 5-retry/5s-base schedule's ~155s total wait. No code
+    # change can shorten a block GDELT itself imposes; this just lets an
+    # operator widen the retry budget without a code change if their
+    # observed block duration is longer than the default covers.
+    gdelt_max_retries: int = 5
+    gdelt_backoff_base_seconds: float = 5.0
+
 
 class ModelSettings(BaseModel):
     # Placeholder model names per stage (TRD 2: small model for mechanical

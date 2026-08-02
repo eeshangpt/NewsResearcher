@@ -101,7 +101,13 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
     # so an approve-resume is required before the rest of NODE_ORDER runs.
     interrupted = graph.invoke(initial_state, config=config)
     assert "__interrupt__" in interrupted
-    result = graph.invoke(Command(resume={"action": "approve"}), config=config)
+    interrupted = graph.invoke(Command(resume={"action": "approve"}), config=config)
+
+    # Gate 2 must also still surface here, even with zero approved
+    # candidates (bugfix: it used to silently no-op on this fallback path,
+    # letting the run finish invisibly with no Gate 2 report at all).
+    assert "__interrupt__" in interrupted
+    result = graph.invoke(Command(resume={"action": "continue"}), config=config)
 
     # No-op nodes return {} so the state should be unchanged coming out.
     assert result["topic"] == "test topic"
@@ -124,6 +130,44 @@ def test_graph_invoke_runs_every_node_and_writes_a_durable_checkpoint(postgres_u
             "SELECT thread_id FROM checkpoints WHERE thread_id = %s", ("test",)
         ).fetchall()
     assert len(rows) > 0
+
+
+def test_gate2_surfaces_an_empty_report_when_zero_candidates_are_approved(postgres_url, monkeypatch):
+    """Bugfix regression: thin sourcing (e.g. GDELT down, RSS sparse) can
+    leave `rank_and_cap_subtopics` with zero candidates. Gate 1 still
+    interrupts and can be approved as-is, but before this fix the run then
+    fell straight through `fan_out`'s no-candidates fallback edge to `END`
+    without Gate 2 ever pausing -- `_make_gate2_node`'s `subtopic_id is None`
+    guard no-opped instead of interrupting. Gate 2 must still surface a
+    (necessarily empty) report so a human sees the run found nothing, rather
+    than the run silently completing.
+    """
+    _stub_subtopic_pipeline(monkeypatch, candidates=[], excess=[], articles=[])
+    graph = build_graph(database_url=postgres_url)
+
+    initial_state: GraphState = {
+        "topic": "Iraq and WMDs",
+        "canonical_topic": "iraq and wmds",
+        "run_id": "thin-run",
+        "subtopics": [],
+        "approved": False,
+    }
+    config = {"configurable": {"thread_id": "thin-run"}}
+
+    graph.invoke(initial_state, config=config)
+    interrupted = graph.invoke(Command(resume={"action": "approve"}), config=config)
+
+    gate2_interrupts = interrupted["__interrupt__"]
+    assert len(gate2_interrupts) == 1
+    assert gate2_interrupts[0].value["cluster_report"] == {
+        "cluster_sizes": [],
+        "sample_headlines": [],
+        "source_spread": {},
+    }
+
+    result = graph.invoke(Command(resume={"action": "continue"}), config=config)
+    assert graph.get_state(config).next == ()
+    assert result["topic"] == "Iraq and WMDs"
 
 
 def test_fan_out_sends_one_concurrent_branch_per_approved_candidate(postgres_url, monkeypatch):

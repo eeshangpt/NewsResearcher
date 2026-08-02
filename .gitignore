@@ -27,6 +27,7 @@ wheels/
 logs/
 docs/
 archive/
+graphify-out/
 
 # MLflow local file-store tracking backend (Settings.mlflow_tracking_uri)
 mlruns/
@@ -39,3 +40,6 @@ NOTES.md
 PRD.md
 TRD.md
 news_research_arch.md
+
+# Log Files
+*.log

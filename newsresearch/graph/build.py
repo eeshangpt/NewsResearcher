@@ -1,35 +1,75 @@
-"""Graph assembly (Phase 0 Task 0.5.2).
+"""Graph assembly (Phase 0 Task 0.5.2, fan-out Task 2.4.1).
 
 Wires the full TRD section 3.1 node topology as trivial passthrough nodes:
 
     Subtopic -> Gate1 -> FanOut -> Sourcing -> Clustering -> Gate2
              -> Claims -> Summarize -> Bias -> Briefing -> Snapshot -> Timeline
 
-`FanOut` stands in for the `Send`-based concurrent per-subtopic fan-out that
-Phase 2 will implement for real; here it is just another passthrough node so
-the topology and compilation/checkpointing machinery exist end-to-end before
-any real node logic does. Compiled with `PostgresSaver` (not an in-memory
-checkpointer) so gate durability across process restarts — the entire point
-of using Postgres here — actually holds.
+`FanOut` is a real node (Task 2.4.1: `fan_out` -> `sourcing` -> `clustering`
+-> `gate2` are all `langgraph.types.Send`-based conditional edges, one `Send`
+per approved `GraphState.candidates` entry out of `fan_out`, and one relay
+`Send` per active branch at each subsequent hop -- see `_make_relay_router`
+-- each carrying a `SubtopicState`-shaped identity, `run_id`/`subtopic_id`/
+`label`, into its own concurrent branch). `Sourcing` remains passthrough for
+now; it just records its own `(node_name, subtopic_id, label)` into
+`GraphState.fan_trace` when running inside a fanned branch, so fan-out
+mechanics are provable without any real node logic existing yet.
+`Clustering` is real (PR #32 tech-lead-rejected rework): it runs Task 2.5.1's
+`topical_clustering_agent` + Task 2.6.1's `build_gate2_report` exactly once
+per branch, upstream of `gate2`'s `interrupt()` -- see `_make_clustering_node`
+for why this can't live inside `gate2_node` itself (LangGraph replays a node
+function from the top on every resume, which would double real sourcing
+calls and risk overwriting a human-reviewed report with a re-run, possibly
+different, one). `Gate2` is also real (Task 2.6.2 follow-up): `_make_gate2_node`
+wraps `graph.nodes.gate2.gate2_node`'s genuine `interrupt()` so a compiled
+`build_graph()` run actually blocks for human review per branch, not a
+passthrough stand-in. `Gate1` is likewise real (Task 2.6.2 follow-up):
+`_make_gate1_node` wraps `graph.nodes.gate1.make_gate1_node`'s genuine
+`interrupt()`, binding the real `make_real_reconcile` hook to
+`state["articles"]` at invocation time -- see `_make_gate1_node` for why
+this can't be built once at graph-construction time the way `gate2_node`'s
+bare function is. When `candidates` is empty (e.g. Phase 0's own
+no-op-topology test), `fan_out` falls back to a single ordinary edge into
+`sourcing`, so the pre-Phase-2 no-candidates path is unaffected -- Gate 1
+itself still interrupts unconditionally either way (it has no such
+fallback), so every `graph.invoke()` now pauses there first regardless.
+`Subtopic` is also real now (Story 2.2 production-wiring follow-up):
+`_make_subtopic_node` composes `agents/subtopic_agent.py`'s already-merged
+`propose_candidates` -> `broad_topic_fetch` -> `reconcile_subtopics` ->
+`rank_and_cap_subtopics` pipeline, unconditionally, once per invocation,
+upstream of `gate1`/fan-out -- not per fanned branch. It's the sole writer
+of `candidates`/`excess`/`articles` now; the invoke-time seed those three
+fields used as a stopgap before this node existed is gone from `cli.py`.
+Compiled
+with `PostgresSaver` (not an in-memory checkpointer) so gate durability
+across process restarts — the entire point of using Postgres here — actually
+holds.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from langchain_core.callbacks import CallbackManagerForLLMRun
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.messages import AIMessage, BaseMessage
-from langchain_core.outputs import ChatGeneration, ChatResult
 from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.postgres import PostgresSaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
+from langgraph.types import Send
 from psycopg.rows import dict_row
 from psycopg_pool import ConnectionPool
 
+from newsresearch.agents.subtopic_agent import (
+    broad_topic_fetch,
+    propose_candidates,
+    rank_and_cap_subtopics,
+    reconcile_subtopics,
+)
+from newsresearch.agents.topical_clustering_agent import topical_clustering_agent
 from newsresearch.config import Settings
+from newsresearch.graph.nodes.gate1 import make_gate1_node, make_real_reconcile
+from newsresearch.graph.nodes.gate2 import gate2_node
 from newsresearch.graph.state import GraphState
+from newsresearch.reports.gate2_report import build_gate2_report
 
 # TRD 3.1 pipeline order, Subtopic through Timeline, as no-op node names.
 NODE_ORDER: list[str] = [
@@ -47,6 +87,14 @@ NODE_ORDER: list[str] = [
     "timeline",
 ]
 
+# The three nodes immediately downstream of `fan_out` -- entered once per
+# `Send`-fanned branch (or once, plainly, on the no-candidates fallback
+# path). Membership here drives `_make_relay_router` wiring between
+# consecutive fan targets regardless of whether the node itself is still a
+# bare passthrough (`sourcing`) or real logic (`clustering`, `gate2`); every
+# member records its own visit into `fan_trace` on the branch's fanned path.
+FAN_OUT_TARGET_NODES: frozenset[str] = frozenset({"sourcing", "clustering", "gate2"})
+
 
 def _make_passthrough_node(name: str):
     """Build a trivial passthrough node function named `name`.
@@ -62,68 +110,293 @@ def _make_passthrough_node(name: str):
     return _node
 
 
-class _StubSubtopicChatModel(BaseChatModel):
-    """Deterministic stand-in chat model for the `subtopic` node (Task 0.7.4).
+def _make_fan_out_target_node(name: str):
+    """Passthrough node that also records `(name, subtopic_id, label)` into
+    `GraphState.fan_trace` when it's running inside a `Send`-fanned branch
+    (i.e. `subtopic_id` is present on its input state). On the plain,
+    no-candidates fallback path `subtopic_id` is absent and this behaves
+    exactly like `_make_passthrough_node`.
 
-    The real Subtopic Agent (prompt, schema, `get_chat_model("subtopic")`)
-    lands in Phase 2 Task 2.2.1. Until then this is the minimal chat-model
-    call needed so the observability stack attached at the top-level
-    `graph.invoke()` call (cost callback, Langfuse, MLflow) has an actual LLM
-    invocation to capture end-to-end -- a real `ChatOpenAI` call would
-    require a live `OPENAI_API_KEY`, which Phase 0 must not depend on.
+    Deliberately does *not* echo `subtopic_id`/`label` back as plain state
+    fields: concurrent branches in the same superstep would then all write
+    different values to the same non-reducer channel, which LangGraph
+    rejects (`InvalidUpdateError`, "can receive only one value per step").
+    `fan_trace` (an `operator.add`-reduced accumulator) is the one channel
+    safe for concurrent per-branch writes, so it's also how the *next* hop's
+    routing (`_make_relay_router`) rediscovers each branch's identity,
+    instead of reading it back off plain state.
     """
 
-    model_name: str = "stub-subtopic-model"
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        subtopic_id = state.get("subtopic_id")
+        if subtopic_id is None:
+            return {}
+        return {"fan_trace": [(name, subtopic_id, state.get("label"))]}
 
-    @property
-    def _llm_type(self) -> str:
-        return "stub-subtopic-chat-model"
+    _node.__name__ = f"{name}_node"
+    return _node
 
-    def _generate(
-        self,
-        messages: list[BaseMessage],
-        stop: list[str] | None = None,
-        run_manager: CallbackManagerForLLMRun | None = None,
-        **kwargs: Any,
-    ) -> ChatResult:
-        message = AIMessage(
-            content="acknowledged",
-            usage_metadata={"input_tokens": 12, "output_tokens": 4, "total_tokens": 16},
+
+def _make_gate1_node(*, settings: Settings | None = None):
+    """Real `gate1` node (follow-up to Task 2.6.2's review): wraps
+    `graph.nodes.gate1.make_gate1_node`'s genuine `interrupt()` so a compiled
+    `build_graph()` run actually blocks for Gate 1 human review, not the
+    generic `_make_passthrough_node` stand-in this slot used before.
+
+    `gate1_node`'s factory (`make_gate1_node(reconcile=...)`) is built at
+    *graph-construction* time in `gate1.py`'s own tests, but the real
+    `reconcile` hook (`make_real_reconcile`) needs `state["articles"]` --
+    the broad-fetch set the edited candidates were originally proposed
+    against -- which only exists once the graph actually runs, not at
+    build time. So this wrapper defers the factory call itself into the
+    node function, building a fresh `make_real_reconcile(state["articles"],
+    settings=settings)` closure on every invocation (matching
+    `test_gate1_edit_resume_runs_real_reconciliation`'s own pattern for
+    binding `articles`) -- gate1 isn't `Send`-fanned, so unlike
+    `_make_clustering_node`/`_make_gate2_node` there's no per-branch guard
+    needed here, just a single ordinary node.
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        reconcile = make_real_reconcile(state.get("articles", []), settings=settings)
+        return make_gate1_node(reconcile=reconcile)(state)
+
+    _node.__name__ = "gate1_node"
+    return _node
+
+
+def _make_clustering_node(
+    lookback_days: int, *, pool: ConnectionPool | None = None, settings: Settings | None = None
+):
+    """Real `clustering` node (Task 2.5.1 + Task 2.6.1, PR #32 rework).
+
+    Runs `topical_clustering_agent` (per-subtopic sourcing + coarse
+    clustering) then `build_gate2_report` (zero-LLM aggregation) for the
+    branch's own `subtopic_id`/`label`. `clustering` is one of
+    `FAN_OUT_TARGET_NODES`, entered exactly once per `Send`-fanned branch --
+    never replayed by a downstream Gate 2 `interrupt()`/resume, unlike code
+    that ran *inside* `gate2_node` itself would be.
+
+    Writes the report into the reducer-safe `cluster_reports` accumulator
+    (not a plain field: concurrent branches racing in the same superstep
+    can't share one non-reducer channel) alongside the usual `fan_trace`
+    entry; `_make_relay_router`'s clustering->gate2 hop then folds the
+    branch's own entry into that branch's outgoing `Send` payload as a plain
+    `cluster_report` field, so `gate2_node` (`graph/nodes/gate2.py`) can read
+    it straight off its own per-branch state with no recomputation.
+
+    On the plain, no-candidates fallback path `subtopic_id` is absent and
+    this behaves like a no-op passthrough, same as `_make_fan_out_target_node`.
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        subtopic_id = state.get("subtopic_id")
+        if subtopic_id is None:
+            return {}
+        label = state.get("label", "")
+        clustering_result = topical_clustering_agent(
+            subtopic_id, label, lookback_days, pool=pool, settings=settings
         )
-        return ChatResult(
-            generations=[ChatGeneration(message=message)],
-            llm_output={"model_name": self.model_name},
+        report = build_gate2_report(clustering_result)
+        return {
+            "fan_trace": [("clustering", subtopic_id, label)],
+            "cluster_reports": [(subtopic_id, report)],
+        }
+
+    _node.__name__ = "clustering_node"
+    return _node
+
+
+def _make_gate2_node():
+    """Real `gate2` node (follow-up to Task 2.6.2's review, plus a bugfix:
+    Gate 2 must always surface, even with zero approved subtopics).
+
+    On a real `Send`-fanned branch (`subtopic_id` present), behaves as
+    before: a real per-branch `interrupt()`, with a `fan_trace` write once
+    the branch resumes past it.
+
+    On the plain, no-candidates fallback path (`subtopic_id` absent -- e.g.
+    Gate 1 was approved with zero candidates because sourcing came back too
+    thin to propose any subtopic), this used to silently no-op, which meant
+    the whole run fell straight through to `END` without ever pausing at
+    Gate 2 -- no report, not even an empty one, contradicting the gate
+    contract every other path honors. It now still calls the real
+    `gate2_node`/`interrupt()` once, with a synthesized empty cluster report
+    (`build_gate2_report({})`, the same zero-LLM aggregation every other
+    branch uses, just over no clusters) so a human still sees and confirms
+    "nothing was found" instead of the run finishing invisibly. There's no
+    real per-branch identity here, so `fan_trace` isn't written on this path
+    (matching `_make_fan_out_target_node`/`_make_clustering_node`'s own
+    no-op-on-fan_trace behavior when `subtopic_id` is absent).
+    """
+
+    def _node(state: dict[str, Any]) -> dict[str, Any]:
+        subtopic_id = state.get("subtopic_id")
+        if subtopic_id is None:
+            return gate2_node({"cluster_report": build_gate2_report({})})
+        result = gate2_node(state)
+        return {**result, "fan_trace": [("gate2", subtopic_id, state.get("label"))]}
+
+    _node.__name__ = "gate2_node"
+    return _node
+
+
+def fan_out_router(state: GraphState) -> list[Send] | str:
+    """Conditional edge out of `fan_out`: Task 2.4.1's real `Send`-based
+    fan-out.
+
+    One `Send("sourcing", ...)` per approved `GraphState.candidates` entry,
+    each carrying a `SubtopicState`-shaped sub-state (`run_id`,
+    `subtopic_id`, `label`) into its own concurrent branch. Falls back to a
+    plain edge into `sourcing` when there are no candidates yet (e.g. before
+    Gate 1 populates them, or Phase 0's original no-candidates topology
+    test), so this doesn't dead-end runs that never reach Gate 1 approval.
+    """
+    candidates = state.get("candidates") or []
+    if not candidates:
+        return "sourcing"
+
+    return [
+        Send(
+            "sourcing",
+            {
+                "run_id": state["run_id"],
+                "subtopic_id": f"{state['run_id']}-sub{i}",
+                "label": candidate["label"],
+            },
         )
+        for i, candidate in enumerate(candidates)
+    ]
 
 
-def _make_subtopic_stub_node():
-    """The `subtopic` node's Phase 0 stand-in.
+def _make_relay_router(source_name: str, target_name: str, *, carry_field: str | None = None):
+    """Conditional edge between two `FAN_OUT_TARGET_NODES`, keeping a
+    `Send`-fanned run's N branches distinct across multiple hops.
 
-    Still a no-op with respect to graph state -- the real subtopic-proposal
-    logic isn't built yet -- but exercises the observability path with one
-    stub chat-model call, per Task 0.7.4. Accepts `config` so the callbacks/
-    metadata attached at the top-level `graph.invoke()` call propagate to
-    this nested LLM call, the same pattern `cost_callback.py` documents.
+    Re-derives each branch's `(subtopic_id, label)` from the `fan_trace`
+    entries `source_name` just wrote (reducer-safe, so this is the one place
+    concurrent branches' identities survive a superstep) and re-`Send`s one
+    message per branch into `target_name`. Falls back to a plain edge when
+    there's nothing to relay (`source_name` never fanned -- the no-candidates
+    path), so it's a no-op unless fan-out is actually happening.
+
+    `carry_field`, when given, names a `(subtopic_id, value)`-tuple reducer
+    field (e.g. `cluster_reports`) whose per-branch entry gets folded into
+    that branch's outgoing `Send` payload as a plain `cluster_report` field
+    -- this is how `clustering`'s real per-branch output reaches `gate2`'s
+    own state without ever being written back to a shared, collision-prone
+    channel.
+    """
+
+    def _router(state: GraphState) -> list[Send] | str:
+        branches = [
+            (subtopic_id, label)
+            for name, subtopic_id, label in state.get("fan_trace", [])
+            if name == source_name
+        ]
+        if not branches:
+            return target_name
+
+        carried = dict(state.get(carry_field, [])) if carry_field else {}
+        sends = []
+        for subtopic_id, label in branches:
+            payload = {"run_id": state["run_id"], "subtopic_id": subtopic_id, "label": label}
+            if carry_field:
+                payload["cluster_report"] = carried.get(subtopic_id, {})
+            sends.append(Send(target_name, payload))
+        return sends
+
+    return _router
+
+
+def _make_subtopic_node(
+    lookback_days: int, *, pool: ConnectionPool | None = None, settings: Settings | None = None
+):
+    """Real `subtopic` node (Story 2.2 production-wiring follow-up).
+
+    Runs the full Task 2.2 pipeline unconditionally, once per graph
+    invocation, upstream of `gate1`/`fan_out` (not per fanned branch):
+    `propose_candidates` (LLM-driven candidate proposal), `broad_topic_fetch`
+    (Phase 1's `sourcing_agent` reused for a broad, topic-scoped article
+    set), `reconcile_subtopics` (embed+cluster the broad set, merge/split/
+    drop candidates against it), then `rank_and_cap_subtopics`
+    (distinctiveness ranking + `Settings.pipeline.max_subtopics` cap) --
+    all four already-merged Story 2.2 functions (`agents/subtopic_agent.py`),
+    just composed here instead of stubbed.
+
+    Writes `candidates`/`excess` for `gate1` to present, and `articles` --
+    this node's own `broad_topic_fetch` output is now the sole writer of
+    `GraphState.articles` (see `graph/state.py`'s field comment); the
+    invoke-time seed `cli.py`/some tests used as a Gate-1-production-wiring
+    stopgap before a real subtopic node existed is dead now and has been
+    removed there.
+
+    Forwards the ambient `config` into `propose_candidates`'s own LLM call
+    (`merge_configs`, not a fresh config) per the repo's config-propagation
+    convention, so cost/Langfuse tracing still attach.
     """
 
     def _node(state: GraphState, config: RunnableConfig) -> dict[str, Any]:
-        _StubSubtopicChatModel().invoke(f"Acknowledge topic: {state['topic']}", config=config)
-        return {}
+        topic = state["topic"]
+        run_id = state.get("run_id", "dev")
+        candidate_list = propose_candidates(
+            topic, run_id=run_id, settings=settings, config=config
+        )
+        articles = broad_topic_fetch(topic, lookback_days, pool=pool, settings=settings)
+        reconciled = reconcile_subtopics(articles, candidate_list.candidates, settings=settings)
+        capped = rank_and_cap_subtopics(
+            reconciled["reconciled"], reconciled["total_articles"], settings=settings
+        )
+        return {"candidates": capped["candidates"], "excess": capped["excess"], "articles": articles}
 
     _node.__name__ = "subtopic_node"
     return _node
 
 
-def build_state_graph() -> StateGraph:
-    """Assemble the full no-op node topology, uncompiled."""
+def build_state_graph(
+    *, lookback_days: int = 7, pool: ConnectionPool | None = None, settings: Settings | None = None
+) -> StateGraph:
+    """Assemble the full node topology, uncompiled.
+
+    `lookback_days`/`pool`/`settings` are forwarded to the real `clustering`
+    node (Task 2.5.1's `topical_clustering_agent` call); `lookback_days`
+    defaults to 7, matching `cli.py`'s own default -- no per-run tunable
+    exists for this yet, and inventing one is out of this task's scope.
+    """
     builder = StateGraph(GraphState)
     for name in NODE_ORDER:
-        node_fn = _make_subtopic_stub_node() if name == "subtopic" else _make_passthrough_node(name)
+        if name == "subtopic":
+            node_fn = _make_subtopic_node(lookback_days, pool=pool, settings=settings)
+        elif name == "gate1":
+            node_fn = _make_gate1_node(settings=settings)
+        elif name == "clustering":
+            node_fn = _make_clustering_node(lookback_days, pool=pool, settings=settings)
+        elif name == "gate2":
+            node_fn = _make_gate2_node()
+        elif name in FAN_OUT_TARGET_NODES:
+            node_fn = _make_fan_out_target_node(name)
+        else:
+            node_fn = _make_passthrough_node(name)
         builder.add_node(name, node_fn)
 
     builder.add_edge(START, NODE_ORDER[0])
     for upstream, downstream in zip(NODE_ORDER, NODE_ORDER[1:]):
-        builder.add_edge(upstream, downstream)
+        if upstream == "fan_out":
+            # Real `Send`-based fan-out (Task 2.4.1): `downstream` here is
+            # always "sourcing" per NODE_ORDER, the sole `path_map` target.
+            builder.add_conditional_edges(upstream, fan_out_router, [downstream])
+        elif upstream in FAN_OUT_TARGET_NODES and downstream in FAN_OUT_TARGET_NODES:
+            # Relay hop between two fan-out branch nodes (sourcing ->
+            # clustering, clustering -> gate2): keeps each branch's identity
+            # distinct across the hop, see `_make_relay_router`. The
+            # clustering->gate2 hop also carries the real `cluster_report`
+            # `clustering` just computed forward into `gate2`'s own state.
+            carry_field = "cluster_reports" if upstream == "clustering" else None
+            builder.add_conditional_edges(
+                upstream, _make_relay_router(upstream, downstream, carry_field=carry_field), [downstream]
+            )
+        else:
+            builder.add_edge(upstream, downstream)
     builder.add_edge(NODE_ORDER[-1], END)
 
     return builder
@@ -149,13 +422,21 @@ def build_checkpointer(database_url: str) -> PostgresSaver:
     return checkpointer
 
 
-def build_graph(database_url: str | None = None) -> CompiledStateGraph:
-    """Compile the no-op pipeline graph with a durable `PostgresSaver`.
+def build_graph(
+    database_url: str | None = None,
+    *,
+    lookback_days: int = 7,
+    pool: ConnectionPool | None = None,
+    settings: Settings | None = None,
+) -> CompiledStateGraph:
+    """Compile the pipeline graph with a durable `PostgresSaver`.
 
     `database_url` defaults to `Settings().database_url`
-    (`NEWSRESEARCH_DATABASE_URL`) when not given explicitly.
+    (`NEWSRESEARCH_DATABASE_URL`) when not given explicitly. `lookback_days`/
+    `pool`/`settings` are forwarded to `build_state_graph`'s real
+    `clustering` node.
     """
-    settings = Settings()
+    settings = settings or Settings()
     resolved_url = database_url or settings.database_url
     if not resolved_url:
         raise ValueError(
@@ -164,4 +445,6 @@ def build_graph(database_url: str | None = None) -> CompiledStateGraph:
         )
 
     checkpointer = build_checkpointer(resolved_url)
-    return build_state_graph().compile(checkpointer=checkpointer)
+    return build_state_graph(lookback_days=lookback_days, pool=pool, settings=settings).compile(
+        checkpointer=checkpointer
+    )

@@ -1,21 +1,18 @@
-"""Gate 1 interrupt node (Phase 2 Task 2.3.1) -- mechanics only.
+"""Gate 1 interrupt node (Phase 2 Task 2.3.1).
 
-Presents the current `candidates`/`excess` from `GraphState` (stubbed per
-Task 2.2.4's not-yet-built rank/cap/excess-retention output, see
-`graph/state.py`) and blocks via `interrupt()` until a human resumes with an
-approve or edit decision.
+Presents the current `candidates`/`excess` from `GraphState` and blocks via
+`interrupt()` until a human resumes with an approve or edit decision.
 
-This is Wave 1 of the tech-lead-approved Phase 2 re-plan: the real Subtopic
-Agent reconciliation (Task 2.2.3 / 2.2.3b) doesn't exist yet, so an
-edit-resume is wired to a pluggable `reconcile` hook that defaults to an
-identity placeholder rather than blocking this task on unimplemented
-clustering/reconciliation logic. The interrupt/resume *mechanics* --
-interrupt, accept edited input, call *some* reconciliation step, resume --
-are what this task delivers now. Full acceptance against Task 2.3.1's
-original criterion ("an edit-resume ... re-triggers Task 2.2.3's
-reconciliation on the edited set") is explicitly deferred to Wave 3, once
-Task 2.2.3b's real reconciliation logic lands and can be swapped in via the
-`reconcile` parameter -- a field-population change, not a mechanics rework.
+Task 2.2.3b/2.2.4's real reconciliation (`reconcile_subtopics` +
+`rank_and_cap_subtopics`, `agents/subtopic_agent.py`) has now landed, closing
+Task 2.3.1's original acceptance: an edit-resume re-triggers real
+reconciliation on the edited candidate set via `make_real_reconcile`, not an
+identity pass-through. `stub_reconcile` is kept as the neutral default for
+`make_gate1_node`'s bare mechanics (approve/durability/bad-action tests that
+don't exercise reconciliation at all) -- a real edit-resume node is built by
+passing `reconcile=make_real_reconcile(articles, settings=...)` explicitly,
+the same pluggable-hook pattern already proven by
+`test_gate1_edit_resume_calls_the_pluggable_reconcile_hook`.
 """
 
 from __future__ import annotations
@@ -24,21 +21,51 @@ from typing import Any, Callable
 
 from langgraph.types import interrupt
 
+from newsresearch.agents.subtopic_agent import rank_and_cap_subtopics, reconcile_subtopics
+from newsresearch.config import Settings
 from newsresearch.graph.state import GraphState
+from newsresearch.llm.schemas import SubtopicCandidate
 
 ReconcileFn = Callable[[list[dict]], list[dict]]
 
 
-def stub_reconcile(candidates: list[dict]) -> list[dict]:
-    """Identity placeholder for Task 2.2.3b's real reconciliation logic.
+def make_real_reconcile(
+    articles: list[dict[str, Any]], *, settings: Settings | None = None
+) -> ReconcileFn:
+    """Build a real `reconcile` hook bound to the broad-fetch `articles` the
+    edited candidate set was originally proposed against (Task 2.2.3b/2.2.4).
 
-    Task 2.2.3 (embed+cluster reconciliation: merge candidates mapping to
-    the same cluster, split clusters spanning multiple candidates, drop
-    unsupported candidates) doesn't exist yet. A real edit-resume should
-    re-run that reconciliation against the edited candidate set. Until
-    Task 2.2.3b lands, edited candidates pass through unchanged so Gate 1's
-    interrupt/resume mechanics can be built and tested now. Replace this
-    with Task 2.2.3b's real reconciliation once it lands.
+    Re-runs `reconcile_subtopics` (embed + cluster `articles`, then
+    merge/split/drop the edited candidates against those clusters) and then
+    `rank_and_cap_subtopics` -- in that order, never skipped -- so the raw
+    numpy `centroid` arrays `reconcile_subtopics` carries are stripped before
+    the result could reach a JSON-serializable, Postgres-durable interrupt
+    payload (per the tech-lead's Task 2.2.3b/2.2.4 review note).
+    """
+
+    def real_reconcile(candidates: list[dict]) -> list[dict]:
+        subtopic_candidates = [
+            SubtopicCandidate(label=c["label"], rationale=c.get("rationale", ""))
+            for c in candidates
+        ]
+        reconciled = reconcile_subtopics(articles, subtopic_candidates, settings=settings)
+        capped = rank_and_cap_subtopics(
+            reconciled["reconciled"], reconciled["total_articles"], settings=settings
+        )
+        return capped["candidates"]
+
+    return real_reconcile
+
+
+def stub_reconcile(candidates: list[dict]) -> list[dict]:
+    """Identity placeholder, kept as `make_gate1_node`'s neutral default.
+
+    A real edit-resume should re-run reconciliation against the edited
+    candidate set -- see `make_real_reconcile` for the real Task 2.2.3b/2.2.4
+    logic. This identity pass-through remains the default so bare
+    interrupt/resume mechanics tests (approve, unrecognized-action,
+    durability) that never exercise reconciliation don't need to supply an
+    `articles` context they have no use for.
     """
     return candidates
 
@@ -51,8 +78,9 @@ def make_gate1_node(reconcile: ReconcileFn = stub_reconcile) -> Callable[[GraphS
       - `{"action": "approve"}`: proceeds with `state["candidates"]`
         unchanged.
       - `{"action": "edit", "candidates": [...]}`: the edited candidate
-        list is passed through `reconcile` (stubbed by default; swap in
-        Task 2.2.3b's real logic via this parameter) before proceeding.
+        list is passed through `reconcile` (identity by default; pass
+        `reconcile=make_real_reconcile(articles, settings=...)` for real
+        Task 2.2.3b/2.2.4 reconciliation) before proceeding.
     """
 
     def gate1_node(state: GraphState) -> dict[str, Any]:

@@ -92,3 +92,18 @@ def test_sourcing_min_primary_article_count_defaults_and_overrides(isolated_cwd,
 
     monkeypatch.setenv("SOURCING__MIN_PRIMARY_ARTICLE_COUNT", "5")
     assert Settings().sourcing.min_primary_article_count == 5
+
+
+def test_sourcing_gdelt_min_request_interval_seconds_defaults_and_overrides(
+    isolated_cwd, monkeypatch
+):
+    default_settings = Settings()
+    assert default_settings.sourcing.gdelt_min_request_interval_seconds == 5.0
+
+    (isolated_cwd / "config.yaml").write_text(
+        "sourcing:\n  gdelt_min_request_interval_seconds: 10.0\n"
+    )
+    assert Settings().sourcing.gdelt_min_request_interval_seconds == 10.0
+
+    monkeypatch.setenv("SOURCING__GDELT_MIN_REQUEST_INTERVAL_SECONDS", "2.5")
+    assert Settings().sourcing.gdelt_min_request_interval_seconds == 2.5

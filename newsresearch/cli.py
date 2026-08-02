@@ -18,6 +18,7 @@ import uuid
 from datetime import datetime, timezone
 
 import typer
+from langgraph.types import Command
 from psycopg_pool import ConnectionPool
 
 from newsresearch.agents.sourcing_agent import sourcing_agent
@@ -63,8 +64,108 @@ def _record_run(pool: ConnectionPool, run_id: str) -> None:
         )
 
 
+def _render_gate1(value: dict) -> None:
+    typer.echo("\n=== Gate 1: Subtopic Candidates ===")
+    for i, candidate in enumerate(value.get("candidates", [])):
+        typer.echo(f"  [{i}] {candidate['label']} (articles={candidate.get('article_count', '?')})")
+    excess = value.get("excess") or []
+    if excess:
+        typer.echo("--- Also detected (excess) ---")
+        for candidate in excess:
+            typer.echo(f"  - {candidate['label']}")
+
+
+def _prompt_gate1(value: dict) -> dict:
+    """Render Gate 1's candidate/excess payload and prompt for approve/edit.
+
+    Edit keeps this minimal (throwaway dev UX per `CLAUDE.md`): pick which
+    candidates to keep by index, dropping the rest. `gate1_node`'s `edit`
+    action only needs each surviving candidate's `label` to re-trigger real
+    reconciliation (`make_real_reconcile`), so passing the kept candidate
+    dicts through unchanged is enough.
+    """
+    candidates = value.get("candidates", [])
+    _render_gate1(value)
+    action = typer.prompt("Approve as-is or edit? [a/e]", default="a").strip().lower()
+    if not action.startswith("e"):
+        return {"action": "approve"}
+
+    keep = typer.prompt(
+        "Comma-separated indices to KEEP (blank = keep all)", default=""
+    ).strip()
+    if keep:
+        keep_indices = {int(i) for i in keep.split(",")}
+        edited = [c for i, c in enumerate(candidates) if i in keep_indices]
+    else:
+        edited = candidates
+    return {"action": "edit", "candidates": edited}
+
+
+def _prompt_gate2(cluster_report: dict) -> dict:
+    """Render a per-subtopic Gate 2 cluster report and prompt to continue."""
+    typer.echo("\n=== Gate 2: Cluster Report ===")
+    typer.echo(f"cluster_sizes={cluster_report.get('cluster_sizes')}")
+    typer.echo(f"source_spread={cluster_report.get('source_spread')}")
+    for headline in cluster_report.get("sample_headlines", []):
+        typer.echo(f"  - {headline}")
+    typer.prompt("Press enter to continue", default="", show_default=False)
+    return {"action": "continue"}
+
+
+def _resume_payloads(interrupts) -> dict:
+    """Build one resume payload per pending interrupt, keyed by interrupt id.
+
+    Works uniformly for Gate 1 (a single pending interrupt) and Gate 2's N
+    concurrent per-subtopic interrupts (Task 2.4.1's fan-out): LangGraph
+    only requires interrupt-id keys once more than one interrupt is pending
+    (`langgraph.pregel._loop`), so a single-entry id-keyed map resumes Gate 1
+    just as well as an unkeyed `{"action": ...}` would.
+    """
+    payloads = {}
+    for intr in interrupts:
+        value = intr.value
+        if "candidates" in value:
+            payloads[intr.id] = _prompt_gate1(value)
+        elif "cluster_report" in value:
+            payloads[intr.id] = _prompt_gate2(value["cluster_report"])
+        else:
+            raise ValueError(f"unrecognized interrupt payload: {value!r}")
+    return payloads
+
+
+def _drain_interrupts(graph, result: dict, config: dict) -> dict:
+    """Resume every currently-pending interrupt, looping until none remain.
+
+    Gate 1 interrupts unconditionally after the real `subtopic` node
+    populates `candidates`/`excess`; approving/editing there fans out into
+    one independent Gate 2 interrupt per approved subtopic (Task 2.4.1).
+    Each pass renders every currently-pending interrupt (Gate 1's single
+    one, then Gate 2's N per-subtopic ones) and resumes them all in one
+    `Command(resume=...)` call, per-branch. Shared between the fresh-run and
+    `--thread-id` resume paths (Task 2.8.3) since both reach this same
+    loop, just from a different starting `result`.
+    """
+    while "__interrupt__" in result:
+        result = graph.invoke(
+            Command(resume=_resume_payloads(result["__interrupt__"])), config=config
+        )
+    return result
+
+
 @app.command()
-def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> None:
+def run(
+    topic: str = typer.Argument(..., help="Topic string to research."),
+    thread_id: str = typer.Option(
+        None,
+        "--thread-id",
+        help=(
+            "Rejoin a previously interrupted run by its thread_id/run_id "
+            "(printed at the start of every run) instead of starting a new "
+            "one. TOPIC is still required by the CLI but is ignored -- the "
+            "resumed run's own persisted topic is used."
+        ),
+    ),
+) -> None:
     """Run the Phase-0 no-op graph end-to-end for TOPIC, with observability attached."""
     settings = Settings()
     if not settings.database_url:
@@ -72,36 +173,62 @@ def run(topic: str = typer.Argument(..., help="Topic string to research.")) -> N
             "NEWSRESEARCH_DATABASE_URL must be set (app Postgres) to run the graph."
         )
 
-    run_id = f"run-{uuid.uuid4()}"
     pool = init_db(settings.database_url)
-    _record_run(pool, run_id)
-
     cost_callback = CostCallbackHandler(pool)
     langfuse_callback = get_langfuse_callback_handler(settings)
-
     graph = build_graph(database_url=settings.database_url)
-    initial_state: GraphState = {
-        "topic": topic,
-        "canonical_topic": topic.strip().lower(),
-        "run_id": run_id,
-        "subtopics": [],
-        "approved": False,
-    }
-    config = {
-        "configurable": {"thread_id": run_id},
-        "callbacks": [cost_callback, langfuse_callback],
-        # Phase 0 only makes one stub LLM call (the `subtopic` node, Task
-        # 0.7.4) so a single "stage" for the whole invocation is accurate;
-        # per-node stage tagging is a Phase 1+ concern once real agents exist.
-        "metadata": {**trace_metadata(run_id), "stage": "subtopic"},
-    }
 
-    with mlflow_run(
-        run_id,
-        params={"topic": topic, "max_subtopics": settings.pipeline.max_subtopics},
-        settings=settings,
-    ):
-        result = graph.invoke(initial_state, config=config)
+    if thread_id:
+        run_id = thread_id
+        config = {
+            "configurable": {"thread_id": run_id},
+            "callbacks": [cost_callback, langfuse_callback],
+            "metadata": {**trace_metadata(run_id), "stage": "subtopic"},
+        }
+        snapshot = graph.get_state(config)
+        pending_interrupts = [i for task in snapshot.tasks for i in task.interrupts]
+        if not pending_interrupts:
+            raise typer.BadParameter(
+                f"No pending interrupt found for thread_id={run_id!r} -- it may "
+                "not exist, or the run may have already completed."
+            )
+        typer.echo(f"run_id={run_id} (resuming)")
+        with mlflow_run(
+            run_id,
+            params={"topic": topic, "max_subtopics": settings.pipeline.max_subtopics},
+            settings=settings,
+        ):
+            result = graph.invoke(
+                Command(resume=_resume_payloads(pending_interrupts)), config=config
+            )
+            result = _drain_interrupts(graph, result, config)
+    else:
+        run_id = f"run-{uuid.uuid4()}"
+        _record_run(pool, run_id)
+        typer.echo(f"run_id={run_id} (starting) -- pass --thread-id={run_id} to resume if killed")
+        initial_state: GraphState = {
+            "topic": topic,
+            "canonical_topic": topic.strip().lower(),
+            "run_id": run_id,
+            "subtopics": [],
+            "approved": False,
+        }
+        config = {
+            "configurable": {"thread_id": run_id},
+            "callbacks": [cost_callback, langfuse_callback],
+            # The real `subtopic` node (Story 2.2 production wiring) makes the
+            # only LLM call before Gate 1; per-node stage tagging beyond that is
+            # a Phase 2+ concern for later nodes as they land.
+            "metadata": {**trace_metadata(run_id), "stage": "subtopic"},
+        }
+
+        with mlflow_run(
+            run_id,
+            params={"topic": topic, "max_subtopics": settings.pipeline.max_subtopics},
+            settings=settings,
+        ):
+            result = graph.invoke(initial_state, config=config)
+            result = _drain_interrupts(graph, result, config)
 
     typer.echo(f"run_id={run_id} topic={result['topic']!r} completed.")
 

@@ -57,6 +57,46 @@ class ClusteringSettings(BaseModel):
     similarity_threshold: float = 0.75
     subtopic_match_threshold: float = 0.8
 
+    # Task 2.1.2a/2.1.2b: data-scientist's sweep (`notebooks/phase2_clustering_eval.py`,
+    # `notebooks/phase2-clustering-recommendation.md`) against
+    # `tests/fixtures/clustering_synthetic_topics.json` found `min_cluster_size=4`
+    # the clear ARI peak (0.781 with sklearn's `HDBSCAN`). `min_samples` was
+    # re-validated against the real standalone `hdbscan` package (the TRD's
+    # named library, not yet installed when the data-scientist ran their
+    # sweep): the two libraries diverge here -- `min_samples=1` reproduces the
+    # sklearn-derived ARI=0.781, but `min_samples=2` (the data-scientist's
+    # original pick) collapses to ARI=0.324/2 clusters-found with the real
+    # `hdbscan` package. `min_samples=1` is used here instead of the
+    # originally-recommended 2, since it's the value that actually performs
+    # well against the library this project depends on.
+    hdbscan_min_cluster_size: int = 4
+    hdbscan_min_samples: int = 1
+
+    # Below this many vectors, HDBSCAN can't reliably discover cluster
+    # structure (density-based methods need enough points per cluster) --
+    # `cluster()` falls back to KMeans instead. Value per the data-scientist's
+    # subsample sweep: ARI already weak (0.24-0.55) by n=20-28 and collapses
+    # to 0 by n=12, so the fallback triggers before HDBSCAN is merely
+    # "a bit worse". Re-confirmed against the real `hdbscan` package at the
+    # corrected `min_samples=1` (same degradation curve as the sklearn-based
+    # sweep: 0.554@28, 0.242@20, 0.0@12).
+    kmeans_fallback_threshold: int = 20
+
+    # Task 2.2.3a (`notebooks/phase2-reconciliation-design.md`): candidate<->
+    # cluster-centroid cosine similarity to "claim" a cluster (else dropped),
+    # and candidate<->candidate cosine similarity to treat two claimants of
+    # the same cluster as one merged claim vs. distinct (split) claims.
+    # Both derived from an observed gap on the design doc's fixture, not
+    # guessed -- see that doc's "Threshold derivation" section.
+    reconciliation_match_threshold: float = 0.60
+    reconciliation_dup_threshold: float = 0.65
+
+    # Task 2.2.3a's distinctiveness-score formula weights (must sum to 1.0):
+    # `0.5*volume_norm + 0.5*avg_pairwise_distance`, an equal-weighting
+    # starting point per the design doc, not a tuned result.
+    distinctiveness_volume_weight: float = 0.5
+    distinctiveness_distance_weight: float = 0.5
+
 
 class SourcingSettings(BaseModel):
     # Below this many combined GDELT+RSS primary results, the sourcing
@@ -66,6 +106,29 @@ class SourcingSettings(BaseModel):
     # backfill) but high enough that a normal multi-source haul doesn't
     # trigger the unofficial-endpoint fallback needlessly (NFR-3).
     min_primary_article_count: int = 15
+
+    # Minimum seconds enforced between GDELT HTTP requests *across all
+    # concurrently-running Send-fanned branches in this process* (Task:
+    # GDELT rate-limit fix under concurrent fan-out). GDELT's own documented
+    # policy is "one request per 5 seconds" -- reuses the same value as
+    # `gdelt.DEFAULT_INTER_REQUEST_DELAY_SECONDS` (sequential sub-window
+    # pacing within a single branch) since both exist to respect the same
+    # documented per-IP limit; no reason for the cross-branch floor to be
+    # looser than the single-branch one.
+    gdelt_min_request_interval_seconds: float = 5.0
+
+    # How many times `gdelt.query_window()` retries a 429/rate-limit-text
+    # response before raising `GDELTError`, and the base (attempt-1) delay
+    # of its exponential backoff. Both used to be hardcoded function-default
+    # literals with no `Settings` knob at all -- confirmed live (see PR
+    # fixing bug where a single, non-concurrent request still exhausted all
+    # retries) that GDELT can enforce an IP-level cooldown lasting well
+    # past the default 5-retry/5s-base schedule's ~155s total wait. No code
+    # change can shorten a block GDELT itself imposes; this just lets an
+    # operator widen the retry budget without a code change if their
+    # observed block duration is longer than the default covers.
+    gdelt_max_retries: int = 5
+    gdelt_backoff_base_seconds: float = 5.0
 
 
 class ModelSettings(BaseModel):

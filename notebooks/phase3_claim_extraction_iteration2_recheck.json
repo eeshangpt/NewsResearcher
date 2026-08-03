@@ -1,0 +1,553 @@
+[
+  {
+    "url": "https://www.bbc.co.uk/news/articles/c5yvqk69enko?at_medium=RSS&at_campaign=rss",
+    "n_claims": 31,
+    "claims": [
+      {
+        "claim_text": "Dozens of people have been killed across the region in clashes between security officials and protesters from the group Joint Awami Action Committee (JAAC) in the last two months.",
+        "subject": "protests and clashes in Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "This region is home to about 4.5 million people and currently has elections taking place.",
+        "subject": "the region of Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Dr Anwar's clinic has treated around 50 to 60 critically injured patients since 27 July, including 15 to 20 with gunshot wounds.",
+        "subject": "Dr Anwar's makeshift clinic",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Protesters are scared to go to the main hospital because they fear they will be arrested or shot.",
+        "subject": "protesters in Rawalakot",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The authorities have said that the claim protesters fear being arrested or shot at hospital is inaccurate.",
+        "subject": "authorities in Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Most of those killed or seriously injured are young people between about 15-16 years old and 32-35 years old, with very few patients over the age of 40.",
+        "subject": "casualties at the protests",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Protesters from the JAAC say the demonstrations are about their rights, including affordable flour, electricity prices, education, and health care.",
+        "subject": "Joint Awami Action Committee (JAAC) protesters",
+        "attributed_source": "JAAC protesters",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "An agreement signed with the Pakistan and Pakistan-administered Kashmir governments in October was meant to help address protesters' concerns, but the JAAC says it has not been implemented.",
+        "subject": "agreement between Pakistan, Pakistan-administered Kashmir governments and JAAC",
+        "attributed_source": "Joint Awami Action Committee (JAAC)",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The local government says the JAAC group is armed and that the protests are about disrupting the ongoing polls.",
+        "subject": "local government in Pakistan-administered Kashmir",
+        "attributed_source": "local government",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "The local government is not willing to let the protesters march to the regional capital, Muzaffarabad.",
+        "subject": "local government in Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The JAAC was banned in June and labeled foreign-funded terrorists by the government.",
+        "subject": "Joint Awami Action Committee (JAAC)",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The JAAC rejects being characterized as terrorists, says they are peaceful, and claims they are funded from the Pakistan-administered Kashmir community abroad but not sponsored by India.",
+        "subject": "Joint Awami Action Committee (JAAC)",
+        "attributed_source": "Joint Awami Action Committee (JAAC)",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "JAAC says they are victims and Pakistan's security forces have been firing on them rather than them initiating violence.",
+        "subject": "Joint Awami Action Committee (JAAC) and Pakistan's security forces",
+        "attributed_source": "Joint Awami Action Committee (JAAC)",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "The internet is cut and roads are blocked or guarded in Rawalakot, making it difficult to get information about the situation.",
+        "subject": "access to information in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Multiple families in the city say they lost loved ones who were shot at the protests.",
+        "subject": "families in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said she was at the protest when she heard her only son had been shot.",
+        "subject": "Asma",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Salman lost his brother in the protests.",
+        "subject": "Salman",
+        "attributed_source": "Salman",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ayub, a retired armed forces member, lost his son and blames the Pakistan-administered Kashmir government for calling in paramilitary forces.",
+        "subject": "Ayub",
+        "attributed_source": "Ayub",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The government of Pakistan-administered Kashmir says it rejects the allegation that security forces fired indiscriminately upon peaceful protesters and says law enforcement acted against individuals involved in attacks and threats.",
+        "subject": "government of Pakistan-administered Kashmir",
+        "attributed_source": "government of Pakistan-administered Kashmir",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "The BBC witnessed food shortages in Rawalakot with many protesters sharing what they had and most shops closed.",
+        "subject": "food situation in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Some roads into Rawalakot have been blocked by felled trees, which the authorities say were placed by the JAAC.",
+        "subject": "road blockades around Rawalakot",
+        "attributed_source": "authorities",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Other entry points to Rawalakot have security checkpoints.",
+        "subject": "entry points to Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pakistan-administered Kashmir's government said it is false to suggest they are preventing food or medical supplies from entering Rawalakot, saying they are facilitating the entry of such supplies.",
+        "subject": "Pakistan-administered Kashmir's government",
+        "attributed_source": "Pakistan-administered Kashmir's government",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Authorities have repeatedly said that the JAAC are a violent group and have shared drone footage showing what they claim are JAAC members carrying guns on rooftops.",
+        "subject": "authorities' claims about JAAC",
+        "attributed_source": "authorities",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Police officials have displayed guns allegedly taken from JAAC members and reported injuries and deaths of security officials, including that one man under interrogation said he was promised a reward for every paramilitary officer killed.",
+        "subject": "police officials",
+        "attributed_source": "police officials",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Umar Nazir, a JAAC core committee member, denies the allegation about the reward for paramilitary officer killings but acknowledges some deaths of security officials.",
+        "subject": "Umar Nazir",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Umar Nazir believes that certain elements infiltrated the JAAC ranks and may have carried out violent actions to justify authorities' narratives, but he provides no evidence.",
+        "subject": "Umar Nazir",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Authorities say the JAAC have engaged in a campaign of disinformation against them, especially on social media.",
+        "subject": "authorities",
+        "attributed_source": "authorities",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "At JAAC protests the BBC attended, no sign of weaponry or shooting was seen, although overnight repeated gunshots were heard with unclear origin.",
+        "subject": "BBC observations at JAAC protests",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The atmosphere in Rawalakot during the protests is tense and uncertain, with unclear prospects for escalation.",
+        "subject": "current atmosphere in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Umar Nazir said the JAAC group is willing to talk and that more protests are planned for now.",
+        "subject": "Umar Nazir and JAAC plans",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/australia-news/2026/aug/03/one-nation-candidates-victoria-state-election-2026-ntwnfb",
+    "n_claims": 46,
+    "claims": [
+      {
+        "claim_text": "One Nation has named its first candidates for the upcoming Victorian state election",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson has vowed to ban the ABC and the Guardian from attending her press conferences during the campaign",
+        "subject": "Pauline Hanson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Reporters from the ABC and the Age were refused entry to Hanson's press conference on Monday",
+        "subject": "ABC and the Age reporters",
+        "attributed_source": "Guardian Australia",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Reporters from the ABC, the Age and the Guardian were not told the time or location of the event in advance",
+        "subject": "ABC, the Age and the Guardian reporters",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation has previously said the ABC and the Guardian were not welcome at the party's events and press conferences",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said democracy doesn't happen on the ABC at all",
+        "subject": "Pauline Hanson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson claimed she denied ABC journalists access to her events for eight months in 1996",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said the same exclusion will go with the Guardian",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said she is not putting up with spin, gotcha moments, and being treated differently compared to other major political parties",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said One Nation has Rebel News and she is happy with them",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Rebel News Australia is run by Avi Yemini, a former Israeli soldier and self-styled investigative journalist",
+        "subject": "Rebel News Australia",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering is One Nation's Victorian president",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering said the party expects and invites a healthy amount of scrutiny of candidates and policy positions",
+        "subject": "Warren Pickering",
+        "attributed_source": "Warren Pickering",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering said blatant character assassination attempts based on fabrications will be met with swift legal action",
+        "subject": "Warren Pickering",
+        "attributed_source": "Warren Pickering",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said it was disappointing that One Nation continues to prevent the Guardian and other news outlets from reporting on its press conferences",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said holding public figures to account is the role of a free press and an essential part of the democratic process",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said journalists should be able to ask questions in the public interest and not be deterred from doing their job",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Guardian has published important public interest journalism about Hanson and her party, which it stands by",
+        "subject": "The Guardian",
+        "attributed_source": "Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson announced Warren Pickering would lead the party's campaign and run as its candidate for the eastern Victoria region in the upper house",
+        "subject": "Pauline Hanson",
+        "attributed_source": "media release prior to Monday's press conference",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said Warren Pickering would instead be running in the lower house seat of Pakenham",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson at the press conference",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation has set up an office in the ultra-marginal electorate of Pakenham",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering ran One Nation's campaign in the 2022 election",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation won 0.22% of first-preference votes in the lower house and 2% in the upper house in the 2022 election",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering unsuccessfully contested a Victorian Senate seat for One Nation at the federal election last year",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Since the 2022 election, One Nation has surged in the polls with latest figures showing between 19 and 27% of Victorians are considering voting for the party",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin, a former member of the Liberal party\u2019s administrative committee, will contest the south-eastern metropolitan region for One Nation",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin quit the Liberal party in June to join One Nation",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin is the director of education at the Institute of Public Affairs",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin has been a vocal supporter of Moira Deeming",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin led a supreme court challenge against the Liberals\u2019 decision to grant John Pesutto a $1.5m loan",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin drew controversy during the 2022 federal election campaign as the Liberal candidate for Macnamara when she said describing global warming as a climate emergency was 'almost' child abuse",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin sought Liberal preselection for the neighbouring seat of Goldstein in 2024 but lost to Tim Wilson",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Mark Nicholson, co-founder of Stepmates Studios, will stand in the northern metropolitan region for One Nation",
+        "subject": "Mark Nicholson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Stepmates Studios creates Hanson's cartoon web series Please Explain and her satirical 'anti-woke' movie",
+        "subject": "Stepmates Studios",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Geelong councillor and former police officer Chris Burson will contest western Victoria for One Nation",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson has served with the Australian Defence Force",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson ran unsuccessfully for the Angry Victorians Party at the 2022 state election and Australian Values party at the 2022 federal election",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson worked with the close personal protection team guarding then premier Daniel Andrews and his wife during the pandemic",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation's only current MP, Rikkie-Lee Tyrrell, will seek re-election in northern Victoria",
+        "subject": "Rikkie-Lee Tyrrell",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Fiona Lopez, Aaron Sandford and Natalie Adams will head One Nation's tickets in the western metropolitan, southern metropolitan and north eastern metropolitan regions respectively",
+        "subject": "Fiona Lopez, Aaron Sandford, and Natalie Adams",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "It remains unclear who will contest the eastern Victoria region for One Nation with Warren Pickering running in the lower house",
+        "subject": "One Nation eastern Victoria candidates",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "New Victorian premier Ben Carroll introduced legislation to parliament last week that will scrap group voting tickets (GVTs)",
+        "subject": "Ben Carroll",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "If One Nation maintains its current polling, the upper house candidates in the number one spot on each ticket are the party's most likely prospects to win seats",
+        "subject": "One Nation upper house candidates",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Pauline Hanson said One Nation will be fielding candidates in every seat at the election",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said the party will release policies in coming weeks",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said Avi Yemini should take credit for the decision to scrap GVTs after he registered the Free Palestine party earlier this year with the intention to funnel votes to conservative parties",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  }
+]

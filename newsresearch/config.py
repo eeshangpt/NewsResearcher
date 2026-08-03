@@ -147,6 +147,13 @@ class SourcingSettings(BaseModel):
     gdelt_max_retries: int = 5
     gdelt_backoff_base_seconds: float = 5.0
 
+    # Seconds `sourcing/fulltext.py::fetch_fulltext()` allows `trafilatura`
+    # to spend downloading a single article before giving up (issue #108: an
+    # unresponsive URL previously hung indefinitely). 30 matches
+    # `trafilatura`'s own upstream default and `gdelt.py`'s `httpx.Client`
+    # timeout, so a single slow/dead article can't stall a batch fetch.
+    fulltext_fetch_timeout_seconds: float = 30.0
+
 
 class ModelSettings(BaseModel):
     # Placeholder model names per stage (TRD 2: small model for mechanical

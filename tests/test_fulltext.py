@@ -1,0 +1,70 @@
+"""Task 3.1.1 tests: in-memory full-text fetch, no persistence path."""
+
+import ast
+from pathlib import Path
+from unittest.mock import patch
+
+from newsresearch.sourcing.fulltext import fetch_fulltext, fetch_fulltext_for_cluster
+
+FULLTEXT_PATH = Path(__file__).resolve().parent.parent / "newsresearch" / "sourcing" / "fulltext.py"
+
+
+def test_fulltext_module_never_imports_persistence():
+    tree = ast.parse(FULLTEXT_PATH.read_text())
+    names: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            names.update(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            names.add(node.module)
+
+    assert not any("persistence" in name for name in names)
+
+
+def test_fetch_fulltext_success():
+    with (
+        patch("trafilatura.fetch_url", return_value="<html>raw</html>"),
+        patch("trafilatura.extract", return_value="the article body"),
+    ):
+        assert fetch_fulltext("https://example.com/a") == "the article body"
+
+
+def test_fetch_fulltext_unreachable_url_soft_fails():
+    with patch("trafilatura.fetch_url", side_effect=Exception("network error")):
+        assert fetch_fulltext("https://unreachable.example.com/a") is None
+
+
+def test_fetch_fulltext_no_content_downloaded():
+    with patch("trafilatura.fetch_url", return_value=None):
+        assert fetch_fulltext("https://example.com/a") is None
+
+
+def test_fetch_fulltext_empty_extraction_result():
+    with (
+        patch("trafilatura.fetch_url", return_value="<html>raw</html>"),
+        patch("trafilatura.extract", return_value=None),
+    ):
+        assert fetch_fulltext("https://example.com/a") is None
+
+
+def test_fetch_fulltext_for_cluster_one_bad_url_does_not_crash_batch():
+    articles = [
+        {"url": "https://good.example.com/a", "title": "t1", "domain": "good.example.com"},
+        {"url": "https://bad.example.com/b", "title": "t2", "domain": "bad.example.com"},
+    ]
+
+    def fake_fetch_url(url, *args, **kwargs):
+        if "bad" in url:
+            raise Exception("network error")
+        return "<html>raw</html>"
+
+    with (
+        patch("trafilatura.fetch_url", side_effect=fake_fetch_url),
+        patch("trafilatura.extract", return_value="body text"),
+    ):
+        results = fetch_fulltext_for_cluster(articles)
+
+    assert results == [
+        {"url": "https://good.example.com/a", "fulltext": "body text"},
+        {"url": "https://bad.example.com/b", "fulltext": None},
+    ]

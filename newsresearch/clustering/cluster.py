@@ -53,28 +53,51 @@ def _estimate_k(vectors: np.ndarray) -> int:
     return best_k
 
 
-def cluster(vectors: np.ndarray, k_hint: int | None = None) -> np.ndarray:
+def cluster(
+    vectors: np.ndarray,
+    k_hint: int | None = None,
+    *,
+    min_cluster_size: int | None = None,
+    min_samples: int | None = None,
+    kmeans_fallback_threshold: int | None = None,
+) -> np.ndarray:
     """Cluster `vectors` (shape `(n, dim)`), returning an `(n,)` label array.
 
     HDBSCAN is primary: density-based, discovers the cluster count itself,
     and marks ambiguous/outlier points as noise (label `-1`). Below
-    `Settings.clustering.kmeans_fallback_threshold` vectors, HDBSCAN can't
-    reliably find cluster structure (per the data-scientist's subsample
-    sweep), so `cluster()` falls back to KMeans instead, forcing every point
-    into one of `k_hint` clusters (or a silhouette-estimated `k` if no hint
-    is supplied -- see `_estimate_k`).
+    `kmeans_fallback_threshold` vectors, HDBSCAN can't reliably find cluster
+    structure (per the data-scientist's subsample sweep), so `cluster()`
+    falls back to KMeans instead, forcing every point into one of `k_hint`
+    clusters (or a silhouette-estimated `k` if no hint is supplied -- see
+    `_estimate_k`).
 
     `k_hint`, when given, is a caller-supplied expected cluster count (e.g.
     the Subtopic Agent's LLM-proposed candidate count for Task 2.2.3) used
     only for the KMeans fallback path; HDBSCAN never takes a k hint since it
     discovers cluster count from density.
+
+    `min_cluster_size`/`min_samples`/`kmeans_fallback_threshold` default to
+    Phase 2's article-level `Settings.clustering.hdbscan_min_cluster_size`/
+    `hdbscan_min_samples`/`kmeans_fallback_threshold` when not passed, so
+    Phase 2's existing call sites are unaffected. Task 3.3.1b's claim-level
+    caller passes the dedicated `Settings.clustering.claim_*` values instead
+    (tech-lead's architecture decision: claim-text granularity doesn't share
+    article-title-tuned hyperparameters -- see `config.py`'s
+    `ClusteringSettings` docstring).
     """
     settings = Settings()
+    if min_cluster_size is None:
+        min_cluster_size = settings.clustering.hdbscan_min_cluster_size
+    if min_samples is None:
+        min_samples = settings.clustering.hdbscan_min_samples
+    if kmeans_fallback_threshold is None:
+        kmeans_fallback_threshold = settings.clustering.kmeans_fallback_threshold
+
     n = len(vectors)
     if n == 0:
         return np.array([], dtype=int)
 
-    if n < settings.clustering.kmeans_fallback_threshold:
+    if n < kmeans_fallback_threshold:
         k = k_hint if k_hint is not None else _estimate_k(vectors)
         k = max(1, min(k, n))
         logger.info("cluster: n=%d below kmeans_fallback_threshold, using KMeans(k=%d)", n, k)
@@ -82,8 +105,8 @@ def cluster(vectors: np.ndarray, k_hint: int | None = None) -> np.ndarray:
         return model.fit_predict(vectors)
 
     model = HDBSCAN(
-        min_cluster_size=settings.clustering.hdbscan_min_cluster_size,
-        min_samples=settings.clustering.hdbscan_min_samples,
+        min_cluster_size=min_cluster_size,
+        min_samples=min_samples,
         metric="euclidean",
     )
     return model.fit_predict(vectors)

@@ -90,6 +90,29 @@ class ClusteringSettings(BaseModel):
     # sweep: 0.554@28, 0.242@20, 0.0@12).
     kmeans_fallback_threshold: int = 20
 
+    # Task 3.3.1a (`notebooks/phase3_claim_clustering_review.md`, data-scientist,
+    # commit `f16c6d1`): claim-text embeddings are a materially different
+    # granularity than Phase 2's article-title+snippet embeddings (short,
+    # numerous, and real same-fact duplication comes in pairs/triples, not
+    # the 4+-member dense cores `hdbscan_min_cluster_size=4` was tuned for) --
+    # per tech-lead's architecture decision, these get dedicated fields
+    # instead of sharing the article-level ones. Full-120-real-claim HDBSCAN
+    # sweep found `min_cluster_size=2` the clear F1 winner (0.744 vs.
+    # 0.318-0.649 at 3-6); `min_samples=1`/`2` tied at every setting, `1`
+    # picked for consistency with `hdbscan_min_samples` above.
+    claim_min_cluster_size: int = 2
+    claim_min_samples: int = 1
+
+    # PROVISIONAL, not final -- data-scientist's subsample sweep found the
+    # shared `kmeans_fallback_threshold=20` is unit-blind (raw vector count
+    # regardless of what's being clustered) and would never trigger for
+    # claims, where real per-subtopic volume is virtually always 60-200+ and
+    # HDBSCAN false-merge precision was already degrading well above 20
+    # (0.674@120 -> 0.481@90 -> 0.278@60). ~40 is a provisional value pending
+    # a dedicated claim-count sweep, not a tuned result -- flagged as a
+    # follow-up in the review doc.
+    claim_kmeans_fallback_threshold: int = 40
+
     # Task 2.2.3a (`notebooks/phase2-reconciliation-design.md`): candidate<->
     # cluster-centroid cosine similarity to "claim" a cluster (else dropped),
     # and candidate<->candidate cosine similarity to treat two claimants of

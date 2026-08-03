@@ -1,0 +1,2224 @@
+[
+  {
+    "url": "https://www.theguardian.com/australia-news/2026/aug/03/one-nation-candidates-victoria-state-election-2026-ntwnfb",
+    "domain": "theguardian.com",
+    "title": "One Nation names eight Victorian election candidates as Hanson bars ABC and Guardian from press conferences",
+    "n_claims": 44,
+    "claims": [
+      {
+        "claim_text": "One Nation has named its first candidates for the upcoming Victorian state election.",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson has vowed to ban the ABC and the Guardian from attending her press conferences during the campaign.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Reporters from the ABC and the Age were refused entry to Hanson\u2019s press conference on Monday.",
+        "subject": "reporters from the ABC and the Age",
+        "attributed_source": "Guardian Australia",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Reporters from the ABC, the Age and the Guardian were not told the time or location of the press conference in advance.",
+        "subject": "reporters from the ABC, the Age and the Guardian",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation previously said the ABC and the Guardian were not welcome at the party\u2019s events and press conferences.",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said it was not the first time she had excluded the ABC and claimed she denied ABC journalists access to her events for eight months in 1996.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said the same exclusion will go with the Guardian.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said she is not putting up with the spin, gotcha moments, and different treatment compared to other major political parties by the ABC and the Guardian.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said democracy doesn\u2019t happen on the ABC at all.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said she is happy with Rebel News carrying her message.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Rebel News Australia is run by Avi Yemini, a former Israeli soldier and self-styled investigative journalist.",
+        "subject": "Rebel News Australia",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering is One Nation's Victorian president.",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering said the party expects and invites a healthy amount of scrutiny of its candidates and policy positions.",
+        "subject": "Warren Pickering",
+        "attributed_source": "Warren Pickering",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering said that any blatant character assassination attempts based on fabrications of their candidates will be met with swift legal action.",
+        "subject": "Warren Pickering",
+        "attributed_source": "Warren Pickering",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said it was disappointing that One Nation continues to prevent the Guardian and other news outlets from reporting on its press conferences.",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "a Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said holding public figures to account is the role of a free press and an essential part of the democratic process.",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "a Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A Guardian spokesperson said journalists should be able to ask questions in the public interest and not be deterred from doing their job.",
+        "subject": "A Guardian spokesperson",
+        "attributed_source": "a Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Guardian has published important public interest journalism about Hanson and her party which it stands by.",
+        "subject": "The Guardian",
+        "attributed_source": "a Guardian spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson announced Warren Pickering would lead the party\u2019s campaign and run as its candidate for the eastern Victoria region in the upper house.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "a media release prior to Monday\u2019s press conference",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering said at the event he would instead be running in the lower house seat of Pakenham.",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation has set up an office in the ultra-marginal electorate of Pakenham southeast of Melbourne.",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering ran One Nation\u2019s campaign in the 2022 election, where it won 0.22% of first-preference votes in the lower house and 2% in the upper house.",
+        "subject": "Warren Pickering and One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Warren Pickering unsuccessfully contested a Victorian Senate seat for One Nation at last year\u2019s federal election.",
+        "subject": "Warren Pickering",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Since the 2022 election, One Nation has surged in the polls with latest figures showing between 19 and 27% of Victorians are considering voting for the party.",
+        "subject": "One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin, a former member of the Liberal party\u2019s administrative committee, will contest the south-eastern metropolitan region for One Nation.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin quit the Liberal party in June to join One Nation.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin is the director of education at the conservative thinktank the Institute of Public Affairs.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin has been a vocal supporter of Moira Deeming and led a supreme court challenge against the Liberals\u2019 decision to grant John Pesutto a $1.5m loan after he lost a defamation case against the MP.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin said describing global warming as a climate emergency was almost child abuse during the 2022 federal election campaign.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Colleen Harkin sought Liberal preselection for the neighbouring seat of Goldstein in 2024 but lost to Tim Wilson.",
+        "subject": "Colleen Harkin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Mark Nicholson, co-founder of animation house Stepmates Studios, will stand in the northern metropolitan region for One Nation.",
+        "subject": "Mark Nicholson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Stepmates Studios creates Hanson\u2019s cartoon web series Please Explain and her satirical, \u201canti-woke\u201d movie.",
+        "subject": "Stepmates Studios",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Geelong councillor and former police officer Chris Burson will contest western Victoria for One Nation.",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson also has served with the Australian Defence Force.",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson ran unsuccessfully for the Angry Victorians Party at the 2022 state election and the Australian Values party at the 2022 federal election.",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson told a podcast in June he worked with the close personal protection team guarding then premier Daniel Andrews and his wife Catherine during the pandemic.",
+        "subject": "Chris Burson",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chris Burson said that during the pandemic they were prepared for attacks while guarding Daniel Andrews and the city of Melbourne.",
+        "subject": "Chris Burson",
+        "attributed_source": "Chris Burson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "One Nation\u2019s only current MP, Rikkie-Lee Tyrrell, will seek re-election in northern Victoria.",
+        "subject": "Rikkie-Lee Tyrrell",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Fiona Lopez, Aaron Sandford and Natalie Adams will head One Nation\u2019s tickets in the western metropolitan, southern metropolitan and north eastern metropolitan regions respectively.",
+        "subject": "Fiona Lopez, Aaron Sandford, Natalie Adams",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "With Warren Pickering running in the lower house, it remains unclear who will contest the eastern Victoria region for One Nation.",
+        "subject": "One Nation eastern Victoria region candidate",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ben Carroll, the new Victorian premier, introduced legislation last week to scrap group voting tickets (GVTs).",
+        "subject": "Ben Carroll",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The change to scrap group voting tickets means if One Nation maintains its current polling, the upper house candidates in the number one spot on each ticket are most likely to win seats.",
+        "subject": "Group voting ticket legislation effect on One Nation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said One Nation will be fielding candidates in every seat at the election and will release policies in coming weeks.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pauline Hanson said Avi Yemini should take credit for the decision to scrap GVTs, after he registered the Free Palestine party earlier this year intending to funnel votes to conservative parties.",
+        "subject": "Pauline Hanson",
+        "attributed_source": "Pauline Hanson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "url": "https://www.aljazeera.com/sports/2026/8/3/wales-fa-withdraws-support-for-infantino-re-election-after-fifa-stake-plan?traffic_source=rss",
+    "domain": "aljazeera.com",
+    "title": "England set to follow Wales in withdrawing support for FIFA\u2019s Infantino",
+    "n_claims": 12,
+    "claims": [
+      {
+        "claim_text": "England's Football Association will join Wales in withdrawing support for FIFA President Gianni Infantino\u2019s re-election bid",
+        "subject": "England's Football Association",
+        "attributed_source": "a source familiar with the matter",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "FIFA\u2019s plan to unlock up to $4.2 billion from private investors by selling a roughly 20% stake in a new entity overseeing competitions including the World Cup ended in retreat on Friday",
+        "subject": "FIFA\u2019s plan to unlock funding by selling a stake",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Wales became the first national federation to formally withdraw its support for Infantino",
+        "subject": "Wales Football Association",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Football Association of Wales confirmed its withdrawal of support for the candidature of Mr Gianni Infantino for re-election as FIFA President for the 2027\u20132031 term",
+        "subject": "Football Association of Wales",
+        "attributed_source": "a statement by the Welsh FA",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The recent failures in good governance, processes, leadership, values, stakeholder management, communications and sound judgement have led the Welsh FA to lose confidence in Infantino to remain at the helm of world football",
+        "subject": "Welsh Football Association's confidence in Gianni Infantino",
+        "attributed_source": "a statement by the Welsh FA",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "FIFA are yet to publicly comment on the Wales statement",
+        "subject": "FIFA",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Infantino is under unprecedented fire after regional confederations for Europe (UEFA) and North and Central America (CONCACAF) said they had lost confidence in his leadership",
+        "subject": "Gianni Infantino's leadership confidence",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "UEFA led the backlash to Infantino\u2019s plans and welcomed the decision to scrap it",
+        "subject": "UEFA",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "UEFA sent a document preservation order to stop the destruction of emails, files or data when an investigation is expected",
+        "subject": "UEFA",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Infantino said in April he intended to seek re-election for a fourth term as FIFA chief",
+        "subject": "Gianni Infantino",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Since taking over from Sepp Blatter in 2016, Infantino has been re-elected unopposed twice",
+        "subject": "Gianni Infantino",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The backlash against the failed proposal exposed dissatisfaction among FIFA members and could complicate Infantino's path ahead of March\u2019s Congress in Morocco",
+        "subject": "Backlash against Gianni Infantino's proposal and its impact",
+        "attributed_source": "experts told Reuters",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      }
+    ]
+  },
+  {
+    "url": "https://www.bbc.co.uk/news/articles/c1e1d5j6660o?at_medium=RSS&at_campaign=rss",
+    "domain": "bbc.com",
+    "title": "Aung San Suu Kyi appears healthy in first confirmed outside contact for 2.5 years",
+    "n_claims": 26,
+    "claims": [
+      {
+        "claim_text": "Detained Burmese leader Aung San Suu Kyi has been allowed to meet a delegation from the International Committee of the Red Cross",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "This meeting is the first confirmed outside contact with Aung San Suu Kyi since a letter to her son two and a half years ago",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "In photographs of the meeting released by the military government Aung San Suu Kyi appeared to be healthy",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the military government",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "She was detained shortly after the armed forces deposed her government in 2021",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "She was sentenced to 33 years in jail on what are widely viewed as trumped-up charges",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Her sentence has been reduced",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "She has been moved to house arrest",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Despite repeated assurances from the military that Aung San Suu Kyi is alive and well, they have never provided any convincing evidence of this",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Her son Kim Aris has in recent months mounted an international campaign demanding proof of life for Aung San Suu Kyi",
+        "subject": "Kim Aris",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A delegation from the ICRC has been allowed to meet Aung San Suu Kyi",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "This was her first confirmed meeting with anyone outside the government for nearly four years",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Photographs released of her with the ICRC team led by its representative Arnaud de Baecque show Aung San Suu Kyi looking relaxed and well",
+        "subject": "Aung San Suu Kyi",
+        "attributed_source": "the military government",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "No details of Aung San Suu Kyi's state of health have been given",
+        "subject": "Aung San Suu Kyi's state of health",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "No details have been given of what Aung San Suu Kyi and the ICRC delegation talked about",
+        "subject": "meeting between Aung San Suu Kyi and ICRC delegation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The ICRC said the visit was carried out in accordance with its standards and procedures for visiting people deprived of liberty",
+        "subject": "International Committee of the Red Cross visit",
+        "attributed_source": "the International Committee of the Red Cross",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The visit included the opportunity to speak with Daw Aung San Suu Kyi in private",
+        "subject": "Aung San Suu Kyi's meeting with ICRC",
+        "attributed_source": "the International Committee of the Red Cross",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Kim Aris welcomed the news about the meeting, saying it was the first positive development for his mother in more than five years",
+        "subject": "Kim Aris",
+        "attributed_source": "Kim Aris",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Kim Aris said on social media that this may be a first step but it must not be the last",
+        "subject": "Kim Aris",
+        "attributed_source": "Kim Aris",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Myanmar government is still headed by coup leader Min Aung Hlaing",
+        "subject": "Myanmar government leadership",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Myanmar government is dominated by the military despite an election held earlier this year",
+        "subject": "Myanmar government",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Myanmar government is trying to end its diplomatic isolation in a series of official visits to neighbouring countries",
+        "subject": "Myanmar government",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Top demands being made of Myanmar's military leadership include ending the aerial bombardment of opposition-held areas",
+        "subject": "Myanmar military leadership",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Top demands being made of Myanmar's military leadership include starting negotiations to end the civil war",
+        "subject": "Myanmar military leadership",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Top demands being made of Myanmar's military leadership include releasing Aung San Suu Kyi",
+        "subject": "Myanmar military leadership",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Myanmar military leadership has so far rejected those calls",
+        "subject": "Myanmar military leadership's response to demands",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The publication of this morning's meeting suggests Myanmar's military leadership may be willing to accede to the demand to release Aung San Suu Kyi",
+        "subject": "Myanmar military leadership's potential willingness to release Aung San Suu Kyi",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/society/2026/jul/31/hiv-aids-medication-usaid-cuts",
+    "domain": "theguardian.com",
+    "title": "HIV prevention drug could reduce cases globally but USAID cuts prevent access, say experts",
+    "n_claims": 29,
+    "claims": [
+      {
+        "claim_text": "New innovations in HIV prevention could dramatically reduce the number of new HIV cases around the globe.",
+        "subject": "Innovations in HIV prevention",
+        "attributed_source": "experts at the Aids 2026 Conference in Rio de Janeiro, Brazil",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "US foreign aid cuts will mean that those that most need the new medication will be unable to access it.",
+        "subject": "US foreign aid cuts impact on access to new medications",
+        "attributed_source": "experts at the Aids 2026 Conference in Rio de Janeiro, Brazil",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "One year ago, the World Health Organization recommended that governments around the world prioritize expanded access to lenacapavir, an injectable version of the HIV prevention medication PrEP that requires only two injections annually.",
+        "subject": "World Health Organization (WHO)",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "PrEP is 99% effective in preventing sexually transmitted HIV for people who take it consistently.",
+        "subject": "PrEP effectiveness",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Access to lenacapavir is limited outside clinical trials.",
+        "subject": "Access to lenacapavir",
+        "attributed_source": "the World Health Organization",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The WHO recommended that governments around the world prioritize scaling up availability of the injectable medication lenacapavir, because it could be gamechanging for populations that face considerable barriers to access for the medications currently available.",
+        "subject": "World Health Organization (WHO) recommendation on lenacapavir",
+        "attributed_source": "the World Health Organization",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "For people who face poverty or stigma, or who live in rural areas far from healthcare services, accessing a daily pill or an every-other-month injection can be close to impossible.",
+        "subject": "Barriers to accessing current HIV prevention medications",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Lenacapavir would provide strong protection against HIV while only requiring patients to access healthcare twice annually.",
+        "subject": "Lenacapavir HIV protection and healthcare access frequency",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A mathematical modeling study from the WHO and the United Nations estimated that widespread availability of lenacapavir could prevent 41% of new HIV infections in South Africa, Zimbabwe and western Kenya.",
+        "subject": "Effectiveness of lenacapavir in preventing new HIV infections",
+        "attributed_source": "a mathematical modeling study from the WHO and the United Nations",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "When the WHO recommended global investment in lenacapavir for HIV prevention in 2025, the Trump administration was already in the process of dissolving USAID.",
+        "subject": "Trump administration dissolving USAID during 2025 WHO recommendation",
+        "attributed_source": "a study in the Lancet Global Health",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "USAID provided 73% of donor-funded resources for HIV prevention globally.",
+        "subject": "USAID's contribution to donor-funded HIV prevention resources",
+        "attributed_source": "a study in the Lancet Global Health",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "As of July 2026, multiple reports show that investment in HIV prevention has declined dramatically around the world.",
+        "subject": "Global investment in HIV prevention as of July 2026",
+        "attributed_source": "multiple reports",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Funding cuts are affecting the delivery of new HIV prevention technologies as well as decreasing the number of people engaged in care and prevention services.",
+        "subject": "Impact of funding cuts on HIV prevention and care",
+        "attributed_source": "Beatriz Grinsztejn, president of the International Aids Society",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The funding cuts affect not only the availability of medications but also the ability of organisations to reach the people who need them.",
+        "subject": "Effects of funding cuts on medication availability and outreach",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "When funding cuts came, peer outreach workers were one of the biggest impacted groups.",
+        "subject": "Impact of funding cuts on peer outreach workers",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Peer outreach workers are crucial to reaching people who use drugs, building their trust, and engaging them with services.",
+        "subject": "Role of peer outreach workers in HIV prevention",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "People who inject drugs are at a particularly high risk for contracting HIV, especially if they do not have access to clean syringes.",
+        "subject": "HIV risk among people who inject drugs",
+        "attributed_source": "a report from the International Network of People Who Use Drugs",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Organisations were most likely to respond to loss of funding by cutting outreach services.",
+        "subject": "Organisations' response to funding loss",
+        "attributed_source": "a report from the International Network of People Who Use Drugs",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Many harm reduction and HIV prevention organisations around the world were having to shut down locations, including mobile locations.",
+        "subject": "Closure of harm reduction and HIV prevention organisation locations",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Clients at risk for HIV lose trust in organisations when harm reduction and prevention service locations shut down.",
+        "subject": "Effect of service location closures on client trust",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "If clients have to travel further to receive services, they lose their local point of contact.",
+        "subject": "Impact of increased travel distances on clients",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Innovations like long-acting injectables will not reach the people who need them most due to funding cuts and service reductions.",
+        "subject": "Impact of funding cuts on access to long-acting injectable HIV prevention",
+        "attributed_source": "Ailish Brennan, a policy analyst at Harm Reduction International",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Before the dissolution of USAID, much of Latin America had been left out of agreements with US-based pharmaceutical companies to make innovative HIV prevention more affordable.",
+        "subject": "Latin America's exclusion from pharmaceutical agreements",
+        "attributed_source": "Beatriz Grinsztejn, president of the International Aids Society",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Gilead Sciences provides generic versions of long-acting medications to low- and middle-income countries for far below sticker price.",
+        "subject": "Gilead Sciences' provision of generics to certain countries",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Gilead Sciences excludes Brazil, Colombia, Mexico, Peru and Argentina from access to affordable generics by classifying them as \u201cupper middle-income countries.\u201d",
+        "subject": "Gilead Sciences' classification of certain Latin American countries",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "HIV advocates dispute Gilead Sciences' justification for excluding some countries, partly because people in these countries played a key role in clinical trials to test the medications.",
+        "subject": "HIV advocates' dispute of Gilead's classification justification",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The UNAIDS long-held goal is to eliminate AIDS as a public health threat by 2030.",
+        "subject": "UNAIDS goal",
+        "attributed_source": "Beatriz Grinsztejn, president of the International Aids Society",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Grinsztejn stated that it should be possible to fulfill the UNAIDS goal of eliminating AIDS as a public health threat by 2030.",
+        "subject": "Feasibility of fulfilling the UNAIDS goal by 2030",
+        "attributed_source": "Beatriz Grinsztejn, president of the International Aids Society",
+        "attribution_type": "attributed",
+        "certainty": "opinion"
+      },
+      {
+        "claim_text": "Grinsztejn expressed doubt that the targets will be met given the current scenario.",
+        "subject": "Doubt about meeting AIDS elimination targets due to current scenario",
+        "attributed_source": "Beatriz Grinsztejn, president of the International Aids Society",
+        "attribution_type": "attributed",
+        "certainty": "opinion"
+      }
+    ]
+  },
+  {
+    "url": "https://www.bbc.co.uk/news/articles/c23579jzv08o?at_medium=RSS&at_campaign=rss",
+    "domain": "bbc.com",
+    "title": "Iran denies Trump's claim that new talks will begin on Monday",
+    "n_claims": 34,
+    "claims": [
+      {
+        "claim_text": "Iran has denied Donald Trump's claim that new talks on ending the conflict would begin on Monday.",
+        "subject": "Iran",
+        "attributed_source": "Iran's foreign ministry",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Donald Trump called off what he said would have been \"massive\" strikes on Iran.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said Iran \"knew the extent of the attack because they saw it forming\".",
+        "subject": "Iran",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said, \"We're talking to them in the form of a negotiation. It begins tomorrow afternoon.\"",
+        "subject": "Iran-US negotiations",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Trump said he had been asked by Iran and US allies in the Middle East to \"hold off\" as the \"perimeters\" of a deal had been agreed.",
+        "subject": "Iran and US allies' request to Trump",
+        "attributed_source": "Donald Trump's post on Truth Social",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Iran's foreign ministry denied they were negotiating with the US or that there were any plans to do so.",
+        "subject": "Iran's foreign ministry",
+        "attributed_source": "Iran's foreign ministry",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Iran is negotiating with Oman to reach \"an understanding over a path to ensure the security of shipping passage through the Strait of Hormuz\".",
+        "subject": "Iran's negotiations with Oman",
+        "attributed_source": "Esmaeil Baghaei, Iran's foreign ministry spokesperson",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Earlier talks between the US and Iran have been facilitated through mediators.",
+        "subject": "US-Iran talks",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump has repeatedly vowed that a negotiated end to the war is near, only for tit-for-tat strikes to resume.",
+        "subject": "Donald's Trump's stance on war end",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump declined to outline a deadline for a deal to be struck with Tehran.",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said, \"We'll just see how it is. We're ready to go anytime we want... I'm not looking to kill people.\"",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump did not specify where the talks on Monday would be held or who would attend.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Saudi Arabia's Crown Prince Mohammed Bin Salman and US partners such as the United Arab Emirates and Qatar urged Trump against conducting strikes over the weekend.",
+        "subject": "Saudi Arabia's Crown Prince Mohammed Bin Salman and US partners",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said, \"We were all set to go\" and that the reason they asked to hold off is because they think there's a deal on Hormuz and there will be a deal on the nuclear.",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Global oil prices fell on Monday morning in Asia trading after Trump's announcement.",
+        "subject": "Global oil prices",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Brent Crude oil was down by 4.5% to $83.98 (\u00a362.26).",
+        "subject": "Brent Crude oil prices",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "US-traded oil was 4.6% lower at $80.74 (\u00a359.85).",
+        "subject": "US-traded oil prices",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Energy prices have fluctuated since the conflict started on 28 February as traders reacted to disruptions to shipping through the Strait of Hormuz.",
+        "subject": "Energy prices",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Around 20% of the world's crude oil and liquefied natural gas (LNG) usually flows through the Strait of Hormuz.",
+        "subject": "Strait of Hormuz",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Iran's semi-official Mehr news agency denied that Tehran had asked the US to hold off on further military action and said Trump's claims were \"nothing but a new lie\".",
+        "subject": "Iran's semi-official Mehr news agency",
+        "attributed_source": "Mehr news agency",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said that the planned strikes would have been \"the biggest attack since World War Two\".",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said the planned strikes could have derailed prospects of a negotiated end to the months-long war.",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump speaking on board Air Force One",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump declined to answer if he had been planning to strike Iranian energy infrastructure.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "International law experts have said that striking Iranian energy infrastructure could constitute a war crime.",
+        "subject": "International law experts",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Iran's acting Defence Minister Majid Ibn al-Reza said Tehran viewed every threat from its adversaries as \"real and credible\" even if it formed part of psychological warfare.",
+        "subject": "Iran's acting Defence Minister Majid Ibn al-Reza",
+        "attributed_source": "Majid Ibn al-Reza",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Majid Ibn al-Reza said, \"We will neither be caught off guard nor remain passive.\"",
+        "subject": "Majid Ibn al-Reza",
+        "attributed_source": "Majid Ibn al-Reza",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump has previously issued apocalyptic warnings to Tehran, then subsequently insisted that diplomacy was being given a chance.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On Saturday, Trump said the US was \"locked and loaded and ready to go against the Islamic Republic of Iran, at levels of Military Terror, Strength, and Power not seen since World War II\".",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump's post on Truth Social",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Trump said cancelling the attack would be \"for the future benefit of the world and, likewise, the survival of a successful and prosperous Iran\".",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump's post on Truth Social",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On 7 April, Trump warned that \"a whole civilisation will die tonight\" if Iran refused to engage in peace talks.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On 7 April, Trump threatened to destroy civilian infrastructure and power plants.",
+        "subject": "Donald Trump",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Historic face-to-face talks in Pakistan led by Vice-President JD Vance resulted from the 7 April threat but did not result in a deal.",
+        "subject": "US-Iran talks in Pakistan",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Trump administration has been largely dismissive of data showing the war and its economic impact are broadly unpopular with Americans, including many Republicans.",
+        "subject": "Trump administration",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Polls showing widespread dissatisfaction with the handling of the war have prompted alarm among some conservative strategists ahead of the November midterms.",
+        "subject": "Polls on war handling and conservative strategists' reactions",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "url": "https://www.bbc.co.uk/news/articles/c5yvqk69enko?at_medium=RSS&at_campaign=rss",
+    "domain": "bbc.com",
+    "title": "'My only son was shot standing up for justice' - inside city gripped by deadly protests in Pakistan-administered Kashmir",
+    "n_claims": 65,
+    "claims": [
+      {
+        "claim_text": "Dr Anwar's makeshift clinic is not far from the main protest site in the city of Rawalakot in Pakistan-administered Kashmir (PAK).",
+        "subject": "Dr Anwar's makeshift clinic",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A spare bedroom acts as a medical supply cupboard in Dr Anwar's clinic.",
+        "subject": "Dr Anwar's makeshift clinic",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "There is a bed under a red stretched tarpaulin outside Dr Anwar's clinic.",
+        "subject": "Dr Anwar's makeshift clinic",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Shafqat Hussain is lying across the bed and was shot in the chest.",
+        "subject": "Shafqat Hussain",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "In the last two months, dozens of people have been killed across the region in clashes between security officials and protesters from the group Joint Awami Action Committee (JAAC).",
+        "subject": "clashes in Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The region where the protests occur is home to about 4.5 million people and currently has elections taking place.",
+        "subject": "Pakistan-administered Kashmir region",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The BBC is the first media organisation to gain access to Rawalakot and speak to those at the heart of the protests.",
+        "subject": "the BBC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Dr Anwar says the clinic has enough supplies to provide first aid, stop bleeding, clean and dress wounds, and remove superficial bullets.",
+        "subject": "Dr Anwar's clinic capabilities",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Patients with serious injuries to the chest, abdomen, head, or other vital organs need advanced hospitals according to Dr Anwar.",
+        "subject": "treatment needs of seriously injured patients",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Even major hospitals would struggle if many seriously injured patients arrived at the same time according to Dr Anwar.",
+        "subject": "capacity of major hospitals",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Since 27 July, Dr Anwar's clinic has treated around 50 to 60 critically injured patients.",
+        "subject": "Dr Anwar's clinic patient treatment",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Dr Anwar personally treated 15 to 20 patients with gunshot wounds.",
+        "subject": "Dr Anwar's medical treatment",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Protesters are scared to go to the main hospital because they fear they will be arrested or shot.",
+        "subject": "protesters' fear of hospitals",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Authorities have said the claim that protesters fear arrest or being shot at hospitals is inaccurate.",
+        "subject": "authorities in Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Most of those killed or seriously injured are young people between about 15-16 years old and 32-35 years old according to Dr Anwar.",
+        "subject": "age range of victims",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Dr Anwar has seen very few patients over the age of 40.",
+        "subject": "age of injured patients",
+        "attributed_source": "Dr Anwar",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ali says they only asked for affordable flour, electricity and their basic rights.",
+        "subject": "protesters' demands according to Ali",
+        "attributed_source": "Ali",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ali says their brothers are being killed and questions why live bullets are being fired at them.",
+        "subject": "Ali on protesters being killed",
+        "attributed_source": "Ali",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Protesters from the JAAC say the demonstrations are about their rights with concerns including electricity prices, education and health care.",
+        "subject": "protesters from JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "An agreement signed with the Pakistan and Pakistan-administered Kashmir governments back in October was meant to help protesters' concerns.",
+        "subject": "agreement between governments and protesters",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The JAAC says the agreement signed in October has not been implemented.",
+        "subject": "JAAC on agreement implementation",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The local government says the group JAAC is armed and that this is about disrupting the ongoing polls.",
+        "subject": "local government about JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "The local government is not willing to let the protesters march to the regional capital, Muzaffarabad.",
+        "subject": "local government",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The JAAC was banned in June.",
+        "subject": "JAAC status",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "JAAC has been labelled foreign-funded terrorists by the local government.",
+        "subject": "JAAC labelling",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "JAAC rejects the characterisation of being terrorists, saying they are peaceful.",
+        "subject": "JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "JAAC says they are funded from the Pakistan-administered Kashmir community abroad but not sponsored by India.",
+        "subject": "JAAC funding and sponsorship",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "JAAC says they are victims and that Pakistan's security forces have been firing on them.",
+        "subject": "JAAC on violence in protests",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "attributed",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "With the internet cut and roads blocked or guarded, getting information has been difficult in Rawalakot.",
+        "subject": "information access in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Multiple families say they lost loved ones shot at the protests according to the BBC's interviews.",
+        "subject": "families of victims",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said she was at the protest itself when she heard her only son had been shot.",
+        "subject": "Asma",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said they were only asking for their rights and they are not terrorists.",
+        "subject": "Asma",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said no mother could ask for a better son.",
+        "subject": "Asma about her son",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said her son knew there were risks but believed standing up for justice was important.",
+        "subject": "Asma on her son",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Asma said her son used to say that dying for a just cause was an honour.",
+        "subject": "Asma on her son's beliefs",
+        "attributed_source": "Asma",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Salman lost his brother at the protests.",
+        "subject": "Salman",
+        "attributed_source": "Salman",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Salman says his brother was the youngest in the family and loved by everyone.",
+        "subject": "Salman on his brother",
+        "attributed_source": "Salman",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Salman feels proud his brother gave his life standing up for the rights of the people.",
+        "subject": "Salman on his brother's death",
+        "attributed_source": "Salman",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ayub was formerly in the armed forces and lost his son.",
+        "subject": "Ayub",
+        "attributed_source": "Ayub",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ayub did not blame the Pakistan government or military for his son's death but pointed to the government in Pakistan-administered Kashmir, saying they called in paramilitary forces.",
+        "subject": "Ayub",
+        "attributed_source": "Ayub",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ayub said he has never seen anything like the current situation in his experience with martial law periods under General Zia-ul-Haq and General Pervez Musharraf.",
+        "subject": "Ayub",
+        "attributed_source": "Ayub",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ayub said his son and the protesters had done nothing wrong.",
+        "subject": "Ayub",
+        "attributed_source": "Ayub",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The government for Pakistan-administered Kashmir says it rejects allegations that security forces fired indiscriminately upon peaceful protesters.",
+        "subject": "government of Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "The government for Pakistan-administered Kashmir says law enforcement acted against individuals involved in attacks on law enforcement personnel, threats to public safety, or obstruction of lawful authority.",
+        "subject": "government of Pakistan-administered Kashmir",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The BBC witnessed food shortages with many protesters sharing what they had with one another.",
+        "subject": "food shortages at protests",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Most shops in Rawalakot were shuttered during the protests.",
+        "subject": "shops in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Some people told the BBC of efforts to smuggle bags of rice on the backs of motorbikes into the city.",
+        "subject": "food smuggling efforts",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Some roads into Rawalakot have been blocked by felled trees.",
+        "subject": "road blockages in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Authorities say the felled trees blocking roads were put by the JAAC.",
+        "subject": "authorities on road blockages",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Other entry points on the main road have security checkpoints.",
+        "subject": "security checkpoints on roads",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pakistan-administered Kashmir's government said it was false to suggest they were preventing food or medical supplies from entering Rawalakot.",
+        "subject": "PAK government on supply entry",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "PAK government said they were facilitating the entry of food and medical supplies into Rawalakot.",
+        "subject": "PAK government on supply entry",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Authorities have repeatedly said that the JAAC are a violent group.",
+        "subject": "authorities' characterization of JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Authorities have shared drone shots showing what they say are JAAC members carrying guns on rooftops.",
+        "subject": "authorities' evidence against JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "At news conferences, police officials displayed guns they said they had taken from JAAC.",
+        "subject": "police officials on weapons seized from JAAC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Police officials said under interrogation one man said he had been promised a reward of 10 million rupees for every paramilitary officer killed.",
+        "subject": "police officials' interrogation report",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "Umar Nazir, a member of the JAAC's core committee, denied the claim about rewards for killing paramilitary officers.",
+        "subject": "Umar Nazir",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Security officials have lost their lives in the protests.",
+        "subject": "security officials",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Umar Nazir said certain elements may have been infiltrated into JAAC ranks and could have carried out violent actions themselves.",
+        "subject": "Umar Nazir on possible infiltrators",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Umar Nazir said there is no evidence that any such violence came from JAAC.",
+        "subject": "Umar Nazir on JAAC violence",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Authorities have said the JAAC have engaged in a campaign of disinformation against them, particularly on social media.",
+        "subject": "authorities on JAAC disinformation campaign",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "disputed"
+      },
+      {
+        "claim_text": "At JAAC protests attended by the BBC, no sign of weaponry or shooting was seen.",
+        "subject": "observations of JAAC protests by BBC",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Overnight repeated gunshots were heard in Rawalakot, but it was unclear who was shooting or at what.",
+        "subject": "gunshots in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The atmosphere in Rawalakot was tense and uncertain with no one knowing when the situation could escalate.",
+        "subject": "situation in Rawalakot",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Umar Nazir says the group JAAC is willing to talk but more protests are planned for now.",
+        "subject": "Umar Nazir on JAAC plans",
+        "attributed_source": "Umar Nazir",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/environment/2026/aug/03/weather-tracker-austria-heat-europe-japan-typhoon-dolphin",
+    "domain": "theguardian.com",
+    "title": "Weather tracker: Austria breaks heat records as Japan braces for Typhoon Dolphin",
+    "n_claims": 20,
+    "claims": [
+      {
+        "claim_text": "Unbearable, record-breaking heat has dominated the summer of 2026 across much of Europe.",
+        "subject": "the summer of 2026 across much of Europe",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Wieselburg in Austria registered a new July peak of 40.3C (104.5F) last week.",
+        "subject": "Wieselburg in Austria",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The peak temperature in Wieselburg is just 0.2C behind the all-time high set in August 2003.",
+        "subject": "the peak temperature in Wieselburg",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Vancouver recorded its wettest July since 2016.",
+        "subject": "Vancouver",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Vancouver recorded its third wettest July since 2008, with 33.6mm of rain.",
+        "subject": "Vancouver",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The July 33.6mm rainfall total in Vancouver is only a touch above the 1991-2020 climate average.",
+        "subject": "July rainfall total in Vancouver",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin has continued to barrel westwards across the Pacific Ocean towards Japan and Taiwan.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin became the fifth category 5 tropical cyclone of 2026.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin ranks third for wind speed behind typhoons Bavi and Sinlaku.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Dolphin reached maximum sustained wind speeds of 175mph on Thursday, with a central pressure of 910mb.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin intensified rapidly over just 36 hours.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On 27 July, Typhoon Dolphin was a tropical storm.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Exceptionally warm sea temperatures of about 30C fuelled Typhoon Dolphin's swift transformation into a super typhoon.",
+        "subject": "Typhoon Dolphin's intensification",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin has an unusually compact structure, with hurricane-force winds extending only 52 miles from the centre.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A typical powerful typhoon similar to Dolphin would have a hurricane-force wind radius of about 100 miles.",
+        "subject": "powerful typhoons' hurricane-force wind radius",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "As of Monday, Typhoon Dolphin has been downgraded to a category 3 storm with sustained wind speeds of 125mph.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Typhoon Dolphin is forecast to weaken further as it continues westwards towards the island of Okinawa and make landfall as a category 1 or 2 typhoon.",
+        "subject": "Typhoon Dolphin",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Wind speeds of 80-100mph are expected to affect the Okinawa archipelago and remain strong enough to cause widespread damage and disruption.",
+        "subject": "wind speeds affecting the Okinawa archipelago",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Typhoon Dolphin's wind field is forecast to expand as it approaches land.",
+        "subject": "Typhoon Dolphin's wind field",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The primary threat from Typhoon Dolphin is shifting from destructive winds to storm surge as its wind field expands.",
+        "subject": "Typhoon Dolphin's primary threat",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/world/2026/jul/28/wildfires-europe-north-america-effects",
+    "domain": "theguardian.com",
+    "title": "Past fires suggest effects of Europe and North America wildfires may linger for years",
+    "n_claims": 30,
+    "claims": [
+      {
+        "claim_text": "Nearly 1,000 fires have sprung into life in the boreal forests of Canada",
+        "subject": "wildfires in Canada",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The fires in Canada have caused the evacuation of towns",
+        "subject": "fires in Canada",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Toxic smoke from Canadian fires has wafted into major Canadian and US cities",
+        "subject": "smoke from Canadian fires",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Donald Trump accused Canada of \"poisoning\" the US air",
+        "subject": "Donald Trump's accusation about Canada",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Smoke is billowing from wildfires in the US",
+        "subject": "smoke from US wildfires",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A third major heatwave in the past month has further dried out vegetation in the US",
+        "subject": "heatwave effects in the US",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Vast, lightning-sparked fires across Washington, eastern Oregon and Idaho have caused a plume of smoke that could reach Florida",
+        "subject": "wildfires and smoke plume in US states",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Huge fires have gripped parts of the UK, France and Spain",
+        "subject": "wildfires in parts of UK, France, and Spain",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "More than 250,000 people have been evacuated due to fires in Europe",
+        "subject": "evacuations in Europe caused by wildfires",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The climate crisis caused by burning fossil fuels is creating more fire-prone conditions worldwide by drying out soil and plants",
+        "subject": "climate crisis effects on fire risk",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Pedro S\u00e1nchez, Spain's prime minister, said the entire Iberian peninsula is suffering the effects of the climate emergency in a very specific way",
+        "subject": "Pedro S\u00e1nchez's statement on climate emergency effects",
+        "attributed_source": "Pedro S\u00e1nchez, Spain's prime minister",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Scientists have known that wildfire smoke can trigger severe respiratory and cardiac problems in affected people",
+        "subject": "health effects of wildfire smoke",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A recent study found exposure to tiny particles in wildfire smoke raises risk of hospitalization for older people hundreds of miles away from fires",
+        "subject": "health risks of wildfire smoke exposure to older people",
+        "attributed_source": "a recent study",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Kai Chen said the cardiovascular toll of wildfire smoke extends beyond fire lines and persists beyond the day the sky turns orange",
+        "subject": "Kai Chen's statement on cardiovascular effects of wildfire smoke",
+        "attributed_source": "Kai Chen, associate professor of epidemiology at Yale School of Public Health",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Ongoing effects of wildfires long after extinguishing have been a more recent scientific understanding",
+        "subject": "long-term effects of wildfires",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Three years after wildfires in Maui, there are continuing challenges including health concerns",
+        "subject": "long-term challenges in Maui after wildfires",
+        "attributed_source": "a new report highlighted by the article",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Wildfires in Maui caused more than 100 deaths and razed several thousand buildings",
+        "subject": "Maui wildfires impact",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Maui Wildfire Exposure Study found many people in Maui are still struggling with poorer lung functions, higher blood pressure, and mental health challenges",
+        "subject": "health issues in Maui post-wildfires",
+        "attributed_source": "the Maui Wildfire Exposure Study led by University of Hawaii researchers",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alika Maunakea said biological, emotional and social consequences of disaster do not disappear on the same timeline as debris removal or reconstruction",
+        "subject": "Alika Maunakea's statement on disaster consequences",
+        "attributed_source": "Alika Maunakea, co-director of the Maui study and University of Hawaii professor",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Nearly half of all adults in the Maui study continued to report depressive symptoms",
+        "subject": "depressive symptoms prevalence in Maui adults",
+        "attributed_source": "the Maui Wildfire Exposure Study",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Nearly one in five adults in the Maui study experienced post-traumatic stress",
+        "subject": "post-traumatic stress prevalence in Maui adults",
+        "attributed_source": "the Maui Wildfire Exposure Study",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Severe depressive symptoms and post-traumatic stress increased among children and adolescents in Maui",
+        "subject": "mental health increases in children and adolescents in Maui",
+        "attributed_source": "the Maui Wildfire Exposure Study",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Blood pressure readings and obesity levels increased among children and adolescents in Maui",
+        "subject": "physical health changes among youth in Maui after wildfires",
+        "attributed_source": "the Maui Wildfire Exposure Study",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Christopher Knightsbridge said children may appear resilient while carrying significant emotional and physical effects beneath the surface",
+        "subject": "Christopher Knightsbridge's statement on children's resilience and hidden effects",
+        "attributed_source": "Christopher Knightsbridge, mental health therapist in Lahaina",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Christopher Knightsbridge said supporting children means supporting entire family, including housing, food security, routines and access to trusted care",
+        "subject": "Christopher Knightsbridge's statement on supporting children",
+        "attributed_source": "Christopher Knightsbridge",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Researchers stressed long-term monitoring and intervention is required after major wildfire events due to impacts lasting years",
+        "subject": "need for long-term monitoring after wildfires",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Experts suggest creating clean air centers in smoke-affected areas so people can escape smoke and air pollutants",
+        "subject": "experts' recommendation on clean air centers",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A research paper from last year found a 7% increase in mortality among older people living in southern California over three years due to wildfire smoke exposure",
+        "subject": "mortality increase due to wildfire smoke in southern California",
+        "attributed_source": "a research paper from last year",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The research paper recommended that activation of public health measures such as clean air centers should not only depend on intensity of smoke because long-term effects can be harmful even at low levels",
+        "subject": "recommendation from research paper on public health measures for wildfire smoke",
+        "attributed_source": "the research paper from last year",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Lara Schwarz said as wildfires become more frequent and severe due to climate change, understanding their long-term effects is critical to informing better public health action",
+        "subject": "Lara Schwarz's statement on importance of understanding wildfire effects",
+        "attributed_source": "Lara Schwarz, environmental health scientist at UC Berkeley",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/business/2026/aug/03/yen-trump-currency-us-japan",
+    "domain": "theguardian.com",
+    "title": "Yen hits three-month high after Trump helps prop up currency",
+    "n_claims": 18,
+    "claims": [
+      {
+        "claim_text": "The yen strengthened to \u00a5155 to the US dollar on Monday, its highest level since early May.",
+        "subject": "the yen",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Tokyo and Washington confirmed they had carried out a rare joint currency intervention late last week.",
+        "subject": "Tokyo and Washington governments",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Tokyo's finance ministry said the two governments had conducted coordinated yen-buying intervention.",
+        "subject": "Tokyo's finance ministry",
+        "attributed_source": "Tokyo\u2019s finance ministry",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Tokyo's finance ministry said the two governments would not hesitate to take further action.",
+        "subject": "Tokyo's finance ministry",
+        "attributed_source": "Tokyo\u2019s finance ministry",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The yen had weakened to a 40-year low of almost \u00a5164 to the dollar last week.",
+        "subject": "the yen",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Donald Trump said that Japan has a weakening yen and wanted a little bit of help, and that the US is always there for Japan.",
+        "subject": "Donald Trump",
+        "attributed_source": "Donald Trump",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The yen had weakened in recent months as Japanese borrowing costs remained lower than in other advanced economies.",
+        "subject": "the yen's weakening",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "This borrowing cost disparity fuelled a carry trade where investors borrowed cheaply in yen to buy higher-yielding dollar assets.",
+        "subject": "the carry trade involving the yen",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The yen has suffered from investors\u2019 concern about Japanese prime minister Sanae Takaichi\u2019s push to use tax and spending measures to stimulate the Japanese economy.",
+        "subject": "the yen",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The yen has suffered from investors' concern about Sanae Takaichi's criticism of the Bank of Japan setting higher interest rates, which have pushed up the country's borrowing costs.",
+        "subject": "the yen",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "US Treasury secretary Scott Bessent said Washington will not hesitate to participate in further joint intervention.",
+        "subject": "US Treasury secretary Scott Bessent",
+        "attributed_source": "Scott Bessent",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Scott Bessent repeated calls for further interest rate rises from Japan's central bank.",
+        "subject": "Scott Bessent",
+        "attributed_source": "Scott Bessent",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A photograph of Scott Bessent\u2019s notebook showed his \"to do\" list included buying $5bn-$10bn worth of Japanese yen.",
+        "subject": "Scott Bessent",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Bank of Japan data suggested Tokyo spent as much as $36.58bn last Friday to buy yen and strengthen the local currency.",
+        "subject": "Bank of Japan data",
+        "attributed_source": "Reuters report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "This is the first collaboration involving Japan and the US since March 2011 when a joint intervention was made to weaken the yen after the March Tohoku earthquake and tsunami.",
+        "subject": "Japan-US currency interventions",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Lee Hardman said the threat of further joint intervention and a faster pace of BoJ hikes should provide more support for the yen and discourage speculators from running elevated short yen positions.",
+        "subject": "Lee Hardman",
+        "attributed_source": "Lee Hardman",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Oxford Economics said the US-Japan coordinated intervention would not be enough to reverse the trend of yen weakness.",
+        "subject": "Oxford Economics",
+        "attributed_source": "Oxford Economics",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Oxford Economics said the Bank of Japan will likely wait until December to hike rates despite market speculation about faster rate hikes, as the intervention reduces the risk of a sharp yen depreciation and gives more time to assess impacts of the Middle East conflict and past rate hikes on the economy.",
+        "subject": "Oxford Economics",
+        "attributed_source": "Oxford Economics",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "url": "https://www.theguardian.com/business/2026/aug/03/uk-manufacturing-growth-donald-trump-tariff-us-iran",
+    "domain": "theguardian.com",
+    "title": "UK manufacturing growth picks up as Trump tariff chaos eases",
+    "n_claims": 28,
+    "claims": [
+      {
+        "claim_text": "UK manufacturers ramped up production in July for the fourth consecutive month at the fastest pace in almost two years",
+        "subject": "UK manufacturers",
+        "attributed_source": "a leading survey of the industry",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The S&P Global poll of manufacturers found them in upbeat mood in July",
+        "subject": "manufacturers",
+        "attributed_source": "the S&P Global poll of manufacturers",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Manufacturers are anxious about the prospect of a long war in the Middle East that would block supplies of oil and gas and raise the cost of production",
+        "subject": "manufacturers",
+        "attributed_source": "the S&P Global poll of manufacturers",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The S&P Global purchasing managers\u2019 index (PMI) dipped in July due to uncertainty about the outcome of the war but maintained a run of nine months of expansion",
+        "subject": "S&P Global purchasing managers\u2019 index (PMI)",
+        "attributed_source": "the S&P Global poll of manufacturers",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The PMI fell back to 51.9 in July, down from 52.5 in June",
+        "subject": "S&P Global purchasing managers\u2019 index (PMI)",
+        "attributed_source": "the S&P Global poll of manufacturers",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A reading above 50 on the PMI denotes a period of expansion",
+        "subject": "the PMI reading",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The manufacturing industry experienced a torrid two years after the election of Donald Trump and the implementation of tariffs in spring last year",
+        "subject": "the manufacturing industry",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The manufacturing industry received a second big blow last autumn when a hack of Jaguar Land Rover's computer system brought production at the UK\u2019s largest car manufacturer to a halt",
+        "subject": "the manufacturing industry",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The latest increase in production was strongly linked to rising intakes of new business from both domestic and export clients",
+        "subject": "the latest increase in production",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Total new orders rose for the eighth successive month",
+        "subject": "total new orders",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Some companies noted an improvement in the functioning of global supply chains after the chaos caused by US tariffs in 2025",
+        "subject": "some companies",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "New export orders flowed from the US and Canada, the EU, mainland China, India and South Korea",
+        "subject": "new export orders",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The recovery has led to only a small increase in employment",
+        "subject": "the recovery",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Uncertainty about the future dragged on the labour market in July",
+        "subject": "labour market",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Staffing levels increased for the fourth successive month in July",
+        "subject": "staffing levels",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The rate of growth in staffing eased to near-stagnation and was the weakest during the current upturn",
+        "subject": "the rate of growth in staffing",
+        "attributed_source": "the report",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "July brought further encouragement for the UK manufacturing sector as rates of growth in output, new orders and new export business all accelerated",
+        "subject": "the UK manufacturing sector",
+        "attributed_source": "Rob Dobson, the director at S&P Global Market Intelligence",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A moratorium on new hiring in July was likely to be short-lived after the influx of new business caused backlogs of work",
+        "subject": "the moratorium on new hiring",
+        "attributed_source": "Rob Dobson, the director at S&P Global Market Intelligence",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Backlogs of work should prompt companies to take on more staff",
+        "subject": "companies",
+        "attributed_source": "Rob Dobson, the director at S&P Global Market Intelligence",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Progress relating to geopolitics, global trade tensions and the direction of the new UK government\u2019s industrial and tax policies will aid the process of business optimism recovery",
+        "subject": "progress relating to geopolitics, global trade tensions and UK government policies",
+        "attributed_source": "Rob Dobson, the director at S&P Global Market Intelligence",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The manufacturing sector had proved resilient amid yo-yoing commodity prices that had seen the cost of many basic manufacturing goods rise and fall sharply in recent months, including oil and gas",
+        "subject": "the manufacturing sector",
+        "attributed_source": "Ginni Cooper, the manufacturing partner at the accountancy firm MHA",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Manufacturers are positive and adaptable to change",
+        "subject": "manufacturers",
+        "attributed_source": "Ginni Cooper, the manufacturing partner at the accountancy firm MHA",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Many companies in the manufacturing industry had welcomed the initiatives announced by Andy Burnham after becoming prime minister, including vocational training in schools",
+        "subject": "many companies in the manufacturing industry",
+        "attributed_source": "Ginni Cooper, the manufacturing partner at the accountancy firm MHA",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The sector is expected to endure a difficult period in the latter half of this year",
+        "subject": "the sector",
+        "attributed_source": "Matt Swannell, the chief economic adviser to the consultancy the Item Club",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The conflict in the Middle East is the key wildcard for the sector's prospects",
+        "subject": "the conflict in the Middle East",
+        "attributed_source": "Matt Swannell, the chief economic adviser to the consultancy the Item Club",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The breakdown of the ceasefire has led to a resurgence in oil and gas prices",
+        "subject": "the breakdown of the ceasefire",
+        "attributed_source": "Matt Swannell, the chief economic adviser to the consultancy the Item Club",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Higher energy prices will filter through into higher business costs",
+        "subject": "higher energy prices",
+        "attributed_source": "Matt Swannell, the chief economic adviser to the consultancy the Item Club",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Demand will be hit by the squeeze on disposable incomes from rising inflation and weakening wage growth",
+        "subject": "demand",
+        "attributed_source": "Matt Swannell, the chief economic adviser to the consultancy the Item Club",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      }
+    ]
+  }
+]

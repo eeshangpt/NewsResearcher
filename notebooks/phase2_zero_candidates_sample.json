@@ -1,0 +1,966 @@
+{
+  "iraq_wmd": {
+    "n_deduped_articles": 11,
+    "score_rows": [
+      {
+        "domain": "britannica.com",
+        "title": "Iraq - Persian Gulf War, Saddam Hussein, Invasion",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      },
+      {
+        "domain": "lawfaremedia.org",
+        "title": "What They Want to Hear: The Politicization of U.S. Intelligence",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.0828,
+        "final_score": 0.3828,
+        "passes_0.50": false
+      },
+      {
+        "domain": "britannica.com",
+        "title": "Iraq - Iran-Iraq War, Saddam Hussein, Invasion",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      },
+      {
+        "domain": "iranwatch.org",
+        "title": "Islamic Revolutionary Guard Corps (IRGC)",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2,
+        "final_score": 0.5,
+        "passes_0.50": true
+      },
+      {
+        "domain": "japantoday.com",
+        "title": "Fear of war's spread as US, Saudi hit Iran-backed fighters in Iraq",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2158,
+        "final_score": 0.5158,
+        "passes_0.50": true
+      },
+      {
+        "domain": "kas.de",
+        "title": "To the Third Nuclear Age \u2013 a Timeline",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.164,
+        "final_score": 0.464,
+        "passes_0.50": false
+      },
+      {
+        "domain": "britannica.com",
+        "title": "U.S.-Iraq War | Pros, Cons, Debate, Arguments, Middle East, & Terrorism",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      },
+      {
+        "domain": "tehrantimes.com",
+        "title": "Betraying the Islamabad MoU and the world\u2019s hope for peace",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1847,
+        "final_score": 0.4847,
+        "passes_0.50": false
+      },
+      {
+        "domain": "britannica.com",
+        "title": "Islamic Revolutionary Guard Corps (IRGC) | History, Growth, Foundation, Leadership, & Sanctions",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      },
+      {
+        "domain": "britannica.com",
+        "title": "Nuclear weapon - Proliferation, Arms Race, Deterrence",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      },
+      {
+        "domain": "britannica.com",
+        "title": "September 11 attacks | History, Summary, Location, Timeline, Casualties, & Facts",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1943,
+        "final_score": 0.4943,
+        "passes_0.50": false
+      }
+    ],
+    "n_pass_0.50": 2,
+    "n_fail_0.50": 9,
+    "shortfall_below_0.50_for_failures": [
+      0.0057,
+      0.0057,
+      0.0057,
+      0.0057,
+      0.0057,
+      0.0057,
+      0.0153,
+      0.036,
+      0.1172
+    ],
+    "reconciliation": {
+      "n_articles": 2,
+      "n_clusters_found": 2,
+      "candidate_best_sim": {
+        "Iraq War rationale and WMD intelligence failures": 0.438,
+        "Iran-backed militia strikes in Iraq": 0.658,
+        "Nuclear weapons proliferation history": 0.323,
+        "Iraq War historical retrospectives": 0.477
+      },
+      "dropped_at_0.60": [
+        {
+          "candidate": "Iraq War rationale and WMD intelligence failures",
+          "best_sim": 0.438
+        },
+        {
+          "candidate": "Nuclear weapons proliferation history",
+          "best_sim": 0.323
+        },
+        {
+          "candidate": "Iraq War historical retrospectives",
+          "best_sim": 0.477
+        }
+      ],
+      "n_reconciled_at_0.60": 1,
+      "survivors_by_threshold": {
+        "0.6": 1,
+        "0.55": 1,
+        "0.5": 1,
+        "0.45": 2,
+        "0.4": 3
+      }
+    }
+  },
+  "taliban": {
+    "n_deduped_articles": 84,
+    "score_rows": [
+      {
+        "domain": "nytimes.com",
+        "title": "Why I Sought Out a Taliban Commander I Had Fought",
+        "tier": "major",
+        "base_score": 0.7,
+        "heuristic_adjustment": 0.2313,
+        "final_score": 0.9313,
+        "passes_0.50": true
+      },
+      {
+        "domain": "news.un.org",
+        "title": "A hijab inspection, a slap, a warning letter: Inside three months of Taliban rule",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "hrw.org",
+        "title": "Afghanistan: 5 Years Under Taliban Rule",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1795,
+        "final_score": 0.4795,
+        "passes_0.50": false
+      },
+      {
+        "domain": "frstrategie.org",
+        "title": "The EU and the Taliban gordian knot - Risks and opportunities for selective re-engagement",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "reuters.com",
+        "title": "Germany deports Afghan without criminal record for first time since Taliban takeover",
+        "tier": "wire",
+        "base_score": 0.8,
+        "heuristic_adjustment": 0.2011,
+        "final_score": 1.0011,
+        "passes_0.50": true
+      },
+      {
+        "domain": "hstoday.us",
+        "title": "PERSPECTIVE: Afghanistan\u2019s Resistance is No Longer Fighting Only the Taliban",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1507,
+        "final_score": 0.4507,
+        "passes_0.50": false
+      },
+      {
+        "domain": "ned.org",
+        "title": "Beyond the Taliban: Five Years of Afghan Resilience and Resistance",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2051,
+        "final_score": 0.5051,
+        "passes_0.50": true
+      },
+      {
+        "domain": "apnews.com",
+        "title": "Gunmen kill high-ranking Taliban official in Afghanistan in rare targeted attack",
+        "tier": "wire",
+        "base_score": 0.8,
+        "heuristic_adjustment": 0.2172,
+        "final_score": 1.0172,
+        "passes_0.50": true
+      },
+      {
+        "domain": "rferl.org",
+        "title": "Spate Of Attacks In Northern Afghanistan Pose Test For Taliban",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2228,
+        "final_score": 0.5228,
+        "passes_0.50": true
+      },
+      {
+        "domain": "lowyinstitute.org",
+        "title": "Kabul\u2019s classrooms, rebuilt in the Taliban\u2019s own image",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2089,
+        "final_score": 0.5089,
+        "passes_0.50": true
+      },
+      {
+        "domain": "bbc.com",
+        "title": "'I disguised myself as a boy so I could go to school'",
+        "tier": "major",
+        "base_score": 0.7,
+        "heuristic_adjustment": 0.2286,
+        "final_score": 0.9286,
+        "passes_0.50": true
+      },
+      {
+        "domain": "archons.org",
+        "title": "Archons Decry Taliban\u2019s Heinous Treatment of Women and Girls in Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2,
+        "final_score": 0.5,
+        "passes_0.50": true
+      },
+      {
+        "domain": "aljazeera.com",
+        "title": "Car bomb attack kills 27 in northwest Pakistan",
+        "tier": "major",
+        "base_score": 0.7,
+        "heuristic_adjustment": 0.2375,
+        "final_score": 0.9375,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Detained Nearly 400 In Three Months, Says UN",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "fdd.org",
+        "title": "Five years of Taliban rule: terror threats in Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1202,
+        "final_score": 0.4202,
+        "passes_0.50": false
+      },
+      {
+        "domain": "orfonline.org",
+        "title": "Europe and the Taliban: From Isolation to Engagement?",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2085,
+        "final_score": 0.5085,
+        "passes_0.50": true
+      },
+      {
+        "domain": "hrw.org",
+        "title": "Afghanistan: Taliban Assault on Rights Deepens 5 Years on",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1795,
+        "final_score": 0.4795,
+        "passes_0.50": false
+      },
+      {
+        "domain": "aljazeera.com",
+        "title": "Pakistan\u2019s attacks on Afghanistan are about more than the TTP",
+        "tier": "major",
+        "base_score": 0.7,
+        "heuristic_adjustment": 0.2375,
+        "final_score": 0.9375,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Shuts Down Over 30 Ismaili Places Of Worship In Badakhshan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "apnews.com",
+        "title": "How the Taliban's Education Ban for Girls Changed One Family",
+        "tier": "wire",
+        "base_score": 0.8,
+        "heuristic_adjustment": 0.2172,
+        "final_score": 1.0172,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Prepares for \u2018Large-Scale Operation\u2019 Against Opponents in Badakhshan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "kabulnow.com",
+        "title": "Afghanistan United Front Announces \"Operation Muharib\" Against Taliban, Claims Three Attacks",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1827,
+        "final_score": 0.4827,
+        "passes_0.50": false
+      },
+      {
+        "domain": "bigrapidsnews.com",
+        "title": "Under Taliban, barring Afghan girls from school takes an emotional toll \u2014 and a community one, too",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.25,
+        "final_score": 0.55,
+        "passes_0.50": true
+      },
+      {
+        "domain": "asia.nikkei.com",
+        "title": "Taliban marks fifth year in power in Afghanistan: 5 things to know",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.25,
+        "final_score": 0.55,
+        "passes_0.50": true
+      },
+      {
+        "domain": "amnesty.eu",
+        "title": "EU/Afghanistan: Abandon Unconscionable Efforts to Deport People to Afghanistan - Letter \u2013 European Institutions Office",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.175,
+        "final_score": 0.475,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amu.tv",
+        "title": "Taliban and Freedom Front clashes in Badakhshan continue for third day",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Opens Fire On Yaftal Protesters, Causing Casualties",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "manassa.news",
+        "title": "The Taliban\u2019s Brussels bargain: Trading normalization for deportation",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2,
+        "final_score": 0.5,
+        "passes_0.50": true
+      },
+      {
+        "domain": "indexoncensorship.org",
+        "title": "Meet the vanishing girl who defied the Taliban",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.25,
+        "final_score": 0.55,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Attack Targets Home Of Taliban Army Chief In Badakhshan, Say Sources",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Two Taliban Members Killed In Armed Attack In Sar-e-Pul, Say Sources",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "32 Militants Killed in Operations Across Two Provinces, Says Pakistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Fighters Shot Down Two Taliban Drones In Badakhshan, Says AFF",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Seven Civilians Detained By Taliban In Badakhshan\u2019s Yaftal District, Say Sources",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "intellinews.com",
+        "title": "Taliban's homegrown drone programme outpaces Pakistan's defences",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1563,
+        "final_score": 0.4563,
+        "passes_0.50": false
+      },
+      {
+        "domain": "thediplomat.com",
+        "title": "America\u2019s Changing Policy on Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1695,
+        "final_score": 0.4695,
+        "passes_0.50": false
+      },
+      {
+        "domain": "wfmz.com",
+        "title": "EU hosts Taliban officials for talks on migrant returns",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1864,
+        "final_score": 0.4864,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Two Taliban Members Killed In Herat Attack, Says Resistance Front",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "theins.press",
+        "title": "Friends like these: How the Taliban came to be Moscow\u2019s strategic ally in Central Asia",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1831,
+        "final_score": 0.4831,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Dismisses UN Sanctions Update As Ineffective",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Minister Requests Academic & Medical Support From T\u00fcrkiye",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "UK Data Breach Exposed 25,000 Afghans to Taliban Reprisals, MPs Say",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Restrictions On Journalists & Media Continue, Says UN",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Leader Reshuffles 21 Officials Across Key Institutions",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Foreign Taliban Fighters Were Ambushed Near Zebak, Says Freedom Front",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Taliban, Kyrgyz Officials Discuss Expanding Bilateral Cooperation",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "longwarjournal.org",
+        "title": "Anti-Taliban resistance groups increase attacks in northeast Afghanistan, district center briefly falls",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1498,
+        "final_score": 0.4498,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Seizes Former Badakhshan MP\u2019s Home In Kabul, Say Sources",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Launches Recruitment Drive Along Pakistan Border",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Two Tamadon TV Journalists Released From Taliban Prison",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "france24.com",
+        "title": "Deadly attack on police checkpoint in Pakistan leaves 15 dead",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2057,
+        "final_score": 0.5057,
+        "passes_0.50": true
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Afghan Nationals Carried Out Most Suicide Attacks This Year, Says Pakistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Taliban Say They Seek Better Ties With Pakistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Human Rights Watch Says Taliban Rights Abuses Deepen Five Years After Takeover",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Sami Sadat Seeks Political Support from U.S., NATO After Claiming Armed Operations in Kandahar",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Taliban Detains Four Women In Herat",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "orfme.org",
+        "title": "Iran\u2019s Afghan Balancing Act Amid Regional Upheaval",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.164,
+        "final_score": 0.464,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Pakistan Army Dismisses UN Report On Afghan Civilian Casualties",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "trtworld.com",
+        "title": "Daesh claims killing of Taliban official in northeastern Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2046,
+        "final_score": 0.5046,
+        "passes_0.50": true
+      },
+      {
+        "domain": "unn.ua",
+        "title": "\"Taliban\" prepares a large-scale operation in the Afghan province of Badakhshan and deploys additional forces - media",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1716,
+        "final_score": 0.4716,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amp.dw.com",
+        "title": "Pakistan: Suicide bomber kills 14 at anti-militancy protest",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "kabulnow.com",
+        "title": "Taliban Culture Official Killed in Armed Attack in Northern Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1827,
+        "final_score": 0.4827,
+        "passes_0.50": false
+      },
+      {
+        "domain": "techtimes.com",
+        "title": "MoD Spreadsheet Exposed 18,500 Afghan Allies to Taliban: No One Will Ever Be Held Accountable For 'Foreseeable Failure'",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2171,
+        "final_score": 0.5171,
+        "passes_0.50": true
+      },
+      {
+        "domain": "kabulnow.com",
+        "title": "ISIS-K Claims Responsibility for Killing Taliban Information Chief in Badakhshan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1827,
+        "final_score": 0.4827,
+        "passes_0.50": false
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Taliban Arrest Three Over Alleged Use of Starlink Satellite Internet in Khost",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amu.tv",
+        "title": "Taliban say they seek to ease tensions with Pakistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amac.us",
+        "title": "Al-Qaeda Regains Ground as Taliban Breaks Free From Isolation",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.25,
+        "final_score": 0.55,
+        "passes_0.50": true
+      },
+      {
+        "domain": "nhregister.com",
+        "title": "Pakistan's military rejects UN report alleging hundreds of civilian deaths in strikes on Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2073,
+        "final_score": 0.5073,
+        "passes_0.50": true
+      },
+      {
+        "domain": "rawa.org",
+        "title": "From Forced Marriage to Prison: The Case of Bibi Sediqa Exposes Taliban Brutality Against Women",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "asiaplus.news",
+        "title": "Tensions rise in Afghan Badakhshan as Taliban prepares operation against armed opposition",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2,
+        "final_score": 0.5,
+        "passes_0.50": true
+      },
+      {
+        "domain": "stratnewsglobal.com",
+        "title": "Taliban 2.0: Victory, Isolation and Unfinished Peace",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1836,
+        "final_score": 0.4836,
+        "passes_0.50": false
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Taliban Agriculture Ministry Delegation Visits Moldova for Cooperation Talks",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amu.tv",
+        "title": "HRW: Taliban rule makes Afghanistan one of world\u2019s gravest rights crises",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "afintl.com",
+        "title": "Restrictions & Funding Cuts Threaten Afghan Women\u2019s & Children\u2019s Health, Says WHO",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.2135,
+        "final_score": 0.5135,
+        "passes_0.50": true
+      },
+      {
+        "domain": "amu.tv",
+        "title": "Taliban say they collected nearly $119 million from hajj pilgrims",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "timesofindia.indiatimes.com",
+        "title": "The Taliban's Trojan horse: What really happened after Afghanistan's opium ban",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "security-risks.com",
+        "title": "Taliban- First Internal Challenge Emerging in Badakhshan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.25,
+        "final_score": 0.55,
+        "passes_0.50": true
+      },
+      {
+        "domain": "kabulnow.com",
+        "title": "Taliban Confirm Injuries During Badakhshan Protest as Reports Allege Deadly Crackdown",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1827,
+        "final_score": 0.4827,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amu.tv",
+        "title": "Pakistan rejects UN findings on civilian deaths in cross-border strikes",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "scmp.com",
+        "title": "At least 14 dead in suicide bomb attack at anti-militant rally in Pakistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.232,
+        "final_score": 0.532,
+        "passes_0.50": true
+      },
+      {
+        "domain": "thekabultribune.com",
+        "title": "Afghanistan Exports Stone Products to U.S.for First Time, Taliban Say",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1297,
+        "final_score": 0.4297,
+        "passes_0.50": false
+      },
+      {
+        "domain": "amu.tv",
+        "title": "At least three killed as Taliban open fire on Badakhshan protesters, sources say",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.1717,
+        "final_score": 0.4717,
+        "passes_0.50": false
+      },
+      {
+        "domain": "sports.yahoo.com",
+        "title": "Cricket Ireland braces for protests ahead of 2026 Afghanistan ODI series as Amnesty warns against 'Taliban propaganda'",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      },
+      {
+        "domain": "shorelinemedia.net",
+        "title": "Taliban's ban on girls education takes a toll on 16-year-old in Afghanistan",
+        "tier": "unknown",
+        "base_score": 0.3,
+        "heuristic_adjustment": 0.225,
+        "final_score": 0.525,
+        "passes_0.50": true
+      }
+    ],
+    "n_pass_0.50": 53,
+    "n_fail_0.50": 31,
+    "shortfall_below_0.50_for_failures": [
+      0.0136,
+      0.0164,
+      0.0169,
+      0.0173,
+      0.0173,
+      0.0173,
+      0.0173,
+      0.0205,
+      0.0205,
+      0.025,
+      0.0283,
+      0.0283,
+      0.0283,
+      0.0283,
+      0.0283,
+      0.0283,
+      0.0284,
+      0.0305,
+      0.036,
+      0.0437,
+      0.0493,
+      0.0502,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0703,
+      0.0798
+    ],
+    "reconciliation": {
+      "n_articles": 53,
+      "n_clusters_found": 2,
+      "candidate_best_sim": {
+        "Taliban treatment of women and girls": 0.745,
+        "Armed resistance and attacks against the Taliban": 0.664,
+        "Taliban foreign policy and international relations": 0.703,
+        "Taliban internal governance and administration": 0.697
+      },
+      "dropped_at_0.60": [],
+      "n_reconciled_at_0.60": 3,
+      "survivors_by_threshold": {
+        "0.6": 4,
+        "0.55": 4,
+        "0.5": 4,
+        "0.45": 4,
+        "0.4": 4
+      }
+    }
+  }
+}

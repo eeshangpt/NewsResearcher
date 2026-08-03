@@ -1,0 +1,248 @@
+[
+  {
+    "subtopic_id": "s1",
+    "label": "OpenAI GPT-5 release",
+    "lookback_days": 14,
+    "total_articles": 32,
+    "n_clusters": 4,
+    "cluster_sizes": {
+      "2": 8,
+      "0": 4,
+      "3": 4,
+      "1": 5
+    },
+    "noise_count": 11,
+    "cluster_titles": {
+      "2": [
+        "Get started with OpenAI GPT-5.6 Sol, Terra, and Luna on Amazon Bedrock | Artificial Intelligence",
+        "OpenAI releases GPT-5.6 Sol amid national security delays",
+        "OpenAI New GPT 5.5 Is A New Kind Of Intelligence (Nothing Comes Close) High Potential (pU8ThPkP5j)",
+        "OpenAI Releases GPT-5.6 After Government Review, Intensifying AI Competition",
+        "GPT-6 Rumors: Is OpenAI Preparing a \u201cMythos-Level\u201d AI Model? Can GPT-6 Beat Anthropic\u2019s Mythos?",
+        "OpenAI Releases GPT-5.6 to Public After Government Review",
+        "Claude Fable 5.1 Leaks: Anthropic\u2019s Next AI Model Could Launch in August Ahead of GPT-6",
+        "OpenAI Releases GPT-5.6 with Luna Terra Sol Variants"
+      ],
+      "0": [
+        "OpenAI says its AI technology acted on its own in an 'unprecedented' hack of another company",
+        "Researchers Build WordPress Exploit Using OpenAI's GPT",
+        "Meet GPT-Red: an LLM super-hacker OpenAI built to make its models safer",
+        "OpenAI's GPT-5.6 Sol and unreleased AI models break out of testing environment in 'unprecedented cybersecurity incident' \u2014 rogue agents hacked HuggingFace's production servers with 'thousands of individual actions across a swarm of short-lived sandbox"
+      ],
+      "3": [
+        "OpenAI Knew GPT-5 Posed Bioweapon Risk and Downgraded the Rating Anyway",
+        "OpenAI acknowledges GPT-5.6 may accidentally delete files, calls it an \u2018honest mistake\u2019",
+        "OpenAI\u2019s GPT-5.6 Sol users report missing files, deleted databases: Here\u2019s what we know",
+        "OpenAI's GPT-5 was labelled a high-risk AI model over biohazard concerns"
+      ],
+      "1": [
+        "Moonshot's open-source Kimi K3 model beats Anthropic's Fable 5 on this benchmark",
+        "Can Domestic AI Models Compete with OpenAI Fable 5? Full Hands-On Test & Performance Comparison of Kimi K3",
+        "China's 2.8-trillion-parameter Kimi K3 beats Claude Fable 5 in Frontend Code Arena benchmark\u2014 Moonshot AI delivers largest open-weight AI model ever, as China works around U.S. compute limits",
+        "Kimi K3 Beats Claude Opus 4.8, But Not Fable 5 or GPT 5.6 Sol",
+        "What is Kimi K3? China\u2019s new AI model aces Claude Fable 5 and GPT-5.6"
+      ]
+    },
+    "noise_titles": [
+      "OpenAI and Hugging Face partner to address security incident during model evaluation",
+      "AI Chatbots Know How to Make Deadly Biological Weapons. Some Will Teach You.",
+      "Why is OpenAI selling a ChatGPT basketball?",
+      "Sonnet 5 vs GPT-5.6 vs Gemini 3.1 Pro: 58% Cheaper [2026]",
+      "Anthropic turns Fable 5 into a premium feature \u2013 OpenAI spreads GPT-5.6 wider",
+      "Claude Mythos 5 Blackout: GPT-5.6 Capped at 20 Firms [2026]",
+      "OpenAI says GPT-5.6 Sol escaped test environment, breached Hugging Face during evaluation",
+      "China Just Dropped Another Bomb on America\u2019s Frontier AI Companies",
+      "SpaceX\u2019 $75B+ Historic IPO, GPT5.5 Outperforms Polymarket, AI Solves 80yr Old Math Problem | EP #257 Pbks Vs Dc (AjzKyPUBgV)",
+      "GPT-5.6 Has a New Rival From Anthropic: Here\u2019s What Claude Opus 5 Brings",
+      "Google Announces Three New Gemini AI Models To Rival OpenAI & Anthropic: All You Need To Know"
+    ]
+  },
+  {
+    "subtopic_id": "s2",
+    "label": "Russia Ukraine ceasefire negotiations",
+    "lookback_days": 14,
+    "total_articles": 8,
+    "n_clusters": 3,
+    "cluster_sizes": {
+      "2": 3,
+      "0": 3,
+      "1": 2
+    },
+    "noise_count": 0,
+    "cluster_titles": {
+      "2": [
+        "Kremlin says there's no immediate prospect of resuming peace talks with Ukraine",
+        "Kazakh president urges Ukraine ceasefire",
+        "Klimkin: Trump Will Push for a Ceasefire in Ukraine"
+      ],
+      "0": [
+        "War in Ukraine | Global Conflict Tracker",
+        "Europe could help get Ukraine and Russia to the negotiating table",
+        "Ukraine and Russia must return to negotiating table - permanent US rep at United Nations"
+      ],
+      "1": [
+        "New inquiry: Russia",
+        "How shadow envoys are quietly helping Russia come in from the cold"
+      ]
+    },
+    "noise_titles": []
+  },
+  {
+    "subtopic_id": "s3",
+    "label": "Federal Reserve interest rate decision",
+    "lookback_days": 21,
+    "total_articles": 11,
+    "n_clusters": 5,
+    "cluster_sizes": {
+      "2": 3,
+      "0": 3,
+      "4": 2,
+      "1": 2,
+      "3": 1
+    },
+    "noise_count": 0,
+    "cluster_titles": {
+      "2": [
+        "U . S . stocks close mixed as chip stocks drop , oil prices plunge - Xinhua",
+        "Canadian dollar hits near two - week low as oil prices drop ; speculators \u2060trim bearish bets",
+        "Global oil prices spike above $100 after Red Sea attacks"
+      ],
+      "0": [
+        "Wall Street Week Ahead : Fed decision , big tech earnings and Middle East conflict in focus",
+        "Markets Brace For Volatile Week , Oil Prices , US Fed Decision And Q1 Earnings To Set The Tone",
+        "US Fed decision , Q1 earnings , crude oil prices likely to drive D - Street next week"
+      ],
+      "4": [
+        "Gold next test : Fed verdict , crude oil and geopolitical tensions in focus",
+        "US Fed action , oil swings to test bullion as traders eye West Asia risks : Analysts"
+      ],
+      "1": [
+        "Gold falls 2 % as Middle East tensions fuel inflation fears , rate - hike bets",
+        "Gold Price Surges Above $4 , 100 as Middle East Tensions Boost Safe - Haven Demand"
+      ],
+      "3": [
+        "Japanese Yen Holds Steady as Intervention Hopes Grow Ahead of U . S . CPI Data"
+      ]
+    },
+    "noise_titles": []
+  },
+  {
+    "subtopic_id": "s4",
+    "label": "Tesla quarterly earnings",
+    "lookback_days": 21,
+    "total_articles": 39,
+    "n_clusters": 2,
+    "cluster_sizes": {
+      "0": 8,
+      "1": 30
+    },
+    "noise_count": 1,
+    "cluster_titles": {
+      "0": [
+        "\u7279\u65af\u62c9\u7b2c\u4e8c\u5b63\u5ea6\u8d22\u62a5 \uff1a \u5168\u7403\u591a\u5730\u4ea4\u4ed8\u91cf\u521b\u65b0\u9ad8 \uff0c \u8425\u6536\u540c\u6bd4\u589e\u957f26 % ",
+        "\u8d22\u62a5 \u3001 \u5730\u7f18\u4e0e\u901a\u80c0\u4ea4\u7ec7 \uff1a \u7f8e\u80a1\u4e09\u5927\u4e3b\u7ebf\u89e3\u6790",
+        "\u66b4\u8dcc57 %\uff01 \u7279\u65af\u62c9Q2\u8425\u4e1a\u5229\u6da6\u5927\u8df3\u6c34 \uff1a \u5229\u6da6\u7387\u53ea\u52691 . 4 % ",
+        "\u7279\u65af\u62c9\u8d22\u62a5\u4f1a\u5b9e\u5f55 \uff1a \u5927\u4e3e\u62bc\u6ce8\u673a\u5668\u4eba \u3001 \u81ea\u52a8\u9a7e\u9a76\u4e0e\u50a8\u80fd \u8d44\u672c\u5f00\u652f\u6301\u7eed\u6269\u5f20 _ \u4e1c\u65b9\u8d22\u5bcc\u7f51",
+        "\u9a6c\u65af\u514b\u79f0\u7279\u65af\u62c9 ( TSLA . US ) \u83b7\u7f8e\u5149  \u53ef\u89c2\u914d\u989d \uff0c AI\u6d6a\u6f6e\u4e0b\u5b58\u50a8\u82af\u7247\u5df2\u6210\u8f66\u4f01\u4e89\u62a2\u6218\u7565\u7269\u8d44 - \u8d22\u7ecf - \u91d1\u878d\u754c",
+        "\u9a6c\u65af\u514b \uff1a \u7f8e\u5149\u4fdd\u969c\u5185\u5b58\u82af\u7247\u4f9b\u5e94 \u56de\u907f\u7279\u65af\u62c9\u4e0eSpaceX\u5408\u5e76 - \u4e1a\u754c\u52a8\u6001 - ITBear\u79d1\u6280\u8d44\u8baf",
+        "\u8d22\u62a5\u7535\u8bdd\u4f1a\u9a6c\u65af\u514b\u56de\u5e94\u4e24\u5927\u7126\u70b9 \uff1a \u611f\u8c22\u7f8e\u5149\u4fdd\u4f9b \uff0c \u5374\u907f\u7b54SpaceX\u5408\u5e76",
+        "\u4e8c\u5b63\u5ea6\u8d22\u62a5\u524d\u5915 \uff0c \u7279\u65af\u62c9\u80a1\u4e1c\u8ffd\u95ee\u4e0eSpaceX\u6f5c\u5728\u5408\u5e76\u4f20\u95fb"
+      ],
+      "1": [
+        "\u8d22\u62a5\u524d\u5915\u518d\u5e03\u5c40 \u7279\u65af\u62c9Robotaxi\u670d\u52a1\u6269\u5c55\u81f3\u5965\u5170\u591a\u548c\u5766\u5e15\u4e24\u5730 - \u4e1a\u754c\u52a8\u6001 - ITBear\u79d1\u6280\u8d44\u8baf",
+        "Earnings at Musk's Tesla fall as spending on research cuts into profit from selling cars",
+        "Tesla Profit Falls Even as Car Sales Rebound",
+        "Tesla Plunges Most in a Year on Investor Angst Over AI Spending",
+        "Should You Buy Tesla Stock Before Earnings on July 22?",
+        "As Musk pivots beyond cars, Tesla\u2019s autos engine is under strain",
+        "Tesla stock suffers double-digit drop on carmaker\u2019s worst day in years",
+        "Is Tesla\u2019s Earnings Miss and Negative Free Cash Flow a Red Flag for Rivian and Lucid Investors?",
+        "Tesla and Alphabet spook investors as earnings season kicks off",
+        "Someone Call Tesla a Robotaxi, or SpaceX, Quick",
+        "Tesla and Alphabet stocks are tumbling after Q2 earnings and lofty capex-spending forecasts",
+        "Watch Tesla Reports Huge Miss on Earnings for Second Quarter",
+        "Tesla's Per-Car Profit Fell Another 8% Last Quarter, and I Fear This May Be the New Norm",
+        "Tesla reports Q2 earnings tonight as stock struggles with 16% decline",
+        "Musk\u2019s SpaceX tumbles back to Earth, dragging Tesla stock down with it",
+        "Google and Tesla shares plunge as AI spending rattles markets",
+        "Tesla Heads Into Its July 22 Earnings Down 22%, and One Firm Sees a 67% Plunge From Here. Who's Right?",
+        "Tesla spending skyrockets as Cybercab, Semi, Megapack production timeline slips",
+        "Tesla earnings recap: Stock drops 4% after EV maker misses big on profit",
+        "What Tesla\u2019s Q2 Earnings Reveal About the Real Price of Scaling Optimus",
+        "Tesla's Investment in SpaceX: The $1 Billion Accounting Choice",
+        "Tesla\u2019s Falling Profits Are Spooking Investors, Amid Robotaxi Delays and SpaceX Merger Rumblings",
+        "ETFs to Watch as Tesla Sees Worst Weekly Slump Post Q2 Earnings Miss",
+        "Why Retail Traders Couldn\u2019t Take Their Eyes Off These Stocks Last Week: NVDA, GOOGL, ORCL, TSLA, INTC",
+        "Tesla earnings disappoint Wall Street as Elon Musk\u2019s AI push, pivot beyond cars hurt profits",
+        "Tesla profit disappoints, EV maker posts cash burn as AI spending surges",
+        "Mixed Alphabet (NASDAQ: GOOG) And Tesla (NASDAQ: TSLA) Earnings Push Wall Street Futures Lower As Oil Surge Reignites Inflation Fears",
+        "Tesla short sellers mint $4 billion profit as shares nosedive",
+        "Michael Burry Highlights Rising AI Spending By Big Tech And Its Impact On S&P 500 \u2014 'The Market Has Voted And The Results Are Clear'",
+        "Tech selloff gathers pace - Tesla Selloff Explained: Profit Pressure, Rising AI Costs and What's Next"
+      ]
+    },
+    "noise_titles": [
+      "US stock market to Kospi : Here world equity heatmap you should know before opening of the Indian stock market today"
+    ]
+  },
+  {
+    "subtopic_id": "s5",
+    "label": "solar panel manufacturing",
+    "lookback_days": 30,
+    "total_articles": 40,
+    "n_clusters": 2,
+    "cluster_sizes": {
+      "0": 13,
+      "1": 5
+    },
+    "noise_count": 22,
+    "cluster_titles": {
+      "0": [
+        "India's solar push idles factories unable to shake reliance on China",
+        "India's Solar Manufacturing Push Backfires as Panel Factories Shut Down",
+        "Reshoring Solar Manufacturing For Energy (National) Security",
+        "Judge affirms ruling prohibiting solar panel manufacturing in Fort Mill",
+        "Can India, Europe produce solar energy without China?",
+        "Houston Attracts New Solar Manufacturing Investment",
+        "Judge affirms ruling prohibiting solar panel manufacturing in Fort Mill",
+        "SC judge determines solar manufacturing needs \u2018heavy industrial\u2019 zoning",
+        "Here's how Texas has emerged as the nation's leader for solar manufacturing",
+        "India Solar Manufacturing Gets 10 GW Boost: SAEL Breaks Ground on TOPCon Cell Plant",
+        "India's solar manufacturing: The investment story behind India's clean energy future",
+        "Solar Manufacturing Infrastructure",
+        "Integrated Solar Factories"
+      ],
+      "1": [
+        "Canadian Solar ramps HJT solar cell manufacturing in Indiana",
+        "CS PowerTech opens first phase of HJT solar cell plant",
+        "Canadian Solar's Arm Opens First Phase of US Solar Cell Manufacturing Facility in Indiana",
+        "CS PowerTech Opens First U.S. HJT Solar Cell Manufacturing Facility in Indiana, Targeting Over 6 GWp Annual Capacity",
+        "Canadian Solar Opens 6 GW HJT Cell Plant In Indiana"
+      ]
+    },
+    "noise_titles": [
+      "DYCM\u2019s journey to panel manufacturing leads to California",
+      "The new Global Reality for PV Module Manufacturers - 2026",
+      "Comstock to recycle scrap material from Illuminate USA\u2019s Ohio solar panel factory",
+      "Judge upholds York County BZA ruling in Silfab Solar zoning dispute",
+      "ES Foundry Completes 2 GW Greenwood Factory Expansion, Bringing Total U.S. Solar Cell Capacity to 3 GW as First Cell Comes Off New Line",
+      "Judge upholds 2024 York County zoning ruling in Silfab Solar dispute: What to know",
+      "Fire breaks out at Qcells solar manufacturing plant in Cartersville",
+      "China\u2019s solar empire enters a new era as standards change old factories",
+      "A peek inside Illuminate USA\u2019s massive solar panel facility in Pataskala",
+      "Equipment Fire Contained at Qcells Solar Plant in Cartersville",
+      "Vikram Solar rolls out first module from its new facility in Tamil Nadu",
+      "Weeks after rollout, Centre defers domestic solar cell sourcing mandate till December 31",
+      "Oman Approves Investment in Middle East\u2019s First 6 GW Integrated Solar Cell and Module Manufacturing Plant",
+      "INOX Air Products Partners INA Solar to Supply UHP Nitrogen for 4.5 GW Solar Cell Plant",
+      "Solex Energy Bags Rs. 628.37 Cr Work Order for N-Type TOPCon Solar Modules",
+      "Arglass partially runs plant using solar",
+      "Reliance Says Solar Wafer Pilot Plant Ready, 40 GWh Battery Capacity on Track",
+      "Mozambique Solar Panel Factory returns to hope",
+      "StarlinePS Enterprises to Invest Rs. 160 Cr in Celloraa Energy's 1.2 GW Solar Cell Manufacturing Facility",
+      "ALMM-II Extension Offers Relief to Solar Developers, Buys Time for Domestic Cell Manufacturing",
+      "Kenya eyes Chinese investment to accelerate clean energy transition",
+      "Taiwanese firms partner on solar panels targeting US power demand"
+    ]
+  }
+]

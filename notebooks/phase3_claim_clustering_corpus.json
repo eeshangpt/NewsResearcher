@@ -1,0 +1,896 @@
+[
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://www.asiaone.com/digital/deepseeks-new-ai-model-far-cheapest-well-known-models-run-research-firm-says",
+    "domain": "asiaone.com",
+    "title": "DeepSeek new AI model is by far the cheapest of well - known models to run , research firm says",
+    "n_claims": 25,
+    "claims": [
+      {
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally",
+        "subject": "DeepSeek's flagship AI model",
+        "attributed_source": "according to a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5",
+        "subject": "DeepSeek's flagship AI model",
+        "attributed_source": "according to a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek officially released its V4-Flash model on Friday",
+        "subject": "DeepSeek's V4-Flash model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model became a global sensation in early 2025",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model triggered a selloff in global technology stocks",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model raised questions about the large amounts US companies were spending on AI",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens",
+        "subject": "DeepSeek's V4-Flash pricing",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "A token is a unit of data used to measure AI usage",
+        "subject": "token",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated V4-Flash's average cost at three cents per test",
+        "subject": "DeepSeek's V4-Flash model cost",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test",
+        "subject": "Moonshot AI's Kimi K3 model cost",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs US$1.86 per test",
+        "subject": "OpenAI's GPT-5.6 Sol model cost",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Anthropic's Claude Fable 5 costs US$3.15 per test",
+        "subject": "Anthropic's Claude Fable 5 model cost",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek once commanded most of the headlines about Chinese AI development",
+        "subject": "DeepSeek",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek was quickly besieged by many domestic rivals including other startups such as Moonshot, MiniMax and Z.AI and tech giants like ByteDance and Alibaba",
+        "subject": "DeepSeek and its domestic rivals",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "All these companies are vying with US tech firms for global adoption",
+        "subject": "Chinese AI startups and tech giants",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index",
+        "subject": "DeepSeek's V4-Flash model Intelligence Index score",
+        "attributed_source": "according to Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Intelligence Index combines results from nine benchmarks spanning coding, reasoning and workplace-style assignments",
+        "subject": "Intelligence Index",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model scored the same score as Google's Gemini 3.6 Flash",
+        "subject": "DeepSeek's V4-Flash and Google's Gemini 3.6 Flash models",
+        "attributed_source": "according to Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI",
+        "subject": "DeepSeek's V4-Flash, Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI models",
+        "attributed_source": "according to Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Moonshot's Kimi K3 scored 57 on the Intelligence Index",
+        "subject": "Moonshot's Kimi K3 model",
+        "attributed_source": "according to Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash",
+        "subject": "Anthropic's Claude Opus 5, Fable 5, OpenAI GPT-5.6 and DeepSeek's V4-Flash models",
+        "attributed_source": "according to Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek is preparing a more powerful version of its model, called the V4-Pro",
+        "subject": "DeepSeek's V4-Pro model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "DeepSeek has not given a date for the official release of the V4-Pro model",
+        "subject": "DeepSeek's V4-Pro model release date",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max",
+        "subject": "Alibaba's Qwen3.8-Max AI model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month",
+        "subject": "Alibaba's Qwen3.8-Max and Moonshot AI's model size",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://www.benzinga.com/markets/tech/26/08/60864220/us-businesses-could-face-12-billion-in-higher-costs-annually-under-potential-chinese-ai-model-ban-report",
+    "domain": "benzinga.com",
+    "title": "US Businesses Could Face $12 Billion in Higher Costs Annually Under Potential Chinese AI Model Ban : Repor",
+    "n_claims": 13,
+    "claims": [
+      {
+        "claim_text": "A potential U.S. ban on Chinese open-weight AI models could come at a massive cost to American businesses as companies increasingly rely on lower-cost Chinese AI solutions.",
+        "subject": "U.S. ban on Chinese open-weight AI models",
+        "attributed_source": "a researcher",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "The estimate used token usage and pricing differences between open- and closed-source AI models from July 21\u201327, based on usage data from AI platform OpenRouter.",
+        "subject": "The estimate of economic impact of AI model usage",
+        "attributed_source": "a researcher",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Yue emphasized these are rough, order-of-magnitude estimates, not precise projections, due to the difficulty of measuring decentralized usage.",
+        "subject": "The estimate of economic impact of AI model usage",
+        "attributed_source": "a researcher named Yue",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The economic impact is still uncertain because it\u2019s unclear whether U.S. companies would adopt closed AI models or stop using some AI workflows altogether.",
+        "subject": "Economic impact of a potential U.S. ban on Chinese open-weight AI models",
+        "attributed_source": "a researcher named Yue",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Banning open-weight AI models could sharply reduce AI demand.",
+        "subject": "Impact of banning open-weight AI models",
+        "attributed_source": "Foundation Capital partner Jaya Gupta",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "A collapse in the debt-funded AI infrastructure market is at risk because data center investments depend on sustained AI demand.",
+        "subject": "The debt-funded AI infrastructure market",
+        "attributed_source": "Foundation Capital partner Jaya Gupta",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Washington\u2019s concerns over Chinese open-weight AI models intensified after Beijing-based Moonshot AI launched Kimi K3 in late July.",
+        "subject": "Washington's concerns over Chinese open-weight AI models",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Kimi K3 model rivaled leading offerings from OpenAI and Anthropic on some benchmarks.",
+        "subject": "Kimi K3 AI model by Moonshot AI",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Trump administration renewed efforts to restrict foreign open-source AI models amid allegations that Moonshot AI infringed U.S. intellectual property.",
+        "subject": "Trump administration efforts regarding foreign open-source AI models",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "OpenAI CEO Sam Altman announced an 80% price cut for the lightweight GPT-5.6 Luna model.",
+        "subject": "OpenAI CEO Sam Altman",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "OpenAI CEO Sam Altman announced a 20% price reduction for the mid-tier GPT-5.6 Terra model.",
+        "subject": "OpenAI CEO Sam Altman",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Global spending on large language model inference fell from $2.07 to $1.67 per million tokens between early June and early July.",
+        "subject": "Global spending on large language model inference",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Goldman Sachs attributed part of the decline in large language model inference spending to growing adoption of lower-cost Chinese open-weight AI models.",
+        "subject": "Goldman Sachs",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://www.freepressjournal.in/tech/alibaba-unveils-qwen38-max-its-most-capable-ai-model-yet-closing-in-on-moonshots-kimi-k3-in-size",
+    "domain": "freepressjournal.in",
+    "title": "Alibaba Unveils Qwen3 . 8 - Max , Its Most Capable AI Model Yet , Closing In On Moonshot Kimi K3 In Size",
+    "n_claims": 20,
+    "claims": [
+      {
+        "claim_text": "Alibaba has unveiled Qwen3.8-Max, which it describes as its largest and most capable AI model to date",
+        "subject": "Alibaba",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max carries 2.4 trillion parameters",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Moonshot's Kimi K3 has 2.8 trillion parameters",
+        "subject": "Moonshot's Kimi K3",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max ranks higher than Kimi K3 on some benchmarks, according to Bloomberg",
+        "subject": "Qwen3.8-Max and Kimi K3",
+        "attributed_source": "Bloomberg",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba plans to release Qwen3.8-Max's weights for public download",
+        "subject": "Alibaba and Qwen3.8-Max",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba positions Qwen3.8-Max as second only to Anthropic's Claude Fable 5 in its internal evaluations",
+        "subject": "Alibaba's Qwen3.8-Max",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max scored 67.7 on SWE-Pro benchmark",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max scored 86.6 on TerminalBench-2.1, ahead of every other model including Fable 5",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max posted a leading score of 93.0 on PaperBench, ahead of Fable 5's 88.8",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On FrontierSWE benchmark, Qwen3.8-Max scored 73.5, trailing Opus 4.8 and Fable 5",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max scored 74.8 on CoWorkBench and 53.4 on JobBench, ahead of its predecessor Qwen 3.7 Max but behind Fable 5",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max scored 52.4 on Agents' Last Exam, narrowly behind GPT-5.6 Sol's 53.6",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On BabyVision and CharXiv visual and multimodal reasoning benchmarks, Qwen3.8-Max posted strong results but trailed Fable 5 on Python-assisted scores",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max led on embodied reasoning benchmark ERQA with a score of 77.8, ahead of Fable 5's 70.0",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "On agentic computer and mobile use benchmarks OSWorld-Verified and MobileWorld, Qwen3.8-Max scored 86.1 and 77.8 respectively",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max led Fable 5's scores on OSWorld-Verified but trailed on MobileWorld",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba's published benchmark charts",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max uses a mixture-of-experts design architecture",
+        "subject": "Qwen3.8-Max",
+        "attributed_source": "Alibaba",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The AI race among Chinese developers includes Alibaba, Moonshot, DeepSeek, and ByteDance",
+        "subject": "Chinese AI developers race including Alibaba, Moonshot, DeepSeek, and ByteDance",
+        "attributed_source": "Bloomberg",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Qwen3.8-Max and Kimi K3 are positioned as open-weight releases that developers can freely download and build upon",
+        "subject": "Qwen3.8-Max and Kimi K3",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Leading US AI labs such as Anthropic and OpenAI offer closed access models",
+        "subject": "Anthropic and OpenAI closed access models",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://economictimes.indiatimes.com/tech/artificial-intelligence/deepseeks-new-ai-model-is-by-far-the-cheapest-of-well-known-models-to-run-research-firm-says/articleshow/132820248.cms",
+    "domain": "economictimes.indiatimes.com",
+    "title": "DeepSeek AI model : DeepSeek new AI model is by far the cheapest of well - known models to run , research firm says",
+    "n_claims": 26,
+    "claims": [
+      {
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally",
+        "subject": "DeepSeek's flagship AI model",
+        "attributed_source": "a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5",
+        "subject": "DeepSeek's flagship AI model",
+        "attributed_source": "a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek officially released its V4-Flash model on Friday",
+        "subject": "DeepSeek",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek is preparing for a potential IPO",
+        "subject": "DeepSeek",
+        "attributed_source": "sources",
+        "attribution_type": "attributed",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model became a global sensation in early 2025",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model triggered a selloff in global technology stocks",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model raised questions about the large amounts U.S. companies were spending on AI",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model charges $0.14 per million input tokens and $0.28 per million output tokens",
+        "subject": "DeepSeek's V4-Flash model pricing",
+        "attributed_source": "research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated DeepSeek's V4-Flash average cost at 3 cents per test",
+        "subject": "DeepSeek's V4-Flash model cost",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test",
+        "subject": "Kimi K3 model",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs $1.86 per test",
+        "subject": "OpenAI's GPT-5.6 Sol model cost",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Claude Fable 5 costs $3.15 per test",
+        "subject": "Claude Fable 5 model cost",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek once commanded most of the headlines about Chinese AI development but was quickly besieged by many domestic rivals",
+        "subject": "DeepSeek",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's domestic rivals include startups such as Moonshot, MiniMax and Z.AI and tech giants like ByteDance and Alibaba",
+        "subject": "DeepSeek's domestic rivals",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "All these Chinese AI companies are vying with U.S. tech firms for global adoption",
+        "subject": "Chinese AI companies",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "These companies target businesses seeking cheaper ways to deploy AI at scale",
+        "subject": "Chinese AI companies",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model scored 50 out of 100 on Artificial Analysis's Intelligence Index",
+        "subject": "DeepSeek's V4-Flash model",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Intelligence Index combines results from nine benchmarks spanning coding, reasoning and workplace-style assignments",
+        "subject": "Artificial Analysis's Intelligence Index",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model scored the same as Google's Gemini 3.6 Flash",
+        "subject": "DeepSeek's V4-Flash model and Google's Gemini 3.6 Flash",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI",
+        "subject": "DeepSeek's V4-Flash model",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Moonshot's Kimi K3 scored 57 on the Intelligence Index",
+        "subject": "Moonshot's Kimi K3 model",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash model on the Intelligence Index",
+        "subject": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 models",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek is preparing a more powerful version of its model called the V4-Pro",
+        "subject": "DeepSeek's V4-Pro model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "DeepSeek has not given a date for the official release of the V4-Pro model",
+        "subject": "DeepSeek's V4-Pro model release date",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max, on Monday",
+        "subject": "Alibaba's Qwen3.8-Max model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba's Qwen3.8-Max model is not far behind in size compared with Moonshot AI's offering launched last month",
+        "subject": "Alibaba's Qwen3.8-Max model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://siliconangle.com/2026/08/02/report-claims-china-distilling-u-s-frontier-models-power-military-ai-applications/",
+    "domain": "siliconangle.com",
+    "title": "Report claims China is distilling U . S . frontier models to power military AI applications",
+    "n_claims": 18,
+    "claims": [
+      {
+        "claim_text": "Chinese artificial intelligence firms have been leveraging the outputs of American frontier models developed by OpenAI Group PBC and Anthropic PBC to train their own AI systems for defense applications.",
+        "subject": "Chinese artificial intelligence firms",
+        "attributed_source": "an exclusive report by Reuters",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chinese institutions linked to the military have been harvesting the outputs of U.S. AI models to bypass Washington\u2019s export controls on advanced chips.",
+        "subject": "Chinese institutions linked to the military",
+        "attributed_source": "a detailed examination by Reuters",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chinese researchers are increasingly hijacking the work of America\u2019s best-known AI startups to build advanced systems that power military applications.",
+        "subject": "Chinese researchers",
+        "attributed_source": "the Reuters report with Jamestown Foundation",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Chinese researchers are misusing a technique known as model distillation, which involves using outputs and data from powerful teacher models to train smaller student models.",
+        "subject": "Chinese researchers",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Through model distillation, China has developed models matching the performance of OpenAI\u2019s and Anthropic\u2019s frontier models using far less computational resources.",
+        "subject": "China",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba Group Holding Ltd. launched a preview of Qwen3.8, which benchmarks second only to Anthropic\u2019s Claude Fable 5 and surpasses OpenAI\u2019s GPT-5.6.",
+        "subject": "Alibaba Group Holding Ltd.",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The Chinese startup Moonshot AI released the world\u2019s largest open-weights model called Kimi K3 with claimed frontier-level performance.",
+        "subject": "Moonshot AI",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "U.S. officials and AI startups have accused Chinese firms of distilling American models to advance the capabilities of their own AI systems.",
+        "subject": "U.S. officials and AI startups",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "U.S. Treasury Secretary Scott Bessent threatened sanctions on any Chinese AI firms deemed guilty of the distillation practice.",
+        "subject": "U.S. Treasury Secretary Scott Bessent",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Microsoft Corp. Chief Executive Satya Nadella highlighted the irony of accusations against China, noting Anthropic\u2019s own models were trained on massive internet data without permission.",
+        "subject": "Microsoft Corp. Chief Executive Satya Nadella",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "PLA Unit 96941, the main cyberwarfare group in the People\u2019s Liberation Army, distilled OpenAI\u2019s GPT-3.5 to process and summarize sensitive military source code.",
+        "subject": "PLA Unit 96941",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "PLA Unit 96941 developed a lightweight model specializing in safely processing sensitive data on Chinese military networks from distillation of GPT-3.5 outputs.",
+        "subject": "PLA Unit 96941",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Researchers at the North University of China used Anthropic\u2019s Claude 3 Haiku to create synthetic training data to build a text classification system for social media monitoring.",
+        "subject": "Researchers at the North University of China",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Researchers at the National University of Defense Technology distilled a U.S.-made image processing model to install it on unmanned aerial vehicles for real-time video analysis aiding navigation and weapons targeting.",
+        "subject": "Researchers at the National University of Defense Technology",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "The White House is concerned that model distillation undermines its export controls and infringes on the intellectual property rights of U.S. model makers.",
+        "subject": "The White House",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Beijing accuses the Americans of pursuing AI hegemonism regarding AI governance and safety talks.",
+        "subject": "Beijing",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "SapienX Inc. co-founder Trevor Koverko stated that Chinese model distillation is best understood as transferring selected capabilities into cheaper, locally controlled systems and does not imply independence from frontier AI.",
+        "subject": "Trevor Koverko",
+        "attributed_source": "the Reuters report",
+        "attribution_type": "opinion",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Chinese researchers can devise systems matching U.S. models in narrow applications but still need original breakthroughs to outperform U.S. rivals.",
+        "subject": "Chinese researchers",
+        "attributed_source": "the Reuters report quoting Trevor Koverko",
+        "attribution_type": "opinion",
+        "certainty": "confirmed"
+      }
+    ]
+  },
+  {
+    "subtopic": "openai_gpt5_release",
+    "url": "https://finance.yahoo.com/technology/ai/articles/deepseeks-ai-model-far-cheapest-054143251.html",
+    "domain": "finance.yahoo.com",
+    "title": "DeepSeek new AI model is by far the cheapest of well - known models to run , research firm says",
+    "n_claims": 18,
+    "claims": [
+      {
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally.",
+        "subject": "Chinese startup DeepSeek's flagship AI model",
+        "attributed_source": "according to a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5 according to a research firm.",
+        "subject": "DeepSeek's flagship AI model",
+        "attributed_source": "according to a research firm",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek officially released its V4-Flash model on Friday.",
+        "subject": "DeepSeek's V4-Flash model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash model is its latest attempt to regain momentum by offering ultra-low-cost AI alternatives.",
+        "subject": "DeepSeek's V4-Flash model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's R1 model became a global sensation in early 2025, triggering a selloff in global technology stocks and raising questions about large amounts U.S. companies were spending on AI.",
+        "subject": "DeepSeek's R1 model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens according to research firm Artificial Analysis.",
+        "subject": "DeepSeek's V4-Flash model pricing",
+        "attributed_source": "according to research firm Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated V4-Flash's average cost at 3 cents per test.",
+        "subject": "DeepSeek's V4-Flash model average test cost",
+        "attributed_source": "San Francisco-based Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI's average cost at 86 cents per test.",
+        "subject": "Kimi K3 model from Moonshot AI",
+        "attributed_source": "San Francisco-based Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol average cost at $1.86 per test.",
+        "subject": "OpenAI's GPT-5.6 Sol model",
+        "attributed_source": "San Francisco-based Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis estimated Claude Fable 5's average cost at $3.15 per test.",
+        "subject": "Claude Fable 5 model",
+        "attributed_source": "San Francisco-based Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index, combining results from nine benchmarks spanning coding, reasoning and workplace-style assignments.",
+        "subject": "DeepSeek's V4-Flash model Intelligence Index score",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash Intelligence Index score is the same as Google's Gemini 3.6 Flash's score.",
+        "subject": "DeepSeek's V4-Flash Intelligence Index score",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek's V4-Flash is one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI on the Intelligence Index.",
+        "subject": "DeepSeek's V4-Flash Intelligence Index score",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Moonshot's Kimi K3 scored 57 on the Intelligence Index.",
+        "subject": "Moonshot's Kimi K3 Intelligence Index score",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash on the Intelligence Index.",
+        "subject": "Anthropic's Claude Opus 5, Fable 5 and OpenAI GPT-5.6 Intelligence Index scores",
+        "attributed_source": "Artificial Analysis",
+        "attribution_type": "attributed",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release.",
+        "subject": "DeepSeek's V4-Pro model",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "developing"
+      },
+      {
+        "claim_text": "Alibaba unveiled its largest and most capable artificial-intelligence model to date called the Qwen3.8-Max.",
+        "subject": "Alibaba's AI model Qwen3.8-Max",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      },
+      {
+        "claim_text": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month.",
+        "subject": "Alibaba's Qwen3.8-Max model size",
+        "attributed_source": "the article's own reporting",
+        "attribution_type": "reported",
+        "certainty": "confirmed"
+      }
+    ]
+  }
+]

@@ -1,0 +1,541 @@
+[
+  {
+    "i": 0,
+    "j": 58,
+    "sim": 1.0000000000000004,
+    "claim_i": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally",
+    "claim_j": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally"
+  },
+  {
+    "i": 1,
+    "j": 59,
+    "sim": 1.0000000000000004,
+    "claim_i": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5",
+    "claim_j": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5"
+  },
+  {
+    "i": 2,
+    "j": 60,
+    "sim": 1.0000000000000004,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday"
+  },
+  {
+    "i": 3,
+    "j": 62,
+    "sim": 1.0000000000000004,
+    "claim_i": "DeepSeek's R1 model became a global sensation in early 2025",
+    "claim_j": "DeepSeek's R1 model became a global sensation in early 2025"
+  },
+  {
+    "i": 19,
+    "j": 78,
+    "sim": 1.0000000000000002,
+    "claim_i": "Moonshot's Kimi K3 scored 57 on the Intelligence Index",
+    "claim_j": "Moonshot's Kimi K3 scored 57 on the Intelligence Index"
+  },
+  {
+    "i": 4,
+    "j": 63,
+    "sim": 1.0,
+    "claim_i": "DeepSeek's R1 model triggered a selloff in global technology stocks",
+    "claim_j": "DeepSeek's R1 model triggered a selloff in global technology stocks"
+  },
+  {
+    "i": 22,
+    "j": 81,
+    "sim": 1.0,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek has not given a date for the official release of the V4-Pro model"
+  },
+  {
+    "i": 9,
+    "j": 67,
+    "sim": 0.9999999999999998,
+    "claim_i": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test",
+    "claim_j": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test"
+  },
+  {
+    "i": 16,
+    "j": 75,
+    "sim": 0.9999999999999998,
+    "claim_i": "The Intelligence Index combines results from nine benchmarks spanning coding, reasoning and workplace-style assignments",
+    "claim_j": "The Intelligence Index combines results from nine benchmarks spanning coding, reasoning and workplace-style assignments"
+  },
+  {
+    "i": 10,
+    "j": 68,
+    "sim": 0.9933609266812042,
+    "claim_i": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs US$1.86 per test",
+    "claim_j": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs $1.86 per test"
+  },
+  {
+    "i": 21,
+    "j": 80,
+    "sim": 0.99316197005812,
+    "claim_i": "DeepSeek is preparing a more powerful version of its model, called the V4-Pro",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro"
+  },
+  {
+    "i": 19,
+    "j": 115,
+    "sim": 0.9901428290963934,
+    "claim_i": "Moonshot's Kimi K3 scored 57 on the Intelligence Index",
+    "claim_j": "Moonshot's Kimi K3 scored 57 on the Intelligence Index."
+  },
+  {
+    "i": 78,
+    "j": 115,
+    "sim": 0.9901428290963934,
+    "claim_i": "Moonshot's Kimi K3 scored 57 on the Intelligence Index",
+    "claim_j": "Moonshot's Kimi K3 scored 57 on the Intelligence Index."
+  },
+  {
+    "i": 5,
+    "j": 64,
+    "sim": 0.9882996699212303,
+    "claim_i": "DeepSeek's R1 model raised questions about the large amounts US companies were spending on AI",
+    "claim_j": "DeepSeek's R1 model raised questions about the large amounts U.S. companies were spending on AI"
+  },
+  {
+    "i": 23,
+    "j": 82,
+    "sim": 0.9856114416442836,
+    "claim_i": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max",
+    "claim_j": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max, on Monday"
+  },
+  {
+    "i": 2,
+    "j": 104,
+    "sim": 0.9853746726270836,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday."
+  },
+  {
+    "i": 60,
+    "j": 104,
+    "sim": 0.9853746726270836,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday."
+  },
+  {
+    "i": 17,
+    "j": 76,
+    "sim": 0.9822494084302746,
+    "claim_i": "DeepSeek's V4-Flash model scored the same score as Google's Gemini 3.6 Flash",
+    "claim_j": "DeepSeek's V4-Flash model scored the same as Google's Gemini 3.6 Flash"
+  },
+  {
+    "i": 6,
+    "j": 107,
+    "sim": 0.9805389224429559,
+    "claim_i": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens",
+    "claim_j": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens according to research firm Artificial Analysis."
+  },
+  {
+    "i": 6,
+    "j": 65,
+    "sim": 0.978763812085562,
+    "claim_i": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens",
+    "claim_j": "DeepSeek's V4-Flash model charges $0.14 per million input tokens and $0.28 per million output tokens"
+  },
+  {
+    "i": 24,
+    "j": 119,
+    "sim": 0.9764098358077413,
+    "claim_i": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month",
+    "claim_j": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month."
+  },
+  {
+    "i": 24,
+    "j": 83,
+    "sim": 0.9748998570591265,
+    "claim_i": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month",
+    "claim_j": "Alibaba's Qwen3.8-Max model is not far behind in size compared with Moonshot AI's offering launched last month"
+  },
+  {
+    "i": 23,
+    "j": 118,
+    "sim": 0.9747052338370936,
+    "claim_i": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max",
+    "claim_j": "Alibaba unveiled its largest and most capable artificial-intelligence model to date called the Qwen3.8-Max."
+  },
+  {
+    "i": 9,
+    "j": 109,
+    "sim": 0.9746694025479956,
+    "claim_i": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test",
+    "claim_j": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI's average cost at 86 cents per test."
+  },
+  {
+    "i": 67,
+    "j": 109,
+    "sim": 0.9746694025479956,
+    "claim_i": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI costs 86 cents per test",
+    "claim_j": "Artificial Analysis estimated Kimi K3 from Chinese rival Moonshot AI's average cost at 86 cents per test."
+  },
+  {
+    "i": 18,
+    "j": 77,
+    "sim": 0.973943408684341,
+    "claim_i": "DeepSeek's V4-Flash scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI",
+    "claim_j": "DeepSeek's V4-Flash model scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI"
+  },
+  {
+    "i": 8,
+    "j": 108,
+    "sim": 0.9698765194041745,
+    "claim_i": "Artificial Analysis estimated V4-Flash's average cost at three cents per test",
+    "claim_j": "Artificial Analysis estimated V4-Flash's average cost at 3 cents per test."
+  },
+  {
+    "i": 68,
+    "j": 110,
+    "sim": 0.9686447500725046,
+    "claim_i": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs $1.86 per test",
+    "claim_j": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol average cost at $1.86 per test."
+  },
+  {
+    "i": 82,
+    "j": 118,
+    "sim": 0.9678665883516858,
+    "claim_i": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max, on Monday",
+    "claim_j": "Alibaba unveiled its largest and most capable artificial-intelligence model to date called the Qwen3.8-Max."
+  },
+  {
+    "i": 0,
+    "j": 102,
+    "sim": 0.9676622908582639,
+    "claim_i": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally",
+    "claim_j": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally."
+  },
+  {
+    "i": 58,
+    "j": 102,
+    "sim": 0.9676622908582639,
+    "claim_i": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally",
+    "claim_j": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally."
+  },
+  {
+    "i": 10,
+    "j": 110,
+    "sim": 0.9660832907120724,
+    "claim_i": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol costs US$1.86 per test",
+    "claim_j": "Artificial Analysis estimated OpenAI's GPT-5.6 Sol average cost at $1.86 per test."
+  },
+  {
+    "i": 1,
+    "j": 103,
+    "sim": 0.9654464894325666,
+    "claim_i": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5",
+    "claim_j": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5 according to a research firm."
+  },
+  {
+    "i": 59,
+    "j": 103,
+    "sim": 0.9654464894325666,
+    "claim_i": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5",
+    "claim_j": "DeepSeek's flagship AI model is more than 100 times cheaper to run than Anthropic's Claude Fable 5 according to a research firm."
+  },
+  {
+    "i": 15,
+    "j": 74,
+    "sim": 0.9642050675774647,
+    "claim_i": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index",
+    "claim_j": "DeepSeek's V4-Flash model scored 50 out of 100 on Artificial Analysis's Intelligence Index"
+  },
+  {
+    "i": 22,
+    "j": 117,
+    "sim": 0.962658986987335,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 81,
+    "j": 117,
+    "sim": 0.962658986987335,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 65,
+    "j": 107,
+    "sim": 0.9624991254329689,
+    "claim_i": "DeepSeek's V4-Flash model charges $0.14 per million input tokens and $0.28 per million output tokens",
+    "claim_j": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens according to research firm Artificial Analysis."
+  },
+  {
+    "i": 83,
+    "j": 119,
+    "sim": 0.9582199292753192,
+    "claim_i": "Alibaba's Qwen3.8-Max model is not far behind in size compared with Moonshot AI's offering launched last month",
+    "claim_j": "Alibaba's Qwen3.8-Max is not far behind in size when compared with an offering from domestic rival Moonshot AI launched last month."
+  },
+  {
+    "i": 79,
+    "j": 116,
+    "sim": 0.9581226776827816,
+    "claim_i": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash model on the Intelligence Index",
+    "claim_j": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash on the Intelligence Index."
+  },
+  {
+    "i": 69,
+    "j": 111,
+    "sim": 0.9569360856963608,
+    "claim_i": "Artificial Analysis estimated Claude Fable 5 costs $3.15 per test",
+    "claim_j": "Artificial Analysis estimated Claude Fable 5's average cost at $3.15 per test."
+  },
+  {
+    "i": 23,
+    "j": 38,
+    "sim": 0.923997709643694,
+    "claim_i": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max",
+    "claim_j": "Alibaba has unveiled Qwen3.8-Max, which it describes as its largest and most capable AI model to date"
+  },
+  {
+    "i": 38,
+    "j": 82,
+    "sim": 0.9098269169062195,
+    "claim_i": "Alibaba has unveiled Qwen3.8-Max, which it describes as its largest and most capable AI model to date",
+    "claim_j": "Alibaba unveiled its largest and most capable artificial-intelligence model to date, the Qwen3.8-Max, on Monday"
+  },
+  {
+    "i": 11,
+    "j": 69,
+    "sim": 0.9091275151232292,
+    "claim_i": "Artificial Analysis estimated Anthropic's Claude Fable 5 costs US$3.15 per test",
+    "claim_j": "Artificial Analysis estimated Claude Fable 5 costs $3.15 per test"
+  },
+  {
+    "i": 20,
+    "j": 116,
+    "sim": 0.9088753348482487,
+    "claim_i": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash",
+    "claim_j": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash on the Intelligence Index."
+  },
+  {
+    "i": 13,
+    "j": 71,
+    "sim": 0.9050824831122624,
+    "claim_i": "DeepSeek was quickly besieged by many domestic rivals including other startups such as Moonshot, MiniMax and Z.AI and tech giants like ByteDance and Alibaba",
+    "claim_j": "DeepSeek's domestic rivals include startups such as Moonshot, MiniMax and Z.AI and tech giants like ByteDance and Alibaba"
+  },
+  {
+    "i": 38,
+    "j": 118,
+    "sim": 0.9034652253692268,
+    "claim_i": "Alibaba has unveiled Qwen3.8-Max, which it describes as its largest and most capable AI model to date",
+    "claim_j": "Alibaba unveiled its largest and most capable artificial-intelligence model to date called the Qwen3.8-Max."
+  },
+  {
+    "i": 17,
+    "j": 113,
+    "sim": 0.9034276207347642,
+    "claim_i": "DeepSeek's V4-Flash model scored the same score as Google's Gemini 3.6 Flash",
+    "claim_j": "DeepSeek's V4-Flash Intelligence Index score is the same as Google's Gemini 3.6 Flash's score."
+  },
+  {
+    "i": 15,
+    "j": 112,
+    "sim": 0.9002519695303781,
+    "claim_i": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index",
+    "claim_j": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index, combining results from nine benchmarks spanning coding, reasoning and workplace-style assignments."
+  },
+  {
+    "i": 12,
+    "j": 70,
+    "sim": 0.8937046358676873,
+    "claim_i": "DeepSeek once commanded most of the headlines about Chinese AI development",
+    "claim_j": "DeepSeek once commanded most of the headlines about Chinese AI development but was quickly besieged by many domestic rivals"
+  },
+  {
+    "i": 76,
+    "j": 113,
+    "sim": 0.8933833657307904,
+    "claim_i": "DeepSeek's V4-Flash model scored the same as Google's Gemini 3.6 Flash",
+    "claim_j": "DeepSeek's V4-Flash Intelligence Index score is the same as Google's Gemini 3.6 Flash's score."
+  },
+  {
+    "i": 11,
+    "j": 111,
+    "sim": 0.8880530611220359,
+    "claim_i": "Artificial Analysis estimated Anthropic's Claude Fable 5 costs US$3.15 per test",
+    "claim_j": "Artificial Analysis estimated Claude Fable 5's average cost at $3.15 per test."
+  },
+  {
+    "i": 74,
+    "j": 112,
+    "sim": 0.8821151921070636,
+    "claim_i": "DeepSeek's V4-Flash model scored 50 out of 100 on Artificial Analysis's Intelligence Index",
+    "claim_j": "Artificial Analysis said DeepSeek's V4-Flash model scored 50 out of 100 on its Intelligence Index, combining results from nine benchmarks spanning coding, reasoning and workplace-style assignments."
+  },
+  {
+    "i": 45,
+    "j": 48,
+    "sim": 0.8804580379931363,
+    "claim_i": "Qwen3.8-Max scored 86.6 on TerminalBench-2.1, ahead of every other model including Fable 5",
+    "claim_j": "Qwen3.8-Max scored 74.8 on CoWorkBench and 53.4 on JobBench, ahead of its predecessor Qwen 3.7 Max but behind Fable 5"
+  },
+  {
+    "i": 77,
+    "j": 114,
+    "sim": 0.8793400770795088,
+    "claim_i": "DeepSeek's V4-Flash model scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI",
+    "claim_j": "DeepSeek's V4-Flash is one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI on the Intelligence Index."
+  },
+  {
+    "i": 18,
+    "j": 114,
+    "sim": 0.8706641031332195,
+    "claim_i": "DeepSeek's V4-Flash scored one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI",
+    "claim_j": "DeepSeek's V4-Flash is one point behind Meta's Muse Spark 1.1 and GLM-5.2 from Z.AI on the Intelligence Index."
+  },
+  {
+    "i": 3,
+    "j": 106,
+    "sim": 0.8685368993261088,
+    "claim_i": "DeepSeek's R1 model became a global sensation in early 2025",
+    "claim_j": "DeepSeek's R1 model became a global sensation in early 2025, triggering a selloff in global technology stocks and raising questions about large amounts U.S. companies were spending on AI."
+  },
+  {
+    "i": 62,
+    "j": 106,
+    "sim": 0.8685368993261088,
+    "claim_i": "DeepSeek's R1 model became a global sensation in early 2025",
+    "claim_j": "DeepSeek's R1 model became a global sensation in early 2025, triggering a selloff in global technology stocks and raising questions about large amounts U.S. companies were spending on AI."
+  },
+  {
+    "i": 46,
+    "j": 48,
+    "sim": 0.8596094663228465,
+    "claim_i": "Qwen3.8-Max posted a leading score of 93.0 on PaperBench, ahead of Fable 5's 88.8",
+    "claim_j": "Qwen3.8-Max scored 74.8 on CoWorkBench and 53.4 on JobBench, ahead of its predecessor Qwen 3.7 Max but behind Fable 5"
+  },
+  {
+    "i": 45,
+    "j": 46,
+    "sim": 0.853405612800417,
+    "claim_i": "Qwen3.8-Max scored 86.6 on TerminalBench-2.1, ahead of every other model including Fable 5",
+    "claim_j": "Qwen3.8-Max posted a leading score of 93.0 on PaperBench, ahead of Fable 5's 88.8"
+  },
+  {
+    "i": 80,
+    "j": 117,
+    "sim": 0.8444701657088822,
+    "claim_i": "DeepSeek is preparing a more powerful version of its model called the V4-Pro",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 4,
+    "j": 106,
+    "sim": 0.8442353163867511,
+    "claim_i": "DeepSeek's R1 model triggered a selloff in global technology stocks",
+    "claim_j": "DeepSeek's R1 model became a global sensation in early 2025, triggering a selloff in global technology stocks and raising questions about large amounts U.S. companies were spending on AI."
+  },
+  {
+    "i": 63,
+    "j": 106,
+    "sim": 0.8442353163867511,
+    "claim_i": "DeepSeek's R1 model triggered a selloff in global technology stocks",
+    "claim_j": "DeepSeek's R1 model became a global sensation in early 2025, triggering a selloff in global technology stocks and raising questions about large amounts U.S. companies were spending on AI."
+  },
+  {
+    "i": 21,
+    "j": 117,
+    "sim": 0.8356488819333534,
+    "claim_i": "DeepSeek is preparing a more powerful version of its model, called the V4-Pro",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 2,
+    "j": 117,
+    "sim": 0.832342949193497,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 60,
+    "j": 117,
+    "sim": 0.832342949193497,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 34,
+    "j": 35,
+    "sim": 0.8297940130029278,
+    "claim_i": "OpenAI CEO Sam Altman announced an 80% price cut for the lightweight GPT-5.6 Luna model.",
+    "claim_j": "OpenAI CEO Sam Altman announced a 20% price reduction for the mid-tier GPT-5.6 Terra model."
+  },
+  {
+    "i": 104,
+    "j": 117,
+    "sim": 0.8194954457751045,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday.",
+    "claim_j": "DeepSeek is preparing a more powerful version of its model called the V4-Pro and has not given a date for its official release."
+  },
+  {
+    "i": 2,
+    "j": 22,
+    "sim": 0.8187275318063256,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek has not given a date for the official release of the V4-Pro model"
+  },
+  {
+    "i": 2,
+    "j": 81,
+    "sim": 0.8187275318063256,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek has not given a date for the official release of the V4-Pro model"
+  },
+  {
+    "i": 22,
+    "j": 60,
+    "sim": 0.8187275318063256,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday"
+  },
+  {
+    "i": 60,
+    "j": 81,
+    "sim": 0.8187275318063256,
+    "claim_i": "DeepSeek officially released its V4-Flash model on Friday",
+    "claim_j": "DeepSeek has not given a date for the official release of the V4-Pro model"
+  },
+  {
+    "i": 20,
+    "j": 79,
+    "sim": 0.8181001690435534,
+    "claim_i": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash",
+    "claim_j": "Anthropic's Claude Opus 5, Fable 5, and OpenAI GPT-5.6 scored nine or more points higher than DeepSeek's V4-Flash model on the Intelligence Index"
+  },
+  {
+    "i": 14,
+    "j": 72,
+    "sim": 0.8044050133218021,
+    "claim_i": "All these companies are vying with US tech firms for global adoption",
+    "claim_j": "All these Chinese AI companies are vying with U.S. tech firms for global adoption"
+  },
+  {
+    "i": 22,
+    "j": 104,
+    "sim": 0.8013990270833199,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday."
+  },
+  {
+    "i": 81,
+    "j": 104,
+    "sim": 0.8013990270833199,
+    "claim_i": "DeepSeek has not given a date for the official release of the V4-Pro model",
+    "claim_j": "DeepSeek officially released its V4-Flash model on Friday."
+  },
+  {
+    "i": 38,
+    "j": 83,
+    "sim": 0.8004836331005336,
+    "claim_i": "Alibaba has unveiled Qwen3.8-Max, which it describes as its largest and most capable AI model to date",
+    "claim_j": "Alibaba's Qwen3.8-Max model is not far behind in size compared with Moonshot AI's offering launched last month"
+  }
+]

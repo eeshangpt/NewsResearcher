@@ -173,10 +173,21 @@ def sourcing_agent(
                 pool, domain, presence_frequency_scores.get(domain), settings
             )
 
+        # data-scientist's `notebooks/phase2_zero_candidates_threshold_review.md`
+        # section 1: a GDELT-zero fetch (soft-failed or genuinely empty) is
+        # disproportionately RSS/backfill-only, i.e. thin trusted-tier coverage
+        # -- use the relaxed degraded floor for that fetch only, not the
+        # healthy-path threshold globally.
+        min_score_threshold = (
+            settings.reputation.min_score_threshold_degraded
+            if not gdelt_articles
+            else settings.reputation.min_score_threshold
+        )
+
         scored_articles: list[ScoredArticle] = []
         for article in deduped_articles:
             reputation = domain_reputations[article["domain"]]
-            if reputation["final_score"] >= settings.reputation.min_score_threshold:
+            if reputation["final_score"] >= min_score_threshold:
                 scored_articles.append(
                     ScoredArticle(
                         article=article,
@@ -186,9 +197,10 @@ def sourcing_agent(
                 )
 
         logger.info(
-            "sourcing_agent: %d article(s) meet min_score_threshold=%.2f",
+            "sourcing_agent: %d article(s) meet min_score_threshold=%.2f (gdelt_contributed=%s)",
             len(scored_articles),
-            settings.reputation.min_score_threshold,
+            min_score_threshold,
+            bool(gdelt_articles),
         )
         return scored_articles
     finally:

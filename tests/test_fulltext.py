@@ -6,7 +6,11 @@ from pathlib import Path
 from unittest.mock import patch
 
 from newsresearch.config import Settings
-from newsresearch.sourcing.fulltext import fetch_fulltext, fetch_fulltext_for_cluster
+from newsresearch.sourcing.fulltext import (
+    _trafilatura_config,
+    fetch_fulltext,
+    fetch_fulltext_for_cluster,
+)
 
 FULLTEXT_PATH = Path(__file__).resolve().parent.parent / "newsresearch" / "sourcing" / "fulltext.py"
 
@@ -65,7 +69,17 @@ def test_fetch_fulltext_passes_configured_timeout_to_trafilatura():
         fetch_fulltext("https://example.com/a", settings)
 
     _, kwargs = mock_fetch_url.call_args
-    assert kwargs["config"].get("DEFAULT", "DOWNLOAD_TIMEOUT") == "3.0"
+    assert kwargs["config"].get("DEFAULT", "DOWNLOAD_TIMEOUT") == "3"
+
+
+def test_trafilatura_config_download_timeout_is_getint_parseable():
+    """Regression for tech-lead review: `trafilatura` reads this key via
+    `config.getint(...)`; writing a float-formatted string ("30.0") makes
+    `getint` raise, which trafilatura swallows -- silently returning `None`
+    for every fetch regardless of reachability. Build the real `ConfigParser`
+    (no mocking `fetch_url`) and exercise the exact read path trafilatura uses."""
+    config = _trafilatura_config(30.0)
+    assert config.getint("DEFAULT", "DOWNLOAD_TIMEOUT") == 30
 
 
 def test_fetch_fulltext_for_cluster_one_bad_url_does_not_crash_batch():

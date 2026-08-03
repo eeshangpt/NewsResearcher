@@ -30,9 +30,12 @@ class ArticleFulltext(TypedDict):
 
 def _trafilatura_config(timeout_seconds: float) -> Any:
     """`trafilatura.fetch_url()` takes a request timeout only via its own
-    `ConfigParser`, not a direct kwarg (issue #108: previously unbounded)."""
+    `ConfigParser`, not a direct kwarg (issue #108: previously unbounded).
+    `trafilatura` reads this key with `config.getint(...)`, so it must be
+    written as an int string -- `"30.0"` fails `getint` and trafilatura
+    silently swallows that, making every fetch return `None`."""
     config = use_config()
-    config.set("DEFAULT", "DOWNLOAD_TIMEOUT", str(timeout_seconds))
+    config.set("DEFAULT", "DOWNLOAD_TIMEOUT", str(int(timeout_seconds)))
     return config
 
 
@@ -44,7 +47,7 @@ def fetch_fulltext(url: str, settings: Settings | None = None) -> str | None:
     download, it returns `None`), or if `trafilatura` can't extract a body
     (paywall, non-article page, empty extraction result).
     """
-    settings = settings or Settings()
+    settings = settings if settings is not None else Settings()
 
     try:
         downloaded = trafilatura.fetch_url(
@@ -78,7 +81,7 @@ def fetch_fulltext_for_cluster(
     on. One unreachable article never drops the rest of the batch -- each
     entry's `fulltext` is independently `None` on failure.
     """
-    settings = settings or Settings()
+    settings = settings if settings is not None else Settings()
     return [
         {"url": article["url"], "fulltext": fetch_fulltext(article["url"], settings)}
         for article in articles

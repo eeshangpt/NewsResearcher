@@ -16,11 +16,17 @@ incidental geometry.
 
 import json
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 
-from newsresearch.agents.subtopic_agent import rank_and_cap_subtopics, reconcile_candidates
+from newsresearch.agents.subtopic_agent import (
+    rank_and_cap_subtopics,
+    reconcile_candidates,
+    reconcile_subtopics,
+)
 from newsresearch.config import Settings
+from newsresearch.llm.schemas import SubtopicCandidate
 
 FIXTURES_DIR = Path(__file__).resolve().parent / "fixtures"
 
@@ -175,6 +181,38 @@ def test_reconcile_three_claimants_mixed_similarity_splits_two_from_one():
     assert c_group["article_count"] == 2
 
 
+def test_reconcile_uses_relaxed_threshold_below_kmeans_fallback_threshold():
+    """A candidate at 0.58 similarity to its best cluster: dropped under the
+    healthy-pool `reconciliation_match_threshold=0.60`, kept under the
+    relaxed `reconciliation_match_threshold_small_pool=0.55` -- but only when
+    the article pool fed to `cluster()` is below
+    `Settings.clustering.kmeans_fallback_threshold` (default 20).
+    """
+    e1, e2 = _unit(1, 0), _unit(0, 1)
+    theta = np.radians(np.degrees(np.arccos(0.58)))  # candidate at exactly cos=0.58 to e1
+    candidate = np.cos(theta) * e1 + np.sin(theta) * e2
+    candidate_embeddings = np.array([candidate])
+    centroids = {0: e1}
+
+    small_pool_articles = np.tile(e1, (10, 1))  # n=10 < kmeans_fallback_threshold(20)
+    small_labels = np.zeros(10, dtype=int)
+
+    result_small = reconcile_candidates(
+        ["Candidate"], candidate_embeddings, [0], centroids, small_pool_articles, small_labels
+    )
+    assert result_small["dropped"] == []
+    assert len(result_small["reconciled"]) == 1
+
+    large_pool_articles = np.tile(e1, (25, 1))  # n=25 >= kmeans_fallback_threshold(20)
+    large_labels = np.zeros(25, dtype=int)
+
+    result_large = reconcile_candidates(
+        ["Candidate"], candidate_embeddings, [0], centroids, large_pool_articles, large_labels
+    )
+    assert result_large["reconciled"] == []
+    assert len(result_large["dropped"]) == 1
+
+
 def test_rank_and_cap_truncates_and_retains_excess():
     settings = Settings()
     total_articles = 40
@@ -204,6 +242,63 @@ def test_rank_and_cap_truncates_and_retains_excess():
     for r in result["candidates"] + result["excess"]:
         assert "centroid" not in r
         assert "distinctiveness_score" in r
+
+
+@patch("newsresearch.agents.subtopic_agent.embed")
+@patch("newsresearch.agents.subtopic_agent.cluster")
+def test_reconcile_subtopics_falls_back_to_unlabeled_clusters_when_all_candidates_dropped(
+    mock_cluster, mock_embed
+):
+    """Regression for the "Iraq and WMDs"/"Taliban Takeover" zero-Gate-1-
+    candidate live failures: a thin article batch where real clusters exist
+    but every LLM-proposed candidate misses them (all dropped) must still
+    produce >=1 Gate 1 candidate via the structural fallback, not an empty
+    list.
+    """
+    articles = [{"title": f"Article {i}"} for i in range(4)]
+    candidates = [SubtopicCandidate(label="Unrelated candidate", rationale="Doesn't match anything")]
+
+    # 2 articles per cluster, 2 clusters -- real cluster structure exists.
+    mock_cluster.return_value = np.array([0, 0, 1, 1])
+
+    def _fake_embed(texts):
+        if len(texts) == len(articles):
+            return np.array(
+                [[1.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 1.0, 0.0]]
+            )
+        # Candidate embedding: orthogonal to both cluster centroids -- both
+        # cosine similarities land at exactly 0, well below any configured
+        # reconciliation threshold, so `reconcile_candidates` drops it.
+        return np.array([[0.0, 0.0, 1.0]])
+
+    mock_embed.side_effect = _fake_embed
+
+    result = reconcile_subtopics(articles, candidates)
+
+    assert result["reconciled"], "structural fallback must produce >=1 candidate, not empty"
+    assert len(result["reconciled"]) == 2
+    labels = {r["label"] for r in result["reconciled"]}
+    assert all("unlabeled" in label for label in labels)
+    assert {r["action"] for r in result["reconciled"]} == {"unlabeled_fallback"}
+    assert sorted(r["article_count"] for r in result["reconciled"]) == [2, 2]
+
+
+@patch("newsresearch.agents.subtopic_agent.embed")
+@patch("newsresearch.agents.subtopic_agent.cluster")
+def test_reconcile_subtopics_no_fallback_when_clustering_itself_finds_nothing(mock_cluster, mock_embed):
+    """When `cluster()` itself finds zero real clusters (all noise, label
+    -1), the structural fallback must NOT invent candidates -- empty
+    `reconciled` stays correct, same as before this change.
+    """
+    articles = [{"title": f"Article {i}"} for i in range(4)]
+    candidates = [SubtopicCandidate(label="Some candidate", rationale="rationale")]
+
+    mock_cluster.return_value = np.array([-1, -1, -1, -1])
+    mock_embed.return_value = np.array([[1.0, 0.0]] * 4)
+
+    result = reconcile_subtopics(articles, candidates)
+
+    assert result["reconciled"] == []
 
 
 def test_rank_and_cap_single_subtopic_has_zero_avg_pairwise_distance():

@@ -138,6 +138,70 @@ def test_sourcing_agent_filters_out_unknown_tier_domain_below_threshold(
     assert "spam-site.example" not in kept_domains
 
 
+# --- degraded reputation threshold (GDELT-zero fetches) -----------------------
+
+
+@NEUTRAL_SIGNALS
+@patch("newsresearch.sourcing.rss.fetch_trusted_rss")
+@patch("newsresearch.sourcing.gdelt.fetch")
+def test_sourcing_agent_uses_degraded_threshold_when_gdelt_contributes_nothing(
+    mock_gdelt_fetch, mock_rss_fetch, pool
+):
+    """`unknown-borderline.example` scores ~0.45 under `NEUTRAL_SIGNALS` (all
+    neutral) -- below the default 0.5 `min_score_threshold` but at/above
+    `min_score_threshold_degraded=0.45`. When GDELT itself soft-fails (raises
+    `GDELTError`, contributing zero articles), the article must survive the
+    filter via the relaxed degraded threshold.
+    """
+    mock_gdelt_fetch.side_effect = GDELTError("simulated GDELT rate-limit exhaustion")
+    mock_rss_fetch.return_value = [
+        _article(
+            "Borderline-reputation regional outlet report",
+            "https://unknown-borderline.example/r1",
+            "unknown-borderline.example",
+            source_type="rss",
+        ),
+    ]
+    settings = Settings(sourcing={"min_primary_article_count": 1})
+
+    result = sourcing_agent(["ceasefire"], lookback_days=7, pool=pool, settings=settings)
+
+    assert len(result) == 1
+    assert result[0].article["domain"] == "unknown-borderline.example"
+    assert result[0].reputation_score >= settings.reputation.min_score_threshold_degraded
+    assert result[0].reputation_score < settings.reputation.min_score_threshold
+
+
+@NEUTRAL_SIGNALS
+@patch("newsresearch.sourcing.rss.fetch_trusted_rss")
+@patch("newsresearch.sourcing.gdelt.fetch")
+def test_sourcing_agent_keeps_healthy_threshold_when_gdelt_succeeds(
+    mock_gdelt_fetch, mock_rss_fetch, pool
+):
+    """Same borderline-reputation domain, but GDELT contributed an (unrelated)
+    article this time -- the degraded threshold must NOT apply, so the
+    borderline domain is filtered out same as today.
+    """
+    mock_gdelt_fetch.return_value = [
+        _article("Reliable wire report", "https://reuters.com/a3", "reuters.com"),
+    ]
+    mock_rss_fetch.return_value = [
+        _article(
+            "Borderline-reputation regional outlet report",
+            "https://unknown-borderline.example/r2",
+            "unknown-borderline.example",
+            source_type="rss",
+        ),
+    ]
+    settings = Settings(sourcing={"min_primary_article_count": 1})
+
+    result = sourcing_agent(["ceasefire"], lookback_days=7, pool=pool, settings=settings)
+
+    kept_domains = {item.article["domain"] for item in result}
+    assert kept_domains == {"reuters.com"}
+    assert "unknown-borderline.example" not in kept_domains
+
+
 # --- cache-first path ---------------------------------------------------------
 
 

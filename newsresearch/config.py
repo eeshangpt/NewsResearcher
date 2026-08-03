@@ -27,6 +27,14 @@ class ReputationSettings(BaseModel):
     staleness_days: int = 30
     min_score_threshold: float = 0.5
 
+    # data-scientist's `notebooks/phase2_zero_candidates_threshold_review.md`
+    # (real-data repro of two zero-Gate-1-candidate live runs, GDELT down):
+    # applied instead of `min_score_threshold` specifically when a fetch's
+    # GDELT call contributed zero articles. 0.45 is the reputation formula's
+    # own "all-neutral" floor (`base_score_unknown + 0.5 * adjustment_bound`
+    # = 0.3 + 0.15), not an arbitrary pick -- see the doc's section 1.
+    min_score_threshold_degraded: float = 0.45
+
     # TRD 4.2 `base_tier_score`: trusted-tier example is 0.7, unknown is 0.3.
     # `data/trusted_outlets.yaml` actually carries two trusted sub-tiers
     # (`wire`/`major`) rather than TRD's single flattened "trusted" bucket --
@@ -90,6 +98,15 @@ class ClusteringSettings(BaseModel):
     # guessed -- see that doc's "Threshold derivation" section.
     reconciliation_match_threshold: float = 0.60
     reconciliation_dup_threshold: float = 0.65
+
+    # data-scientist's `notebooks/phase2_zero_candidates_threshold_review.md`
+    # section 2: relaxed bar applied instead of `reconciliation_match_threshold`
+    # when the article pool fed to `cluster()` is below
+    # `kmeans_fallback_threshold` (clustering's own small-n reduced-reliability
+    # signal, reused rather than inventing a second n-based cutoff). 0.55
+    # sits strictly above the design doc's one documented false-positive
+    # (0.525) so it doesn't reopen that fixture's failure.
+    reconciliation_match_threshold_small_pool: float = 0.55
 
     # Task 2.2.3a's distinctiveness-score formula weights (must sum to 1.0):
     # `0.5*volume_norm + 0.5*avg_pairwise_distance`, an equal-weighting

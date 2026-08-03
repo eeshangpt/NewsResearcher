@@ -154,10 +154,31 @@ def reconcile_candidates(
     full cluster centroid for merge/single-match subtopics, the assigned
     article subset's centroid for split subtopics -- per the design doc's
     distinctiveness-formula centroid definition) for Task 2.2.4's ranking.
+
+    Per data-scientist's `notebooks/phase2_zero_candidates_threshold_review.md`
+    section 2: below `Settings.clustering.kmeans_fallback_threshold` articles
+    fed to `cluster()` (the same n-based cutoff clustering itself already
+    uses as its own small-n reduced-reliability signal), the match threshold
+    relaxes to `reconciliation_match_threshold_small_pool` instead of the
+    healthy-pool `reconciliation_match_threshold`.
     """
     settings = settings or Settings()
-    match_threshold = settings.clustering.reconciliation_match_threshold
+    match_threshold = (
+        settings.clustering.reconciliation_match_threshold_small_pool
+        if len(article_vectors) < settings.clustering.kmeans_fallback_threshold
+        else settings.clustering.reconciliation_match_threshold
+    )
     dup_threshold = settings.clustering.reconciliation_dup_threshold
+
+    if not cluster_ids:
+        # No real clusters at all (e.g. every article labeled noise) --
+        # nothing for any candidate to claim; every candidate drops.
+        return {
+            "dropped": [
+                {"candidate": label, "best_sim": None} for label in candidate_labels
+            ],
+            "reconciled": [],
+        }
 
     n_candidates = len(candidate_labels)
     sim_matrix = np.zeros((n_candidates, len(cluster_ids)))
@@ -293,6 +314,15 @@ def reconcile_subtopics(
     `reconcile_candidates`'s merge/split/drop rules. Unclaimed clusters (no
     candidate claims them) are dropped per the design doc's explicit call --
     logged here for visibility, not force-labeled.
+
+    Structural fallback (data-scientist's `notebooks/phase2_zero_candidates_
+    threshold_review.md` section 3): if, even after the relaxed small-pool
+    threshold above, every real cluster `cluster()` found goes unclaimed
+    (`reconciled` empty but `cluster_ids` non-empty), synthesize generic
+    unlabeled candidates from those raw clusters instead of returning an
+    empty list -- scoped strictly to that case, so a normal run where at
+    least one candidate matches something is unaffected, and a run where
+    clustering itself finds zero clusters still correctly returns empty.
     """
     settings = settings or Settings()
     vectors = embed([a.get("title", "") for a in articles])
@@ -323,7 +353,31 @@ def reconcile_subtopics(
             sorted(unclaimed),
         )
 
+    if not result["reconciled"] and cluster_ids:
+        logger.warning(
+            "reconcile_subtopics: 0 candidates reconciled but %d real cluster(s) found -- "
+            "falling back to generic unlabeled candidates",
+            len(cluster_ids),
+        )
+        result["reconciled"] = [
+            {
+                "action": "unlabeled_fallback",
+                "cluster_id": cid,
+                "label": f"Cluster {cid} ({int((labels == cid).sum())} articles, unlabeled)",
+                "merged_from": [],
+                "article_count": int((labels == cid).sum()),
+                "centroid": centroids[cid],
+            }
+            for cid in cluster_ids
+        ]
+
     result["total_articles"] = len(articles)
+    logger.info(
+        "reconcile_subtopics: %d article(s) -> %d cluster(s) -> %d reconciled subtopic(s)",
+        len(articles),
+        len(cluster_ids),
+        len(result["reconciled"]),
+    )
     return result
 
 

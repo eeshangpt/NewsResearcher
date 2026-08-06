@@ -64,16 +64,22 @@ CREATE TABLE IF NOT EXISTS claim_clusters (
     cluster_id TEXT PRIMARY KEY,
     subtopic_id TEXT REFERENCES subtopics(subtopic_id),
     summary TEXT,
-    framing_label TEXT,
-    sentiment_avg REAL
+    framing_label TEXT
 );
 
--- Many-to-many: which articles assert / omit which claim clusters
+-- Many-to-many: which articles assert / omit which claim clusters. One row
+-- per (article, claim) for 'asserts' -- an article can contribute more than
+-- one claim to the same cluster -- and one 'omits' row per non-asserting
+-- article, claim_text/sentiment NULL. Sentiment
+-- (agents/sentiment.py::ClaimSentiment) is per-claim, not a per-cluster
+-- average, so it lives on this row.
 CREATE TABLE IF NOT EXISTS claim_cluster_articles (
     cluster_id TEXT REFERENCES claim_clusters(cluster_id),
     article_id TEXT REFERENCES articles(article_id),
     relation TEXT CHECK(relation IN ('asserts','omits')),
-    claim_text TEXT
+    claim_text TEXT,
+    sentiment_label TEXT CHECK(sentiment_label IN ('positive','neutral','negative')),
+    sentiment_compound REAL
 );
 
 -- One row per subtopic per run: the synthesized briefing
@@ -123,4 +129,19 @@ UPDATE schema_version SET version = 2 WHERE version < 2;
 
 INSERT INTO schema_version (version)
 SELECT 2
+WHERE NOT EXISTS (SELECT 1 FROM schema_version);
+
+-- Schema version 3 (Story 3.5): claim_clusters.sentiment_avg was a scalar
+-- per-cluster average that never matched the real shape -- sentiment
+-- (agents/sentiment.py::ClaimSentiment) is per-claim (label + compound),
+-- so it moves onto claim_cluster_articles instead.
+ALTER TABLE claim_clusters DROP COLUMN IF EXISTS sentiment_avg;
+ALTER TABLE claim_cluster_articles ADD COLUMN IF NOT EXISTS sentiment_label TEXT
+    CHECK(sentiment_label IN ('positive','neutral','negative'));
+ALTER TABLE claim_cluster_articles ADD COLUMN IF NOT EXISTS sentiment_compound REAL;
+
+UPDATE schema_version SET version = 3 WHERE version < 3;
+
+INSERT INTO schema_version (version)
+SELECT 3
 WHERE NOT EXISTS (SELECT 1 FROM schema_version);

@@ -85,18 +85,32 @@ def write_claim_clusters(
     return cluster_ids
 
 
+def write_cluster_summary(pool: ConnectionPool, cluster_id: str, summary: str) -> None:
+    """Write `agents/summarization_agent.py`'s output to `claim_clusters.summary`."""
+    with pool.connection() as conn:
+        conn.execute(
+            "UPDATE claim_clusters SET summary = %s WHERE cluster_id = %s",
+            (summary, cluster_id),
+        )
+
+
 def read_cluster_article_relations(pool: ConnectionPool, cluster_id: str) -> list[dict[str, Any]]:
     """Every `claim_cluster_articles` row for one persisted cluster.
 
     Returns `[{"article_id", "relation", "claim_text", "sentiment_label",
-    "sentiment_compound"}, ...]`, one dict per row (asserting articles may
-    have more than one row).
+    "sentiment_compound", "domain"}, ...]`, one dict per row (asserting
+    articles may have more than one row). `domain` is joined in from
+    `articles` -- needed by `agents/summarization_agent.py`'s prompt, which
+    lists claims as "source domain, then the claim".
     """
     with pool.connection() as conn:
         rows = conn.execute(
             """
-            SELECT article_id, relation, claim_text, sentiment_label, sentiment_compound
-            FROM claim_cluster_articles WHERE cluster_id = %s
+            SELECT cca.article_id, cca.relation, cca.claim_text,
+                   cca.sentiment_label, cca.sentiment_compound, a.domain
+            FROM claim_cluster_articles cca
+            JOIN articles a ON a.article_id = cca.article_id
+            WHERE cca.cluster_id = %s
             """,
             (cluster_id,),
         ).fetchall()
@@ -107,6 +121,7 @@ def read_cluster_article_relations(pool: ConnectionPool, cluster_id: str) -> lis
             "claim_text": r[2],
             "sentiment_label": r[3],
             "sentiment_compound": r[4],
+            "domain": r[5],
         }
         for r in rows
     ]

@@ -73,3 +73,21 @@ def test_cluster_below_threshold_estimates_k_without_hint(fixture_data):
 
     assert -1 not in labels
     assert 1 <= len(set(labels.tolist())) <= min(5, len(sub_vectors) - 1)
+
+
+def test_cluster_default_overrides_match_article_level_settings(fixture_data):
+    """Regression: Task 3.3.1b added optional overrides to `cluster()` --
+    Phase 2's existing article-level call sites (which never pass them) must
+    behave byte-identically to before."""
+    vectors, _ = fixture_data
+    settings = Settings()
+
+    default_labels = cluster(vectors)
+    explicit_labels = cluster(
+        vectors,
+        min_cluster_size=settings.clustering.hdbscan_min_cluster_size,
+        min_samples=settings.clustering.hdbscan_min_samples,
+        kmeans_fallback_threshold=settings.clustering.kmeans_fallback_threshold,
+    )
+
+    assert np.array_equal(default_labels, explicit_labels)

@@ -43,7 +43,10 @@ newsresearch = "newsresearch.cli:app"
 
 [dependency-groups]
 dev = [
+    "ddgs>=9.14.4",
     "freezegun>=1.5.5",
+    "langchain-community>=0.4.2",
+    "langchain-tavily>=0.2.18",
     "pytest>=9.1.1",
     "pytest-mock>=3.15.1",
     "respx>=0.23.1",

@@ -29,10 +29,25 @@ Write the summary following these rules:
    report both numbers against their own subjects -- do not average them,
    round them together, or generalize them into a single approximate
    claim.
-5. State how many of the sources listed actually assert each fact you
-   summarize -- do not imply broader agreement than the claims listed
-   show (e.g. do not write "multiple outlets report" for a fact only one
-   listed source states).
+5. For EACH distinct fact/sentence in your summary, separately identify
+   which source domains (not claim lines) assert that specific fact --
+   different facts in the same cluster are often asserted by different
+   subsets of sources, so never give one blanket count or source list
+   covering the whole summary. The same domain can appear on more than one
+   line in the list above (one outlet contributing several claim lines
+   about the same fact, or about several different facts); it still counts
+   once per fact, not once per line.
+   Prefer NAMING the domains that assert a fact (e.g. "according to BBC and
+   NPR") over stating a bare number -- naming them is unambiguous and
+   cannot be miscounted by the reader. If you do state a number instead of
+   or alongside names, that number must exactly equal how many domains you
+   named for that fact -- before you finalize a sentence, recount the
+   domains you just named for it and fix the number if it does not match;
+   never carry over a number from how many claim lines appeared in the
+   list above. Do not imply broader agreement than the claims listed show
+   (e.g. do not write "multiple outlets report" for a fact only one listed
+   source states), and never state or imply a count higher than the total
+   number of distinct domains listed in this cluster.
 6. If claims differ in how certain or attributed they are (e.g. one is
    stated as settled fact, another as alleged, denied, or preliminary),
    keep that distinction in the summary rather than flattening everything

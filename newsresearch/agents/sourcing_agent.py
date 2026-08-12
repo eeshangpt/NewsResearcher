@@ -2,7 +2,7 @@
 
 Composes every other Phase 1 module in the order TRD 4.2 lays out:
 
-    query (GDELT + trusted RSS)
+    query (DuckDuckGo+Tavily web search + trusted RSS)
       -> backfill-if-below-min-count (Google News RSS, NFR-3 soft-fail)
       -> dedup (exact-URL + cross-source fuzzy title)
       -> score each surviving domain's reputation (cache-first)
@@ -10,16 +10,19 @@ Composes every other Phase 1 module in the order TRD 4.2 lays out:
 
 This is the Phase 1 phase-level "Done when" target itself
 (EXECUTION_PLAN.md Story 1.9): given a hardcoded sample subtopic (no
-Subtopic Agent yet -- that's Phase 2), calling `sourcing_agent(...)` against
-real GDELT/RSS returns a deduplicated, reputation-scored, threshold-filtered
-article list.
+Subtopic Agent yet -- that's Phase 2), calling `sourcing_agent(...)` returns
+a deduplicated, reputation-scored, threshold-filtered article list.
 
-Both GDELT and Google News backfill are soft-fail (Story 1.12, hardening
-GDELT to match the backfill precedent established in Story 1.8): a
-`GDELTError`/backfill failure is logged and swallowed, and the pipeline
-continues with whatever primary/backfill sources did succeed. RSS is not
-wrapped -- it hasn't shown a failure mode in this codebase's tests and
-doesn't need one.
+GDELT DOC 2.0 is persistently IP-blocked (issue #101) and was replaced as
+the primary discovery source by `sourcing/web_search.py` (DuckDuckGo +
+Tavily) -- `sourcing/gdelt.py` itself is left in the tree, unimported, in
+case the block ever lifts.
+
+Both web search and Google News backfill are soft-fail (Story 1.12,
+hardening precedent established in Story 1.8): a `WebSearchError`/backfill
+failure is logged and swallowed, and the pipeline continues with whatever
+primary/backfill sources did succeed. RSS is not wrapped -- it hasn't shown
+a failure mode in this codebase's tests and doesn't need one.
 """
 
 from __future__ import annotations
@@ -34,16 +37,16 @@ from newsresearch.config import Settings
 from newsresearch.persistence.db import init_db
 from newsresearch.reputation import cache, scorer, signals
 from newsresearch.sourcing import dedup as dedup_module
-from newsresearch.sourcing import gdelt, rss
+from newsresearch.sourcing import rss, web_search
 from newsresearch.sourcing.backfill_trigger import maybe_backfill
-from newsresearch.sourcing.gdelt import GDELTError
+from newsresearch.sourcing.web_search import WebSearchError
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
 class ScoredArticle:
-    """An article dict (from `gdelt.py`/`rss.py`/`google_news_backfill.py`)
+    """An article dict (from `web_search.py`/`rss.py`/`google_news_backfill.py`)
     plus its domain's reputation score, via the cache-first path in
     `reputation/cache.py` + `reputation/scorer.py`.
 
@@ -136,21 +139,21 @@ def sourcing_agent(
 
     try:
         try:
-            gdelt_articles = gdelt.fetch(keywords, lookback_days)
-        except GDELTError:
+            web_search_articles = web_search.fetch(keywords, lookback_days, settings=settings)
+        except WebSearchError:
             logger.warning(
-                "sourcing_agent: gdelt.fetch failed; continuing with RSS (+backfill-if-triggered) "
-                "results only",
+                "sourcing_agent: web_search.fetch failed; continuing with RSS "
+                "(+backfill-if-triggered) results only",
                 exc_info=True,
             )
-            gdelt_articles = []
+            web_search_articles = []
 
         rss_articles = rss.fetch_trusted_rss(keywords, lookback_days)
-        primary_articles = gdelt_articles + rss_articles
+        primary_articles = web_search_articles + rss_articles
         logger.info(
-            "sourcing_agent: %d primary article(s) (%d gdelt, %d rss) for keywords=%r",
+            "sourcing_agent: %d primary article(s) (%d web_search, %d rss) for keywords=%r",
             len(primary_articles),
-            len(gdelt_articles),
+            len(web_search_articles),
             len(rss_articles),
             keywords,
         )
@@ -174,13 +177,13 @@ def sourcing_agent(
             )
 
         # data-scientist's `notebooks/phase2_zero_candidates_threshold_review.md`
-        # section 1: a GDELT-zero fetch (soft-failed or genuinely empty) is
-        # disproportionately RSS/backfill-only, i.e. thin trusted-tier coverage
-        # -- use the relaxed degraded floor for that fetch only, not the
-        # healthy-path threshold globally.
+        # section 1: a primary-discovery-zero fetch (soft-failed or
+        # genuinely empty) is disproportionately RSS/backfill-only, i.e. thin
+        # trusted-tier coverage -- use the relaxed degraded floor for that
+        # fetch only, not the healthy-path threshold globally.
         min_score_threshold = (
             settings.reputation.min_score_threshold_degraded
-            if not gdelt_articles
+            if not web_search_articles
             else settings.reputation.min_score_threshold
         )
 
@@ -197,10 +200,10 @@ def sourcing_agent(
                 )
 
         logger.info(
-            "sourcing_agent: %d article(s) meet min_score_threshold=%.2f (gdelt_contributed=%s)",
+            "sourcing_agent: %d article(s) meet min_score_threshold=%.2f (web_search_contributed=%s)",
             len(scored_articles),
             min_score_threshold,
-            bool(gdelt_articles),
+            bool(web_search_articles),
         )
         return scored_articles
     finally:

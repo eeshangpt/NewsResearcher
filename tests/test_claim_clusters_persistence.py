@@ -92,3 +92,23 @@ def test_write_claim_clusters_matches_in_memory_assignment(pool, monkeypatch):
         if r["relation"] == "omits":
             assert r["claim_text"] is None
             assert r["sentiment_label"] is None
+
+
+def test_read_subtopic_cluster_ids_returns_only_that_subtopics_clusters(pool):
+    """Task 4.1.1b's batching entrypoint reads its clusters through this."""
+    _seed_subtopic_and_articles(pool, "sub-a", ["a10"])
+    _seed_subtopic_and_articles(pool, "sub-b", ["a11"])
+    with pool.connection() as conn:
+        for subtopic_id, cluster_id in [
+            ("sub-a", "sub-a:1"),
+            ("sub-a", "sub-a:0"),
+            ("sub-b", "sub-b:0"),
+        ]:
+            conn.execute(
+                "INSERT INTO claim_clusters (cluster_id, subtopic_id) VALUES (%s, %s)",
+                (cluster_id, subtopic_id),
+            )
+
+    assert claim_clusters.read_subtopic_cluster_ids(pool, "sub-a") == ["sub-a:0", "sub-a:1"]
+    assert claim_clusters.read_subtopic_cluster_ids(pool, "sub-b") == ["sub-b:0"]
+    assert claim_clusters.read_subtopic_cluster_ids(pool, "sub-missing") == []

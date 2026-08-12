@@ -188,6 +188,10 @@ class ModelSettings(BaseModel):
     bias_framing: str = "gpt-4.1"
     briefing: str = "gpt-4.1"
 
+    # Claim clusters per bias/framing call (tech-lead, 2026-08-12): bounded
+    # batching, not one call per cluster and not one call per subtopic.
+    bias_framing_batch_size: int = 8
+
 
 class EmbeddingsSettings(BaseModel):
     backend: Literal["local", "openai"] = "local"

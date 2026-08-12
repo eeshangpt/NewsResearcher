@@ -112,9 +112,19 @@ COMPARING ACROSS ARTICLES
    - accounts_conflict: as defined in rule 3 only.
 9. divergence_note explains your divergence value in one or two sentences,
    naming the specific article ids or source domains involved and pointing
-   at the actual differing wording. When an article is relaying competing
-   third-party accounts rather than taking a position itself, say that
-   explicitly -- that is the third parties disagreeing, not the outlets.
+   at the actual differing wording. When articles differ, quote the
+   differing words themselves from each article involved rather than
+   describing the difference in your own words -- one article's id, then
+   the words it used, then the other article's id and the words it used,
+   with both sets of words copied from those articles' own claim lines.
+   Each quoted span must be a single unbroken run of words copied
+   character for character, under the same rules as rule 7: no ellipsis,
+   no stitching, no normalising. Quote a shorter phrase rather than an
+   inexact longer one. When the articles do not actually differ, do not
+   manufacture a contrast to have something to quote. When an article is
+   relaying competing third-party accounts rather than taking a position
+   itself, say that explicitly -- that is the third parties disagreeing,
+   not the outlets.
 10. Never state or imply a count of how many articles or sources do
     something ("three outlets report...", "most sources agree..."). Name the
     specific article ids or domains instead. The same domain can appear on

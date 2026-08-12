@@ -1,0 +1,2085 @@
+{
+ "subtopic": "task371-leipzig-drone",
+ "batch_size": 8,
+ "amended_rule_9": true,
+ "model": "gpt-4.1",
+ "input_clusters": {
+  "task371-leipzig-drone:0": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Last year, a Chinese woman was convicted for passing on information about flight schedules and cargo movements at Leipzig/Halle Airport to a man spying for Beijing."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Last year, a Chinese national was convicted for passing information about flight schedules and cargo movements at Leipzig/Halle airport to a man spying for Beijing."
+   }
+  ],
+  "task371-leipzig-drone:1": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The tabloid Bild speculated that the explosive device could have been fabricated from fertiliser and petrol."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Public broadcasters NDR and WDR, as well as the S\u00fcddeutsche newspaper, said the device contained pentaerythritol tetranitrate (PETN), a primary ingredient in semtex."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "German media reported that the attached bomb was made of PETN and semtex plastic explosive."
+   }
+  ],
+  "task371-leipzig-drone:10": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Alexander Dobrindt suggested the investigation may point to a possible competition that may involve foreign powers."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Alexander Dobrindt said there might be foreign powers involved in the drone incident aiming to contribute to considerable uncertainty in Germany."
+   }
+  ],
+  "task371-leipzig-drone:11": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "In July 2024, a parcel burst into flames on the ground at Leipzig/Halle Airport before it could be loaded onto a DHL cargo plane."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "A firebomb exploded at Leipzig airport in July 2024, posted via DHL."
+   }
+  ],
+  "task371-leipzig-drone:12": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "The second unidentified object landed in Hanover with minor damage to the cargo aircraft."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Minor damage was detected on the cargo aircraft after the collision, which later landed in Hanover."
+   }
+  ],
+  "task371-leipzig-drone:13": [
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "The initial evidence points firmly towards a Russian-orchestrated plot for the drone incident."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "Details about the explosives, the origin of the drone, and who was behind the incident are under ongoing investigation."
+   }
+  ],
+  "task371-leipzig-drone:14": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "A second unidentified object collided with a cargo aircraft near Leipzig/Halle Airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "A DHL cargo plane aborted its landing at Leipzig airport and collided with an unknown object in mid-air as it climbed away from the airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "A suspected second unidentified flying object collided with a cargo aircraft after it had taken off following the previous closure of the runway at Leipzig airport."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "A second unidentified flying object, possibly another drone, collided with a DHL cargo plane several hundred metres above the ground after the first incident."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "An apparent second flying object collided with a freight airplane after it aborted a landing at Leipzig/Halle because the runway was closed."
+   }
+  ],
+  "task371-leipzig-drone:15": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The DHL cargo plane later landed safely elsewhere after the collision."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "The DHL cargo plane only sustained minor damage from the collision with the unidentified flying object."
+   }
+  ],
+  "task371-leipzig-drone:16": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Russia has not commented on the drone incidents at Leipzig/Halle Airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Moscow has not commented on the drone incident so far."
+   }
+  ],
+  "task371-leipzig-drone:17": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Leipzig/Halle Airport is used by the German military and NATO allies for transport of military goods."
+   },
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Leipzig/Halle Airport serves as a base for Ukraine's Antonov Airlines which carry most of Ukraine's aerial cargo."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Leipzig airport is a NATO and German military logistics hub and is the base for Ukraine\u2019s Antonov Airlines in Europe."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Leipzig airport is the European base of Ukrainian Antonov jets used for heavy cargo."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Leipzig airport is used by NATO and the German military for transport."
+   }
+  ],
+  "task371-leipzig-drone:18": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Leipzig/Halle Airport is a major hub for the logistics group DHL."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Leipzig airport is a DHL hub."
+   }
+  ],
+  "task371-leipzig-drone:19": [
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "German Interior Minister Alexander Dobrindt said that the drone carrying explosives represents a new quality of danger."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "A drone armed with explosives at an airport is a new threat scenario, according to German Interior Minister Alexander Dobrindt."
+   }
+  ],
+  "task371-leipzig-drone:2": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Russian secret services were reportedly plotting an attack against Stefan Thumann, the head of German drone manufacturer Donaustahl."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "German investigators were tipped off by a foreign intelligence service at the end of last year and arrested a Ukrainian man and a Romanian woman this spring related to the plotting against Stefan Thumann."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Stefan Thumann is said to be under police protection due to the plot."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "A pan-European investigation identified 22 suspects in Lithuania and Poland suspected of being employed by Russian intelligence."
+   }
+  ],
+  "task371-leipzig-drone:20": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "German airports are on high alert following several unauthorized drone flights in recent months over military bases, airports, energy terminals, seaports and logistics companies."
+   },
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Similar incidents with suspicious drones in Germany have only happened since Russia's full-scale invasion of Ukraine in February 2022."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Germany and other European countries have experienced a series of suspicious unauthorized drone overflights at airports, military facilities, ports, and logistics companies."
+   }
+  ],
+  "task371-leipzig-drone:21": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Ukraine's Ambassador to Germany Oleksii Makeiev stated that Russia could be responsible for the drone incidents."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The airport\u2019s status as a NATO and German military hub and base for Ukraine\u2019s Antonov Airlines has directed suspicion toward Russia regarding the drone incident."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Ukraine\u2019s ambassador to Germany Oleksii Makeiev blamed Moscow for the drone incident."
+   }
+  ],
+  "task371-leipzig-drone:22": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Police have warned of a potential Russian involvement in the drone incidents, which Moscow has denied."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Russia has previously been accused of carrying out sabotage attacks in Europe."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Germany and other European countries have accused Russian agents of being behind some unauthorized drone flights, which Moscow has denied."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Germany has accused Russia of orchestrating a campaign of sabotage, espionage, and disinformation against it, which the Kremlin has denied."
+   }
+  ],
+  "task371-leipzig-drone:23": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "The detonator was removed from the explosive device and police later carried out a controlled explosion at Leipzig/Halle Airport."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "The bomb attached to the drone did not explode because the detonator was faulty."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "Police removed the detonator from the drone with the explosive device."
+   }
+  ],
+  "task371-leipzig-drone:24": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "A NATO official said they are aware of the drone incident at Leipzig airport and that investigations continue."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "NATO was aware of the drone incident at Leipzig airport on Wednesday."
+   }
+  ],
+  "task371-leipzig-drone:25": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "German police deployed a bomb disposal robot to defuse and destroy the explosive device found at Leipzig airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Police deployed a bomb disposal robot to examine the drone at Leipzig airport."
+   }
+  ],
+  "task371-leipzig-drone:26": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "A robot was deployed at Leipzig/Halle Airport after the explosive device was spotted by an employee near Ukrainian cargo planes overnight."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "An anti-explosives robot was deployed to check an object near the south runway at Leipzig/Halle Airport."
+   }
+  ],
+  "task371-leipzig-drone:27": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Flights on the northern runway at Leipzig/Halle Airport resumed at 01:55 (23:55 GMT on Tuesday)."
+   },
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "The southern runway at Leipzig/Halle Airport remains closed."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Operations in the northern part of Leipzig airport resumed two hours after the incident."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "Both the runways at Leipzig/Halle Airport were closed after a flying object was sighted nearby shortly before midnight Tuesday."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "The north runway at Leipzig/Halle Airport was reopened after about two hours."
+   }
+  ],
+  "task371-leipzig-drone:28": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The drone found near a Ukrainian Antonov cargo plane was a quadcopter fitted with an explosive device."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Photographs published by German newspapers show a quadcopter drone with a package attached near a Ukrainian Antonov cargo plane."
+   }
+  ],
+  "task371-leipzig-drone:29": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "A drone carrying an explosive device has been found at Leipzig/Halle Airport in Germany."
+   },
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "The explosive-laden drone was spotted close to parked Antonov planes at Leipzig/Halle Airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "A small drone carrying explosives was discovered at Leipzig airport on Wednesday morning."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Investigators said a drone carrying an unknown explosive device was spotted by an airport employee near the south runway of Leipzig airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The southern runway of Leipzig airport, where the drone was found, remained closed after the incident."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "An armed drone was found at Leipzig airport on Wednesday."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "The drone was carrying an unknown explosive device when discovered in the secure cargo flight operations area near the airport\u2019s southern runway."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Police discovered as much as 800 grams of explosive on the drone at Leipzig airport."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "A drone with explosives was found at Germany's Leipzig/Halle Airport and the device was defused."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "An airport employee discovered a drone near the airport's south runway with an unknown explosive device."
+   }
+  ],
+  "task371-leipzig-drone:3": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "In 2024, US intelligence services reportedly foiled a Russian plot to assassinate Armin Papperger, chief executive of Germany\u2019s leading arms manufacturer Rheinmetall."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The plot to murder Armin Papperger was reportedly one of several Russian government schemes targeting defense industry executives in Europe supporting Ukraine\u2019s war effort."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The assassination plot against Armin Papperger was believed to be the most advanced among the reported Russian schemes."
+   }
+  ],
+  "task371-leipzig-drone:30": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "The discovery of the drone caused flight diversions at Leipzig airport."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Several aircraft, including a passenger plane from Mallorca, were diverted because of the drone incident at Leipzig airport."
+   }
+  ],
+  "task371-leipzig-drone:4": [
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "NATO jets struggled to shoot down incoming drones during the first drone incursion case, with most drones eventually crashing or losing power and gliding to the ground."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Western militaries struggled to identify the perpetrators and respond promptly to the surveillance drones in the second incursion case."
+   }
+  ],
+  "task371-leipzig-drone:5": [
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "A second firebomb package traveled to the UK and caught fire at a warehouse in Birmingham."
+   },
+   {
+    "article_id": "leipzig-drone-2",
+    "domain": "theguardian.com",
+    "claim_text": "Two similar firebomb packages were found in Poland."
+   }
+  ],
+  "task371-leipzig-drone:6": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Police and prosecutors said there is no danger to the lives or safety of passengers or airport staff, and passenger air traffic is unaffected."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "There was no danger to passengers or airport employees during the incident, and flights were not affected during the day."
+   }
+  ],
+  "task371-leipzig-drone:7": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "The parcel fires in July 2024 targeted the UK and EU countries and are suspected to be sabotage linked to Moscow."
+   },
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "Russia has denied involvement in the parcel fires targeting the UK and EU countries."
+   }
+  ],
+  "task371-leipzig-drone:8": [
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Germany\u2019s interior minister Alexander Dobrindt said the incident did not appear to be the work of amateurs."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Alexander Dobrindt and other German officials did not explicitly mention Russia as a potential suspect in their remarks."
+   }
+  ],
+  "task371-leipzig-drone:9": [
+   {
+    "article_id": "leipzig-drone-0",
+    "domain": "bbc.com",
+    "claim_text": "German Interior Minister Alexander Dobrindt described the incidents as a professional, hybrid threat scenario."
+   },
+   {
+    "article_id": "leipzig-drone-1",
+    "domain": "theguardian.com",
+    "claim_text": "Alexander Dobrindt said investigators were treating the drone incident as part of a professional hybrid threat scenario."
+   },
+   {
+    "article_id": "leipzig-drone-3",
+    "domain": "npr.org",
+    "claim_text": "Alexander Dobrindt described the incident as a hybrid attack scenario."
+   }
+  ]
+ },
+ "results": [
+  {
+   "run": 0,
+   "batch": 0,
+   "asked": [
+    "task371-leipzig-drone:0",
+    "task371-leipzig-drone:1",
+    "task371-leipzig-drone:10",
+    "task371-leipzig-drone:11",
+    "task371-leipzig-drone:12",
+    "task371-leipzig-drone:13",
+    "task371-leipzig-drone:14",
+    "task371-leipzig-drone:15"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:0",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Conviction of a Chinese individual for passing information about Leipzig/Halle Airport to a man spying for Beijing.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'Chinese woman was convicted' while leipzig-drone-1 says 'Chinese national was convicted'.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "a Chinese woman was convicted for passing on information"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "a Chinese national was convicted for passing information"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:1",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Speculation by Bild that the explosive device could have been made from fertiliser and petrol; reporting by other German media that the device contained PETN and semtex plastic explosive.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 attributes speculation to 'Bild speculated that the explosive device could have been fabricated from fertiliser and petrol' and also reports 'NDR and WDR, as well as the S\u00fcddeutsche newspaper, said the device contained pentaerythritol tetranitrate (PETN)'. leipzig-drone-2 states 'German media reported that the attached bomb was made of PETN and semtex plastic explosive'.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "conveys multiple media accounts of bomb composition",
+        "evidence_quote": "Bild speculated that the explosive device could have been fabricated from fertiliser and petrol"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "states bomb composition per German media",
+        "evidence_quote": "German media reported that the attached bomb was made of PETN and semtex plastic explosive"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:10",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Suggestions by Alexander Dobrindt that foreign powers may have been involved in the drone incident at Leipzig.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 says 'suggested the investigation may point to a possible competition that may involve foreign powers.' leipzig-drone-1 says 'said there might be foreign powers involved in the drone incident aiming to contribute to considerable uncertainty'.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes suggestion to Dobrindt, possible foreign power involvement",
+        "evidence_quote": "Dobrindt suggested the investigation may point to a possible competition that may involve foreign powers"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes suggestion to Dobrindt, possible foreign power involvement",
+        "evidence_quote": "Dobrindt said there might be foreign powers involved in the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:11",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "An incendiary or explosive parcel ignited or exploded at Leipzig/Halle Airport in July 2024 before being loaded onto a DHL cargo aircraft.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 states 'a parcel burst into flames on the ground at Leipzig/Halle Airport before it could be loaded onto a DHL cargo plane.' leipzig-drone-2 says 'A firebomb exploded at Leipzig airport in July 2024, posted via DHL.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "states event plainly, emphasizes timing before loading",
+        "evidence_quote": "a parcel burst into flames on the ground at Leipzig/Halle Airport before it could be loaded onto a DHL cargo plane"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "uses term 'firebomb', mentions DHL as posting method",
+        "evidence_quote": "A firebomb exploded at Leipzig airport in July 2024, posted via DHL"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:12",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "A second unidentified object landed in Hanover, causing minor damage to a cargo aircraft.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 says 'landed in Hanover with minor damage to the cargo aircraft.' leipzig-drone-1 says 'Minor damage was detected on the cargo aircraft after the collision, which later landed in Hanover.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "landed in Hanover with minor damage to the cargo aircraft"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, focuses on sequence after collision",
+        "evidence_quote": "Minor damage was detected on the cargo aircraft after the collision, which later landed in Hanover"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:13",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "The Guardian states initial evidence points to a Russian-orchestrated plot, while NPR reports details are still under ongoing investigation.",
+      "divergence": "accounts_conflict",
+      "divergence_note": "leipzig-drone-2 states 'initial evidence points firmly towards a Russian-orchestrated plot'. leipzig-drone-3 reports 'Details about the explosives, the origin of the drone, and who was behind the incident are under ongoing investigation.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "assertion of Russian involvement as primary frame",
+        "evidence_quote": "initial evidence points firmly towards a Russian-orchestrated plot"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "emphasizes ongoing investigation and unknowns",
+        "evidence_quote": "Details about the explosives, the origin of the drone, and who was behind the incident are under ongoing investigation"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:14",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "A second unidentified flying object collided with a cargo or freight aircraft near or after takeoff at Leipzig/Halle Airport, following or during runway closure.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 says 'second unidentified object collided with a cargo aircraft near Leipzig/Halle Airport.' leipzig-drone-1 states 'DHL cargo plane aborted its landing at Leipzig airport and collided with an unknown object in mid-air as it climbed away from the airport.' leipzig-drone-2 says 'A second unidentified flying object, possibly another drone, collided with a DHL cargo plane several hundred metres above the ground after the first incident.' leipzig-drone-3 claims 'An apparent second flying object collided with a freight airplane after it aborted a landing at Leipzig/Halle because the runway was closed.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "second unidentified object collided with a cargo aircraft near Leipzig/Halle Airport"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "details aborted landing and mid-air collision",
+        "evidence_quote": "cargo plane aborted its landing at Leipzig airport and collided with an unknown object in mid-air"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "suggests possibility of second drone and sequence of events",
+        "evidence_quote": "A second unidentified flying object, possibly another drone, collided with a DHL cargo plane several hundred metres above the ground after the first incident"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "frames event as 'apparent' and after runway closure",
+        "evidence_quote": "An apparent second flying object collided with a freight airplane after it aborted a landing at Leipzig/Halle because the runway was closed"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:15",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "The plane landed safely elsewhere after the collision; minor damage resulted from the collision with the unidentified object.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 says 'plane later landed safely elsewhere after the collision.' leipzig-drone-2 reports 'plane only sustained minor damage from the collision with the unidentified flying object.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "focuses on safe landing outcome following incident",
+        "evidence_quote": "plane later landed safely elsewhere after the collision"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasizes minor damage from the collision",
+        "evidence_quote": "plane only sustained minor damage from the collision with the unidentified flying object"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 0,
+   "batch": 1,
+   "asked": [
+    "task371-leipzig-drone:16",
+    "task371-leipzig-drone:17",
+    "task371-leipzig-drone:18",
+    "task371-leipzig-drone:19",
+    "task371-leipzig-drone:2",
+    "task371-leipzig-drone:20",
+    "task371-leipzig-drone:21",
+    "task371-leipzig-drone:22"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:16",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Neither Russia nor Moscow has commented on the drone incident(s) at Leipzig/Halle Airport.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'Russia has not commented on the drone incidents at Leipzig/Halle Airport.' while leipzig-drone-1 uses 'Moscow has not commented on the drone incident so far.'. One uses 'Russia', the other 'Moscow', and one says 'incident(s)' while the other says 'incident', with slight variation in emphasis.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Russia has not commented"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Moscow has not commented"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:17",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Leipzig/Halle Airport (1) is used by the German military and NATO allies for transporting military goods, and (2) serves as a European base for Ukraine\u2019s Antonov Airlines.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'Leipzig/Halle Airport is used by the German military and NATO allies for transport of military goods.' and 'Leipzig/Halle Airport serves as a base for Ukraine's Antonov Airlines which carry most of Ukraine's aerial cargo.' leipzig-drone-1 combines both points: 'Leipzig airport is a NATO and German military logistics hub and is the base for Ukraine\u2019s Antonov Airlines in Europe.' leipzig-drone-2 splits these into 'Leipzig airport is the European base of Ukrainian Antonov jets used for heavy cargo.' and 'Leipzig airport is used by NATO and the German military for transport.' There are differences in wording and in the specific emphasis on the details of cargo or military use.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "provides factual background on airport's military and Ukrainian links",
+        "evidence_quote": "Leipzig/Halle Airport is used by the German military and NATO allies"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "combines operational military role and Ukrainian cargo use",
+        "evidence_quote": "is the base for Ukraine\u2019s Antonov Airlines in Europe"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "separates military/NATO use and Ukrainian Antonov base status",
+        "evidence_quote": "is used by NATO and the German military for transport"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:18",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Leipzig/Halle Airport is an important hub for DHL's logistics operations.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'Leipzig/Halle Airport is a major hub for the logistics group DHL.' leipzig-drone-2 says 'Leipzig airport is a DHL hub.' The wording differs in the level of emphasis, with bbc.com stressing 'major hub' and theguardian.com providing a plainer description.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasizes DHL's logistics prominence at airport",
+        "evidence_quote": "major hub for the logistics group DHL"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "is a DHL hub"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:19",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The German Interior Minister characterises the drone with explosives at the airport as a new type or quality of threat.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-3 covers this, presenting the Interior Minister's assessment and relaying his statement about the new nature of the threat.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "relays official view of drone threat as new danger",
+        "evidence_quote": "represents a new quality of danger"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:2",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "(1) Russian secret services allegedly plotted an attack against German drone manufacturer head Stefan Thumann, (2) arrests were made linked to this plot, (3) Thumann is under police protection, (4) a pan-European investigation identified 22 suspects in Lithuania and Poland connected to Russian intelligence.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-1 covers specifics about a plot against Stefan Thumann, associated arrests and protection for Thumann: 'Russian secret services were reportedly plotting an attack against Stefan Thumann', 'arrested a Ukrainian man and a Romanian woman', and 'is said to be under police protection'. leipzig-drone-2 addresses a related but broader investigation: 'identified 22 suspects in Lithuania and Poland suspected of being employed by Russian intelligence.' leipzig-drone-2 does not mention Thumann, focusing on the wider scope.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "focuses on alleged plot against drone manufacturer Thumann and ensuing arrests",
+        "evidence_quote": "Russian secret services were reportedly plotting an attack"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "presents broader context of multi-country Russian intelligence investigation",
+        "evidence_quote": "identified 22 suspects in Lithuania and Poland"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:20",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "There have been a series of suspicious unauthorized drone overflights at German and European airports, military facilities, ports, and logistics hubs in recent months; this is a recent phenomenon since Russia's 2022 invasion of Ukraine.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 states 'German airports are on high alert following several unauthorized drone flights in recent months' and 'Similar incidents with suspicious drones in Germany have only happened since Russia's full-scale invasion.' leipzig-drone-1 says 'Germany and other European countries have experienced a series of suspicious unauthorized drone overflights.' leipzig-drone-0 highlights heightened alert and ties timing closely to Russia's invasion, while leipzig-drone-1 emphasizes the pan-European scope.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasizes recent onset and heightened alert in response to incidents",
+        "evidence_quote": "German airports are on high alert"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "highlights pan-European scale of suspicious drone activity",
+        "evidence_quote": "Germany and other European countries have experienced"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:21",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Suspicion has been directed at Russia for the drone incidents at Leipzig airport, with Ukraine's ambassador to Germany explicitly blaming Russia.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Ukraine's Ambassador to Germany Oleksii Makeiev stated that Russia could be responsible for the drone incidents.' leipzig-drone-1: 'Ukraine\u2019s ambassador to Germany Oleksii Makeiev blamed Moscow for the drone incident.' and 'has directed suspicion toward Russia regarding the drone incident.' The wording shifts from 'could be responsible' (leipzig-drone-0) to 'blamed Moscow' (leipzig-drone-1), showing different levels of certainty attributed to the ambassador.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "relays ambassador's suspicion of Russian involvement",
+        "evidence_quote": "Russia could be responsible"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "emphasizes explicit blame from Ukrainian ambassador",
+        "evidence_quote": "blamed Moscow for the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:22",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "(1) Police and European countries have accused Russia or Russian agents of involvement in drone incidents and sabotage attacks, (2) Russia/Moscow has denied these allegations.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0 covers 'Police have warned of a potential Russian involvement in the drone incidents, which Moscow has denied.' leipzig-drone-1 gives broader context: 'Russia has previously been accused of carrying out sabotage attacks in Europe.', 'Germany and other European countries have accused Russian agents of being behind some unauthorized drone flights, which Moscow has denied.', and 'Germany has accused Russia of orchestrating a campaign of sabotage, espionage, and disinformation against it, which the Kremlin has denied.' leipzig-drone-0 focuses narrowly on police warnings and denials about the drone incidents, while leipzig-drone-1 situates this within a broader pattern of accusations and denials involving Russia.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "focuses dispute on police warning and Russian denial for drone incidents",
+        "evidence_quote": "Police have warned of a potential Russian involvement"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "places drone incident accusations in context of European claims of broader Russian sabotage",
+        "evidence_quote": "Germany and other European countries have accused Russian agents"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 0,
+   "batch": 2,
+   "asked": [
+    "task371-leipzig-drone:23",
+    "task371-leipzig-drone:24",
+    "task371-leipzig-drone:25",
+    "task371-leipzig-drone:26",
+    "task371-leipzig-drone:27",
+    "task371-leipzig-drone:28",
+    "task371-leipzig-drone:29",
+    "task371-leipzig-drone:3"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:23",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "How the detonator was handled: police removal versus faulty detonator, and controlled explosion by police.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'The detonator was removed from the explosive device and police later carried out a controlled explosion at Leipzig/Halle Airport.' while leipzig-drone-2 has 'The bomb attached to the drone did not explode because the detonator was faulty.' and leipzig-drone-3 states 'Police removed the detonator from the drone with the explosive device.' The articles differ in whether the detonator was removed by police or failed because it was faulty; leipzig-drone-0 also emphasizes the controlled explosion.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "explains police mitigation actions taken",
+        "evidence_quote": "The detonator was removed from the explosive device and police later carried out a controlled explosion"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "attributes drone's failure to detonate to faulty component",
+        "evidence_quote": "the detonator was faulty"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "highlights police direct intervention",
+        "evidence_quote": "Police removed the detonator"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:24",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "NATO's awareness of the drone incident at Leipzig airport and that investigations are ongoing.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 states 'A NATO official said they are aware of the drone incident at Leipzig airport and that investigations continue.' while leipzig-drone-2 says 'NATO was aware of the drone incident at Leipzig airport on Wednesday.' One attributes the awareness to a NATO official and notes continuing investigations; the other states awareness without attribution or mention of investigations.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes awareness and ongoing investigation to NATO official",
+        "evidence_quote": "A NATO official said they are aware of the drone incident"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "NATO was aware of the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:25",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Deployment of a bomb disposal robot by German police to address the explosive device at Leipzig airport.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 covers the police deployment and robot's tasks in this cluster.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "describes police procedural response",
+        "evidence_quote": "German police deployed a bomb disposal robot"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:26",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Police deployment of an anti-explosives robot in response to the discovery of a suspicious object near Leipzig/Halle Airport's runway area.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 details 'A robot was deployed at Leipzig/Halle Airport after the explosive device was spotted by an employee near Ukrainian cargo planes overnight.' while leipzig-drone-3 states 'An anti-explosives robot was deployed to check an object near the south runway at Leipzig/Halle Airport.' One specifies the location near Ukrainian cargo planes; the other gives the south runway and general object check.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "procedural police response with details on discovery context",
+        "evidence_quote": "A robot was deployed at Leipzig/Halle Airport after the explosive device was spotted by an employee near Ukrainian cargo planes overnight"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "focuses on anti-explosives measures at south runway",
+        "evidence_quote": "An anti-explosives robot was deployed to check an object near the south runway"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:27",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Status and timeline of Leipzig/Halle Airport runway closures and resumptions following the drone incident.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0 provides specific runway names and exact times with 'Flights on the northern runway at Leipzig/Halle Airport resumed at 01:55 (23:55 GMT on Tuesday).' and 'The southern runway at Leipzig/Halle Airport remains closed.' leipzig-drone-1 gives a more general temporal marker with 'Operations in the northern part of Leipzig airport resumed two hours after the incident.' leipzig-drone-3 adds context by describing both runways: 'Both the runways at Leipzig/Halle Airport were closed after a flying object was sighted nearby shortly before midnight Tuesday.' and 'The north runway at Leipzig/Halle Airport was reopened after about two hours.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "detailed scheduling of runway closures and reopenings",
+        "evidence_quote": "Flights on the northern runway at Leipzig/Halle Airport resumed at 01:55"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "restoration of operations with approximate timeline",
+        "evidence_quote": "Operations in the northern part of Leipzig airport resumed two hours after the incident"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasizes closure and reopening sequence for both runways",
+        "evidence_quote": "Both the runways at Leipzig/Halle Airport were closed"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:28",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The drone found near a Ukrainian Antonov cargo plane was a quadcopter with an attached package or explosive device.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 refers to 'The drone found near a Ukrainian Antonov cargo plane was a quadcopter fitted with an explosive device.' leipzig-drone-2 states 'Photographs published by German newspapers show a quadcopter drone with a package attached near a Ukrainian Antonov cargo plane.' The former directly asserts an explosive device, while the latter describes a package as seen in published photographs.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "directly describes drone's threat and proximity to Ukrainian plane",
+        "evidence_quote": "a quadcopter fitted with an explosive device"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "relays photographic evidence of attached package",
+        "evidence_quote": "Photographs published by German newspapers show a quadcopter drone with a package attached"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:29",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Discovery of a drone carrying an explosive device at Leipzig/Halle Airport, including location details, type of device, and device handling.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0 gives location and proximity to Antonov planes: 'The explosive-laden drone was spotted close to parked Antonov planes at Leipzig/Halle Airport.' leipzig-drone-1 covers timing and investigator/employee involvement: 'A small drone carrying explosives was discovered at Leipzig airport on Wednesday morning.' and 'Investigators said a drone carrying an unknown explosive device was spotted by an airport employee near the south runway of Leipzig airport.' leipzig-drone-2 specifies device details: 'Police discovered as much as 800 grams of explosive on the drone.' leipzig-drone-3 notes that the device 'was defused' and an employee discovered it 'near the airport's south runway.' Each article focuses on a different aspect: location, timing, device specifics, or procedural follow-up.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "focuses on discovery location and parked planes",
+        "evidence_quote": "A drone carrying an explosive device has been found at Leipzig/Halle Airport"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "gives incident timing and procedural specifics",
+        "evidence_quote": "A small drone carrying explosives was discovered at Leipzig airport on Wednesday morning"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "provides device specifics and amount of explosive",
+        "evidence_quote": "Police discovered as much as 800 grams of explosive"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "highlights device defusal and employee role in discovery",
+        "evidence_quote": "A drone with explosives was found at Germany's Leipzig/Halle Airport and the device was defused"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:3",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "US intelligence reportedly foiled a Russian plot to assassinate Armin Papperger, and this was believed to be among several such Russian schemes targeting defense executives in Europe supporting Ukraine.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 covers Russian assassination plots targeting defense executives in Europe, including Armin Papperger.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "links to broader pattern of Russian targeting and reports US intelligence involvement",
+        "evidence_quote": "reportedly foiled a Russian plot to assassinate Armin Papperger"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 0,
+   "batch": 3,
+   "asked": [
+    "task371-leipzig-drone:30",
+    "task371-leipzig-drone:4",
+    "task371-leipzig-drone:5",
+    "task371-leipzig-drone:6",
+    "task371-leipzig-drone:7",
+    "task371-leipzig-drone:8",
+    "task371-leipzig-drone:9"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:30",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The discovery of a drone at Leipzig airport caused flight diversions, including affecting a passenger plane from Mallorca.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 is present, so no comparison across articles is possible.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Several aircraft, including a passenger plane from Mallorca, were diverted because of the drone incident at Leipzig airport."
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:4",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "NATO jets struggled to shoot down incoming drones during the first drone incursion, and Western militaries struggled to identify perpetrators and respond to surveillance drones in a second incursion.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-2 is present, reporting both operational difficulty in shooting down drones and difficulties in attribution and response.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "NATO jets struggled to shoot down incoming drones"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:5",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "A second firebomb package traveled to the UK and caught fire in Birmingham; two similar firebomb packages were found in Poland.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-2 is present, and it covers both the UK and Poland incidents.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "A second firebomb package traveled to the UK and caught fire at a warehouse in Birmingham."
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:6",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Authorities stated there was no danger to passengers or airport staff and passenger air traffic was not affected during the Leipzig drone incident.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 (theguardian.com) says, \"Police and prosecutors said there is no danger to the lives or safety of passengers or airport staff, and passenger air traffic is unaffected.\" leipzig-drone-3 (npr.org) says, \"There was no danger to passengers or airport employees during the incident, and flights were not affected during the day.\" The wording differs in phrase emphasis ('during the incident', 'during the day') but the underlying fact is the same.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "foregrounds reassurance that passengers were unaffected",
+        "evidence_quote": "Police and prosecutors said there is no danger to the lives or safety of passengers or airport staff"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "There was no danger to passengers or airport employees during the incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:7",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Parcel fires in July 2024 targeted the UK and EU and are suspected sabotage linked to Moscow, with Russia denying involvement.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-0 is present, which states both the suspicion and the denial, indicating a contested report within the article.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "presents suspicion and denial regarding Moscow involvement",
+        "evidence_quote": "are suspected to be sabotage linked to Moscow"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:8",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "German interior minister Alexander Dobrindt stated the drone incident did not appear amateurish and did not attribute suspicion to Russia.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 is present, reporting both the assessment of professionalism and the lack of explicit mention of Russia.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "emphasizes officials' cautious attribution and professionalism assessment",
+        "evidence_quote": "Germany\u2019s interior minister Alexander Dobrindt said the incident did not appear to be the work of amateurs."
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:9",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Alexander Dobrindt described the Leipzig drone incident as a (professional) hybrid threat scenario or hybrid attack scenario.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 (bbc.com): \"described the incidents as a professional, hybrid threat scenario\"; leipzig-drone-1 (theguardian.com): \"investigators were treating the drone incident as part of a professional hybrid threat scenario\"; leipzig-drone-3 (npr.org): \"described the incident as a hybrid attack scenario\". The wording for 'hybrid threat' versus 'hybrid attack', and the addition of 'professional' in some but not all, shows difference in emphasis.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "frames incident as part of hybrid threats to Europe",
+        "evidence_quote": "described the incidents as a professional, hybrid threat scenario"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "presents official description as professional hybrid scenario",
+        "evidence_quote": "treating the drone incident as part of a professional hybrid threat scenario"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "frames as hybrid attack scenario without specifying professionalism",
+        "evidence_quote": "described the incident as a hybrid attack scenario"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 1,
+   "batch": 0,
+   "asked": [
+    "task371-leipzig-drone:0",
+    "task371-leipzig-drone:1",
+    "task371-leipzig-drone:10",
+    "task371-leipzig-drone:11",
+    "task371-leipzig-drone:12",
+    "task371-leipzig-drone:13",
+    "task371-leipzig-drone:14",
+    "task371-leipzig-drone:15"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:0",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Conviction of a Chinese national for passing information about Leipzig/Halle Airport to a man spying for Beijing.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses the words \"a Chinese woman was convicted\" while leipzig-drone-1 uses \"a Chinese national was convicted\". Other details are otherwise nearly identical.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "a Chinese woman was convicted for passing on information"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "a Chinese national was convicted for passing information"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:1",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Media-reported claims regarding the composition of the explosive device used in the Leipzig incident, as relayed by different outlets.",
+      "divergence": "no_notable_divergence",
+      "divergence_note": "Both leipzig-drone-1 and leipzig-drone-2 attribute details about the explosive device to other media outlets and clearly distinguish these as reported or speculated information, not asserted as fact by their own articles.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "relays differing media speculation about explosive device",
+        "evidence_quote": "Bild speculated that the explosive device could have been fabricated"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes claim to other outlets' reporting",
+        "evidence_quote": "German media reported that the attached bomb was made of PETN and semtex plastic explosive"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:10",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Statements by Alexander Dobrindt about possible foreign involvement or competition in the Leipzig drone incident.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 refers to \"the investigation may point to a possible competition that may involve foreign powers,\" while leipzig-drone-1 says \"there might be foreign powers involved in the drone incident aiming to contribute to considerable uncertainty in Germany.\" The level of specificity about the motives and phrasing differs.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes suspicion to politician's statement",
+        "evidence_quote": "Alexander Dobrindt suggested the investigation may point to a possible competition that may involve foreign powers."
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes suspicion of foreign involvement to politician's statement",
+        "evidence_quote": "Alexander Dobrindt said there might be foreign powers involved in the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:11",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Incident of a fire or firebomb on the ground at Leipzig/Halle Airport in July 2024 prior to DHL plane loading or mailing.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 describes \"a parcel burst into flames on the ground,\" while leipzig-drone-2 refers to \"a firebomb exploded at Leipzig airport... posted via DHL.\" The emphasis is on a generic parcel versus a firebomb, and on ground versus via DHL post.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "a parcel burst into flames on the ground at Leipzig/Halle Airport"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "frames incident as firebomb related to parcel post",
+        "evidence_quote": "A firebomb exploded at Leipzig airport in July 2024, posted via DHL."
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:12",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The cargo aircraft that suffered minor damage from the collision with an unidentified object landed in Hanover.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 states \"The second unidentified object landed in Hanover with minor damage to the cargo aircraft.\" leipzig-drone-1 says \"Minor damage was detected on the cargo aircraft after the collision, which later landed in Hanover.\" One leads with the object, the other with the damage; the chronology is inverted but facts do not conflict.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "The second unidentified object landed in Hanover with minor damage to the cargo aircraft."
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Minor damage was detected on the cargo aircraft after the collision"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:13",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "theguardian.com claims initial evidence points towards a Russian-orchestrated plot for the drone incident; npr.org states details about explosives, drone origin, and perpetrators are under ongoing investigation.",
+      "divergence": "accounts_conflict",
+      "divergence_note": "leipzig-drone-2 provides \"The initial evidence points firmly towards a Russian-orchestrated plot for the drone incident.\" npr.org presents \"Details about the explosives, the origin of the drone, and who was behind the incident are under ongoing investigation.\" The first asserts responsibility, the second treats the matter as unsettled and under inquiry.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "strongly attributes incident to Russian orchestration",
+        "evidence_quote": "initial evidence points firmly towards a Russian-orchestrated plot"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "emphasises ongoing investigation and lack of conclusion",
+        "evidence_quote": "Details about the explosives, the origin of the drone, and who was behind the incident are under ongoing investigation."
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:14",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "A second unidentified object collided with a cargo aircraft near or after takeoff from Leipzig/Halle Airport, with mention of a runway closure and different possible timings for the sequence of events.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses \"A second unidentified object collided with a cargo aircraft near Leipzig/Halle Airport.\" leipzig-drone-1 phrases include \"collided with an unknown object in mid-air as it climbed away\" and \"after it had taken off following the previous closure of the runway.\" leipzig-drone-2 specifies \"possibly another drone... several hundred metres above the ground.\" leipzig-drone-3 states \"An apparent second flying object collided with a freight airplane after it aborted a landing at Leipzig/Halle because the runway was closed.\" There are differences in emphasis on timing, flight maneuvers, and object identification, but all agree on the collision with a second object.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "A second unidentified object collided with a cargo aircraft near Leipzig/Halle Airport."
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "details specifics of incident sequence and flight actions",
+        "evidence_quote": "collided with an unknown object in mid-air as it climbed away from the airport"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "describes object as possibly another drone, specifies altitude",
+        "evidence_quote": "a second unidentified flying object, possibly another drone, collided with a DHL cargo plane several hundred metres above the ground"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "uses 'apparent' to qualify event and links to aborted landing",
+        "evidence_quote": "An apparent second flying object collided with a freight airplane after it aborted a landing"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:15",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "theguardian.com leipzig-drone-1 notes the outcome of the landing after the collision; theguardian.com leipzig-drone-2 states the extent of the damage as minor.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-1 says \"The DHL cargo plane later landed safely elsewhere after the collision.\" leipzig-drone-2 says \"The DHL cargo plane only sustained minor damage from the collision with the unidentified flying object.\" One frames outcome as a safe landing, the other emphasizes minimal damage.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasises safe landing outcome after incident",
+        "evidence_quote": "The DHL cargo plane later landed safely elsewhere after the collision."
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasises limited physical damage after collision",
+        "evidence_quote": "The DHL cargo plane only sustained minor damage from the collision"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 1,
+   "batch": 1,
+   "asked": [
+    "task371-leipzig-drone:16",
+    "task371-leipzig-drone:17",
+    "task371-leipzig-drone:18",
+    "task371-leipzig-drone:19",
+    "task371-leipzig-drone:2",
+    "task371-leipzig-drone:20",
+    "task371-leipzig-drone:21",
+    "task371-leipzig-drone:22"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:16",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Reporting that Russia/Moscow has not commented on the drone incident at Leipzig/Halle Airport",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Russia has not commented on the drone incidents at Leipzig/Halle Airport.' leipzig-drone-1: 'Moscow has not commented on the drone incident so far.' The difference is in whether they use 'Russia' or 'Moscow' and in specifying 'so far.'",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Russia has not commented"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Moscow has not commented"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:17",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Leipzig/Halle Airport is used by the German military and NATO for transporting military goods; it serves as a logistics hub and base for Ukraine's Antonov Airlines, which carry most of Ukraine's aerial cargo.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Leipzig/Halle Airport is used by the German military and NATO allies for transport of military goods.' leipzig-drone-1: 'Leipzig airport is a NATO and German military logistics hub and is the base for Ukraine\u2019s Antonov Airlines in Europe.' leipzig-drone-2: 'Leipzig airport is used by NATO and the German military for transport.' There is variation in the wording: the focus on 'military goods,' 'logistics hub,' and specifics about Antonov Airlines' role.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "describes military and Ukrainian cargo roles",
+        "evidence_quote": "Leipzig/Halle Airport is used by the German military and NATO allies"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "highlights military logistics and Antonov base",
+        "evidence_quote": "is the base for Ukraine\u2019s Antonov Airlines in Europe"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "focuses on use by NATO and cargo flights",
+        "evidence_quote": "is used by NATO and the German military for transport"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:18",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Leipzig/Halle Airport serves as a logistics hub for DHL.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Leipzig/Halle Airport is a major hub for the logistics group DHL.' leipzig-drone-2: 'Leipzig airport is a DHL hub.' The emphasis is stronger in leipzig-drone-0 with 'major hub,' while leipzig-drone-2 provides a simpler description.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "describes importance for logistics company DHL",
+        "evidence_quote": "major hub for the logistics group DHL"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement about DHL hub",
+        "evidence_quote": "is a DHL hub"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:19",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "German Interior Minister Alexander Dobrindt stated that a drone with explosives represents a new type of danger; a drone armed at an airport constitutes a new threat scenario.",
+      "divergence": "single_article_only",
+      "divergence_note": "All claims come from leipzig-drone-3 and are attributed to the same named party; there are no other articles to compare here.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "emphasizes official warning about new threat",
+        "evidence_quote": "German Interior Minister Alexander Dobrindt said"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:2",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Russian secret services reportedly plotting attack against Stefan Thumann; German investigators arrested suspects linked to the plot; Stefan Thumann is under police protection due to the plot; 22 suspects in Lithuania and Poland suspected of being employed by Russian intelligence.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1: 'Russian secret services were reportedly plotting an attack against Stefan Thumann' and 'Stefan Thumann is said to be under police protection,' while leipzig-drone-2: 'A pan-European investigation identified 22 suspects in Lithuania and Poland suspected of being employed by Russian intelligence.' The focus and wording differ; leipzig-drone-1 centers on the plot against an individual, leipzig-drone-2 on a larger investigation and suspects.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "foregrounds alleged plot against specific individual",
+        "evidence_quote": "Russian secret services were reportedly plotting an attack"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "focuses on broader pan-European investigation and suspects",
+        "evidence_quote": "A pan-European investigation identified 22 suspects"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:20",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Recent months have seen an increase in suspicious unauthorized drone overflights at German and European airports, military facilities, and logistics sites, particularly since Russia's invasion of Ukraine.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0: 'German airports are on high alert following several unauthorized drone flights in recent months' and 'Similar incidents with suspicious drones in Germany have only happened since Russia's full-scale invasion of Ukraine in February 2022.' leipzig-drone-1: 'Germany and other European countries have experienced a series of suspicious unauthorized drone overflights at airports, military facilities, ports, and logistics companies.' leipzig-drone-0 places emphasis on the heightened alert and ties the incidents specifically to the context of the Ukraine invasion; leipzig-drone-1 gives a wider European context.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "ties incidents to Russia's invasion and alert status",
+        "evidence_quote": "have only happened since Russia's full-scale invasion of Ukraine"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "provides European regional context for incidents",
+        "evidence_quote": "Germany and other European countries have experienced"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:21",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Ukraine's Ambassador to Germany suggested Russia could be behind the drone incidents; suspicion toward Russia has arisen due to airport's military and Ukrainian ties; the ambassador directly blamed Moscow for the drone incident.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Ukraine's Ambassador to Germany Oleksii Makeiev stated that Russia could be responsible for the drone incidents.' leipzig-drone-1: 'Ukraine\u2019s ambassador to Germany Oleksii Makeiev blamed Moscow for the drone incident.' and 'has directed suspicion toward Russia regarding the drone incident.' leipzig-drone-0 presents the statement as a possibility ('could be responsible'), while leipzig-drone-1 uses stronger attribution of blame and expands on the grounds for suspicion.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "attributes suspicion to ambassador's statement",
+        "evidence_quote": "stated that Russia could be responsible"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "connects suspicion to airport's role and uses more direct blame",
+        "evidence_quote": "blamed Moscow for the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:22",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Police have warned about potential Russian involvement in drone incidents (with denial from Moscow); Russia has previously been accused of sabotage in Europe; Germany and other countries have accused Russian agents of unauthorized drone flights (denied by Moscow); Germany accused Russia of sabotage, espionage, and disinformation (denied by Kremlin).",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: 'Police have warned of a potential Russian involvement in the drone incidents, which Moscow has denied.' leipzig-drone-1: 'Russia has previously been accused of carrying out sabotage attacks in Europe.' and 'Germany and other European countries have accused Russian agents of being behind some unauthorized drone flights, which Moscow has denied.' and 'Germany has accused Russia of orchestrating a campaign of sabotage, espionage, and disinformation against it, which the Kremlin has denied.' leipzig-drone-1 gives a broader pattern of accusations about sabotage and disinformation, while leipzig-drone-0 confines itself to the drone incidents.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "police concern about Russian involvement, presents denial",
+        "evidence_quote": "Police have warned of a potential Russian involvement"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "places drone incidents in pattern of suspected Russian sabotage",
+        "evidence_quote": "Russia has previously been accused of carrying out sabotage attacks"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 1,
+   "batch": 2,
+   "asked": [
+    "task371-leipzig-drone:23",
+    "task371-leipzig-drone:24",
+    "task371-leipzig-drone:25",
+    "task371-leipzig-drone:26",
+    "task371-leipzig-drone:27",
+    "task371-leipzig-drone:28",
+    "task371-leipzig-drone:29",
+    "task371-leipzig-drone:3"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:23",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "How the detonator on the drone's explosive device was handled and why the device did not explode: whether police removed the detonator, performed a controlled explosion, or the detonator was faulty.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 claims 'The detonator was removed from the explosive device', leipzig-drone-2 says 'the detonator was faulty', and leipzig-drone-3 says 'Police removed the detonator'. The focus is on police action in leipzig-drone-0 and leipzig-drone-3, versus technical failure in leipzig-drone-2.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "details police response and safety procedure",
+        "evidence_quote": "The detonator was removed from the explosive device"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "highlights technical failure of explosive",
+        "evidence_quote": "the detonator was faulty"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "Police removed the detonator"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:24",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "NATO was aware of the drone incident at Leipzig airport and noted that investigations continue.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1 says 'A NATO official said they are aware of the drone incident at Leipzig airport and that investigations continue' while leipzig-drone-2 states 'NATO was aware of the drone incident at Leipzig airport on Wednesday'. leipzig-drone-1 attributes awareness and investigation status to a named official, leipzig-drone-2 presents it as a settled fact.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "relays official NATO position and investigation status",
+        "evidence_quote": "A NATO official said they are aware of the drone incident"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "NATO was aware of the drone incident"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:25",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "Police deployed a bomb disposal robot to examine or defuse the explosive device at Leipzig airport; robot role in dealing with the device.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 covers these facts.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "details police tactics and bomb disposal efforts",
+        "evidence_quote": "German police deployed a bomb disposal robot to defuse and destroy the explosive device"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:26",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "A (bomb disposal) robot was deployed at Leipzig/Halle Airport to investigate a suspicious object near the runway after an explosive device was found.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0 uses 'A robot was deployed at Leipzig/Halle Airport after the explosive device was spotted by an employee near Ukrainian cargo planes', while leipzig-drone-3 specifies 'An anti-explosives robot was deployed to check an object near the south runway'. The former provides more context on timing and location (near cargo planes), while the latter focuses on the specific runway location.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "connects robot deployment to initial device spotting near Ukrainian planes",
+        "evidence_quote": "A robot was deployed at Leipzig/Halle Airport after the explosive device was spotted by an employee"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "emphasizes anti-explosives role and runway location",
+        "evidence_quote": "An anti-explosives robot was deployed to check an object near the south runway"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:27",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "The operational status of the runways at Leipzig/Halle Airport following the drone incident: reopening of the northern runway/operations, closure of the southern runway, both runways' initial closure after the sighting.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0 focuses on 'Flights on the northern runway...resumed...' and 'The southern runway...remains closed.' leipzig-drone-1 highlights 'Operations in the northern part...resumed two hours after the incident.' leipzig-drone-3 says 'Both the runways...were closed...' and 'The north runway...was reopened after about two hours.' leipzig-drone-3 adds context of both runways being closed, others focus separately on each runway's status.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "gives timeline and operational status for each runway",
+        "evidence_quote": "Flights on the northern runway at Leipzig/Halle Airport resumed"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "summarizes when operations resumed in northern part of airport",
+        "evidence_quote": "Operations in the northern part of Leipzig airport resumed"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "describes closure and reopening sequence for both runways",
+        "evidence_quote": "Both the runways at Leipzig/Halle Airport were closed"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:28",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "A quadcopter drone equipped with an explosive device was found near a Ukrainian Antonov cargo plane at Leipzig airport.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-1 states 'The drone found near a Ukrainian Antonov cargo plane was a quadcopter fitted with an explosive device.' leipzig-drone-2 says 'Photographs published by German newspapers show a quadcopter drone with a package attached near a Ukrainian Antonov cargo plane.' leipzig-drone-2 presents the detail as supported by published photographs, while leipzig-drone-1 asserts it directly.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "asserts type and location of drone directly",
+        "evidence_quote": "The drone found near a Ukrainian Antonov cargo plane was a quadcopter fitted with an explosive device"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "refers to photo evidence from German newspapers",
+        "evidence_quote": "Photographs published by German newspapers show a quadcopter drone"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:29",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "A drone carrying an explosive device was found at Leipzig/Halle Airport; location details, amount of explosives, actions taken (device defused), and the status of the runway post-discovery.",
+      "divergence": "context_differs",
+      "divergence_note": "leipzig-drone-0 states 'A drone carrying an explosive device has been found at Leipzig/Halle Airport in Germany' and specifies 'near Antonov planes.' leipzig-drone-1 adds 'spotted by an airport employee near the south runway' and 'southern runway...remained closed.' leipzig-drone-2 notes 'discovered in the secure cargo flight operations area near the airport\u2019s southern runway' and quantifies 'as much as 800 grams of explosive.' leipzig-drone-3 highlights 'device was defused.' Each emphasizes slightly different contextual details.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "notes proximity to Antonov planes and discovery details",
+        "evidence_quote": "The explosive-laden drone was spotted close to parked Antonov planes"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "relays investigator findings and runway status",
+        "evidence_quote": "Investigators said a drone carrying an unknown explosive device was spotted by an airport employee"
+       },
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "adds details on location and amount of explosives",
+        "evidence_quote": "The drone was carrying an unknown explosive device when discovered in the secure cargo flight operations area"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "mentions device was defused, employee discovery",
+        "evidence_quote": "A drone with explosives was found at Germany's Leipzig/Halle Airport and the device was defused"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:3",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "US intelligence reportedly foiled a Russian plot to assassinate Armin Papperger, and this plot was one of several Russian schemes against European defense executives, with the attempt against Papperger believed to be the most advanced.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 covers these facts.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "hedges_as_uncertain",
+        "contextual_frame": "places alleged plot among coordinated Russian efforts",
+        "evidence_quote": "reportedly foiled a Russian plot to assassinate Armin Papperger"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "run": 1,
+   "batch": 3,
+   "asked": [
+    "task371-leipzig-drone:30",
+    "task371-leipzig-drone:4",
+    "task371-leipzig-drone:5",
+    "task371-leipzig-drone:6",
+    "task371-leipzig-drone:7",
+    "task371-leipzig-drone:8",
+    "task371-leipzig-drone:9"
+   ],
+   "output": {
+    "clusters": [
+     {
+      "cluster_id": "task371-leipzig-drone:30",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The discovery of a drone at Leipzig airport caused flight diversions involving multiple aircraft.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 is present; no divergence between articles is possible.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual statement, no wider framing",
+        "evidence_quote": "flight diversions at Leipzig airport"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:4",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "NATO jets struggled to shoot down drones during the first incursion; Western militaries struggled to identify perpetrators and respond during the second incursion.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-2 is present; no divergence between articles is possible.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "describes military response difficulties during drone incursions",
+        "evidence_quote": "struggled to shoot down incoming drones"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:5",
+      "cluster_coherence": "multiple_distinct_facts",
+      "shared_focus": "A firebomb package caught fire in Birmingham, UK; two similar firebomb packages were found in Poland.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-2 is present; no divergence between articles is possible.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-2",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "links firebomb packages found in different countries",
+        "evidence_quote": "firebomb packages were found in Poland"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:6",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Officials said there was no danger to passengers or airport staff and flights were unaffected during the incident.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-1: \"there is no danger to the lives or safety of passengers or airport staff, and passenger air traffic is unaffected\"; leipzig-drone-3: \"There was no danger to passengers or airport employees during the incident, and flights were not affected during the day.\"",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "foregrounds official reassurance about safety and operations",
+        "evidence_quote": "Police and prosecutors said there is no danger"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "states_as_established",
+        "contextual_frame": "plain factual summary of lack of danger or disruption",
+        "evidence_quote": "no danger to passengers or airport employees"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:7",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "The July 2024 parcel fires targeted the UK and EU and are suspected sabotage linked to Moscow, while Russia has denied involvement.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-0 is present; no divergence between articles is possible. Conflicting accounts are presented within the article itself: suspicion of Moscow and Russia\u2019s denial.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "reports_as_contested",
+        "contextual_frame": "presents suspicion and denial regarding Russian involvement",
+        "evidence_quote": "are suspected to be sabotage linked to Moscow"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:8",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "Germany\u2019s interior minister and officials did not name Russia as a suspect and said the incident did not appear amateur.",
+      "divergence": "single_article_only",
+      "divergence_note": "Only leipzig-drone-1 is present; no divergence between articles is possible.",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "highlights official statements about expertise and avoidance of naming suspects",
+        "evidence_quote": "did not explicitly mention Russia as a potential suspect"
+       }
+      ]
+     },
+     {
+      "cluster_id": "task371-leipzig-drone:9",
+      "cluster_coherence": "single_shared_fact",
+      "shared_focus": "German Interior Minister Alexander Dobrindt described the drone incident as part of a professional hybrid threat scenario.",
+      "divergence": "wording_or_emphasis_differs",
+      "divergence_note": "leipzig-drone-0: \"described the incidents as a professional, hybrid threat scenario.\"; leipzig-drone-1: \"treating the drone incident as part of a professional hybrid threat scenario.\"; leipzig-drone-3: \"described the incident as a hybrid attack scenario.\"",
+      "per_article": [
+       {
+        "article_id": "leipzig-drone-0",
+        "domain": "bbc.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "quotes official describing the incident as hybrid threat",
+        "evidence_quote": "described the incidents as a professional, hybrid threat scenario"
+       },
+       {
+        "article_id": "leipzig-drone-1",
+        "domain": "theguardian.com",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "highlights investigative framing as professional hybrid threat",
+        "evidence_quote": "treating the drone incident as part of a professional hybrid threat scenario"
+       },
+       {
+        "article_id": "leipzig-drone-3",
+        "domain": "npr.org",
+        "epistemic_treatment": "attributes_to_named_party",
+        "contextual_frame": "repeats official description of hybrid attack",
+        "evidence_quote": "described the incident as a hybrid attack scenario"
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ]
+}

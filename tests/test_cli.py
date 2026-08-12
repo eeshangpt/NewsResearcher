@@ -17,7 +17,7 @@ from newsresearch.cli import app
 from newsresearch.llm.schemas import SubtopicCandidateList
 from newsresearch.observability.mlflow_setup import EXPERIMENT_NAME
 from newsresearch.persistence.db import init_db
-from newsresearch.sourcing.gdelt import GDELTError
+from newsresearch.sourcing.web_search import WebSearchError
 
 # Hermetic `testcontainers[postgres]` per Story 0.4/0.7's own precedent, so
 # this doesn't depend on the dev `docker compose up -d` stack being up.
@@ -286,7 +286,7 @@ def test_run_with_unknown_thread_id_fails_readably_not_with_a_crash(cli_env):
 
 # Story 1.10 -- `dev sourcing-test` is a thin CLI wrapper over
 # `agents/sourcing_agent.py` (already end-to-end verified against real
-# GDELT/RSS by Story 1.9's own live test). Mocking `sourcing_agent` here
+# web search/RSS by Story 1.9's own live test). Mocking `sourcing_agent` here
 # keeps this hermetic while still exercising the CLI's own plumbing: arg
 # parsing, keyword splitting, pool lifecycle, and output formatting.
 def test_dev_sourcing_test_invokes_sourcing_agent_and_exits_0(cli_env):
@@ -337,14 +337,14 @@ def test_dev_sourcing_test_requires_database_url(tmp_path, monkeypatch):
     assert result.exit_code != 0
 
 
-# Tech-lead review follow-up: a `GDELTError` (GDELT is a primary source,
-# allowed to hard-fail per NFR-3 -- only Google News backfill soft-fails)
-# used to crash this command with a raw traceback. It should now surface as
-# a readable diagnostic + non-zero exit instead.
-def test_dev_sourcing_test_reports_a_gdelt_error_readably_instead_of_crashing(cli_env):
-    with patch("newsresearch.cli.sourcing_agent", side_effect=GDELTError("boom")):
+# Tech-lead review follow-up: a `WebSearchError` (web search is a primary
+# source, allowed to hard-fail per NFR-3 -- only Google News backfill
+# soft-fails) used to crash this command with a raw traceback. It should now
+# surface as a readable diagnostic + non-zero exit instead.
+def test_dev_sourcing_test_reports_a_web_search_error_readably_instead_of_crashing(cli_env):
+    with patch("newsresearch.cli.sourcing_agent", side_effect=WebSearchError("boom")):
         result = runner.invoke(app, ["dev", "sourcing-test", "climate policy"])
 
     assert result.exit_code != 0
-    assert "GDELT error" in result.output
+    assert "web search error" in result.output
     assert "Traceback" not in result.output

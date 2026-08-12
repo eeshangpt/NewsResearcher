@@ -2,7 +2,7 @@
 
 Hermetic: real `testcontainers` Postgres (so `reputation/cache.py` +
 `reputation/scorer.py` run for real, exercising the actual cache-first
-wiring) but every network-calling collector (GDELT, RSS, Google News
+wiring) but every network-calling collector (web search, RSS, Google News
 backfill, WHOIS, HTTPS/about-page) is mocked -- matching this repo's
 established pattern of a fast/deterministic unit test for orchestration plus
 a separate `@pytest.mark.live` test for the real end-to-end run (see
@@ -27,7 +27,7 @@ from newsresearch.agents.sourcing_agent import ScoredArticle, sourcing_agent
 from newsresearch.config import Settings
 from newsresearch.persistence.db import init_db
 from newsresearch.reputation import cache
-from newsresearch.sourcing.gdelt import GDELTError
+from newsresearch.sourcing.web_search import WebSearchError
 
 # --- fixtures -----------------------------------------------------------------
 
@@ -60,7 +60,7 @@ def _article(
     title: str,
     url: str,
     domain: str,
-    source_type: str = "gdelt",
+    source_type: str = "web_search",
     published_at: datetime | None = None,
 ) -> dict:
     return {
@@ -77,11 +77,11 @@ def _article(
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
+@patch("newsresearch.sourcing.web_search.fetch")
 def test_sourcing_agent_returns_deduped_threshold_filtered_scored_articles(
-    mock_gdelt_fetch, mock_rss_fetch, pool
+    mock_web_search_fetch, mock_rss_fetch, pool
 ):
-    mock_gdelt_fetch.return_value = [
+    mock_web_search_fetch.return_value = [
         _article("Ceasefire talks resume in Geneva", "https://reuters.com/a1", "reuters.com"),
         # Exact-URL duplicate of the article above (different query params) -- must collapse.
         _article(
@@ -119,11 +119,11 @@ def test_sourcing_agent_returns_deduped_threshold_filtered_scored_articles(
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
+@patch("newsresearch.sourcing.web_search.fetch")
 def test_sourcing_agent_filters_out_unknown_tier_domain_below_threshold(
-    mock_gdelt_fetch, mock_rss_fetch, pool
+    mock_web_search_fetch, mock_rss_fetch, pool
 ):
-    mock_gdelt_fetch.return_value = [
+    mock_web_search_fetch.return_value = [
         _article("Reliable wire report", "https://reuters.com/a2", "reuters.com"),
     ]
     mock_rss_fetch.return_value = [
@@ -138,22 +138,22 @@ def test_sourcing_agent_filters_out_unknown_tier_domain_below_threshold(
     assert "spam-site.example" not in kept_domains
 
 
-# --- degraded reputation threshold (GDELT-zero fetches) -----------------------
+# --- degraded reputation threshold (web-search-zero fetches) -----------------
 
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
-def test_sourcing_agent_uses_degraded_threshold_when_gdelt_contributes_nothing(
-    mock_gdelt_fetch, mock_rss_fetch, pool
+@patch("newsresearch.sourcing.web_search.fetch")
+def test_sourcing_agent_uses_degraded_threshold_when_web_search_contributes_nothing(
+    mock_web_search_fetch, mock_rss_fetch, pool
 ):
     """`unknown-borderline.example` scores ~0.45 under `NEUTRAL_SIGNALS` (all
     neutral) -- below the default 0.5 `min_score_threshold` but at/above
-    `min_score_threshold_degraded=0.45`. When GDELT itself soft-fails (raises
-    `GDELTError`, contributing zero articles), the article must survive the
+    `min_score_threshold_degraded=0.45`. When web search itself soft-fails (raises
+    `WebSearchError`, contributing zero articles), the article must survive the
     filter via the relaxed degraded threshold.
     """
-    mock_gdelt_fetch.side_effect = GDELTError("simulated GDELT rate-limit exhaustion")
+    mock_web_search_fetch.side_effect = WebSearchError("simulated web search outage")
     mock_rss_fetch.return_value = [
         _article(
             "Borderline-reputation regional outlet report",
@@ -174,15 +174,15 @@ def test_sourcing_agent_uses_degraded_threshold_when_gdelt_contributes_nothing(
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
-def test_sourcing_agent_keeps_healthy_threshold_when_gdelt_succeeds(
-    mock_gdelt_fetch, mock_rss_fetch, pool
+@patch("newsresearch.sourcing.web_search.fetch")
+def test_sourcing_agent_keeps_healthy_threshold_when_web_search_succeeds(
+    mock_web_search_fetch, mock_rss_fetch, pool
 ):
-    """Same borderline-reputation domain, but GDELT contributed an (unrelated)
+    """Same borderline-reputation domain, but web search contributed an (unrelated)
     article this time -- the degraded threshold must NOT apply, so the
     borderline domain is filtered out same as today.
     """
-    mock_gdelt_fetch.return_value = [
+    mock_web_search_fetch.return_value = [
         _article("Reliable wire report", "https://reuters.com/a3", "reuters.com"),
     ]
     mock_rss_fetch.return_value = [
@@ -206,9 +206,9 @@ def test_sourcing_agent_keeps_healthy_threshold_when_gdelt_succeeds(
 
 
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
-def test_sourcing_agent_uses_fresh_cache_without_recomputing_signals(mock_gdelt_fetch, mock_rss_fetch, pool):
-    mock_gdelt_fetch.return_value = [
+@patch("newsresearch.sourcing.web_search.fetch")
+def test_sourcing_agent_uses_fresh_cache_without_recomputing_signals(mock_web_search_fetch, mock_rss_fetch, pool):
+    mock_web_search_fetch.return_value = [
         _article("Cached wire report", "https://reuters.com/cached1", "reuters.com"),
     ]
     mock_rss_fetch.return_value = []
@@ -244,11 +244,11 @@ def test_sourcing_agent_uses_fresh_cache_without_recomputing_signals(mock_gdelt_
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.backfill_trigger.fetch_google_news_backfill")
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
+@patch("newsresearch.sourcing.web_search.fetch")
 def test_sourcing_agent_invokes_backfill_when_primary_count_below_threshold(
-    mock_gdelt_fetch, mock_rss_fetch, mock_backfill_fetch, pool
+    mock_web_search_fetch, mock_rss_fetch, mock_backfill_fetch, pool
 ):
-    mock_gdelt_fetch.return_value = [
+    mock_web_search_fetch.return_value = [
         _article("Thin primary result", "https://reuters.com/thin1", "reuters.com"),
     ]
     mock_rss_fetch.return_value = []
@@ -272,11 +272,11 @@ def test_sourcing_agent_invokes_backfill_when_primary_count_below_threshold(
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.backfill_trigger.fetch_google_news_backfill")
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
+@patch("newsresearch.sourcing.web_search.fetch")
 def test_sourcing_agent_survives_backfill_failure_nfr3(
-    mock_gdelt_fetch, mock_rss_fetch, mock_backfill_fetch, pool
+    mock_web_search_fetch, mock_rss_fetch, mock_backfill_fetch, pool
 ):
-    mock_gdelt_fetch.return_value = [
+    mock_web_search_fetch.return_value = [
         _article("Thin primary result", "https://reuters.com/resilience1", "reuters.com"),
     ]
     mock_rss_fetch.return_value = []
@@ -292,9 +292,9 @@ def test_sourcing_agent_survives_backfill_failure_nfr3(
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
-def test_sourcing_agent_survives_gdelt_failure(mock_gdelt_fetch, mock_rss_fetch, pool):
-    mock_gdelt_fetch.side_effect = GDELTError("simulated GDELT rate-limit exhaustion")
+@patch("newsresearch.sourcing.web_search.fetch")
+def test_sourcing_agent_survives_web_search_failure(mock_web_search_fetch, mock_rss_fetch, pool):
+    mock_web_search_fetch.side_effect = WebSearchError("simulated web search outage")
     mock_rss_fetch.return_value = [
         _article(
             "RSS-sourced wire report",
@@ -304,12 +304,12 @@ def test_sourcing_agent_survives_gdelt_failure(mock_gdelt_fetch, mock_rss_fetch,
         ),
     ]
     # Low enough that the single surviving RSS article already meets it, so
-    # backfill doesn't also trigger -- isolates the GDELT-failure path.
+    # backfill doesn't also trigger -- isolates the web-search-failure path.
     settings = Settings(sourcing={"min_primary_article_count": 1})
 
     result = sourcing_agent(["ceasefire"], lookback_days=7, pool=pool, settings=settings)
 
-    mock_gdelt_fetch.assert_called_once()
+    mock_web_search_fetch.assert_called_once()
     assert len(result) == 1
     assert result[0].article["domain"] == "reuters.com"
     assert result[0].article["source_type"] == "rss"
@@ -320,9 +320,9 @@ def test_sourcing_agent_survives_gdelt_failure(mock_gdelt_fetch, mock_rss_fetch,
 
 @NEUTRAL_SIGNALS
 @patch("newsresearch.sourcing.rss.fetch_trusted_rss")
-@patch("newsresearch.sourcing.gdelt.fetch")
-def test_sourcing_agent_raises_without_database_url_or_pool(mock_gdelt_fetch, mock_rss_fetch):
-    mock_gdelt_fetch.return_value = []
+@patch("newsresearch.sourcing.web_search.fetch")
+def test_sourcing_agent_raises_without_database_url_or_pool(mock_web_search_fetch, mock_rss_fetch):
+    mock_web_search_fetch.return_value = []
     mock_rss_fetch.return_value = []
     settings = Settings(database_url=None)
 

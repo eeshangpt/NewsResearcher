@@ -32,7 +32,7 @@ from newsresearch.observability.langfuse_setup import (
 )
 from newsresearch.observability.mlflow_setup import mlflow_run
 from newsresearch.persistence.db import init_db
-from newsresearch.sourcing.gdelt import GDELTError
+from newsresearch.sourcing.web_search import WebSearchError
 
 app = typer.Typer(help="NewsResearch dev CLI harness.")
 dev_app = typer.Typer(help="Manual dev-inspection subcommands (Story 1.10).")
@@ -240,8 +240,8 @@ def sourcing_test(
     ),
     lookback_days: int = typer.Option(7, help="How many days back to search."),
 ) -> None:
-    """Run `agents/sourcing_agent.py` against real GDELT/RSS and print each
-    resulting article's URL, domain, reputation score, and tier.
+    """Run `agents/sourcing_agent.py` against real web search/RSS and print
+    each resulting article's URL, domain, reputation score, and tier.
 
     Manual dev-inspection harness (Story 1.10) -- not part of the LangGraph
     pipeline itself, just a thin wrapper for spot-checking sourcing +
@@ -256,14 +256,14 @@ def sourcing_test(
     pool = init_db(settings.database_url)
     try:
         results = sourcing_agent(keywords.split(), lookback_days, pool=pool, settings=settings)
-    except GDELTError as exc:
-        # Story 1.12 made `sourcing_agent` soft-fail GDELT (log a warning,
-        # continue with RSS(+backfill)-only results) -- so this branch is
-        # now unreachable for the GDELT case in normal operation. Left in
-        # place as defensive dead code (not deleted) rather than assuming
-        # with full confidence that no other path could ever raise
-        # `GDELTError` through this CLI command.
-        typer.echo(f"GDELT error: {exc}", err=True)
+    except WebSearchError as exc:
+        # Story 1.12 made `sourcing_agent` soft-fail web search (log a
+        # warning, continue with RSS(+backfill)-only results) -- so this
+        # branch is now unreachable for the web-search case in normal
+        # operation. Left in place as defensive dead code (not deleted)
+        # rather than assuming with full confidence that no other path
+        # could ever raise `WebSearchError` through this CLI command.
+        typer.echo(f"web search error: {exc}", err=True)
         raise typer.Exit(code=1) from exc
     finally:
         pool.close()

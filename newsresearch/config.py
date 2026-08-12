@@ -204,6 +204,7 @@ class Settings(BaseSettings):
     )
 
     openai_api_key: str | None = Field(default=None, validation_alias="OPENAI_API_KEY")
+    tavily_api_key: str | None = Field(default=None, validation_alias="TAVILY_API_KEY")
     database_url: str | None = Field(default=None, validation_alias="NEWSRESEARCH_DATABASE_URL")
     langfuse_public_key: str | None = Field(default=None, validation_alias="LANGFUSE_PUBLIC_KEY")
     langfuse_secret_key: str | None = Field(default=None, validation_alias="LANGFUSE_SECRET_KEY")

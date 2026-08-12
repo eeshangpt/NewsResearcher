@@ -1,0 +1,85 @@
+{
+  "29": {
+    "n_distinct_asserting_domains": 3,
+    "domains": [
+      "bbc.com",
+      "npr.org",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "A small drone carrying an explosive device was discovered near the southern runway of Leipzig/Halle Airport in Germany by an airport employee, according to three sources. The drone was found in the secure cargo flight operations area close to parked Antonov planes, and the runway remained closed after the incident, as reported by one source. Police found as much as 800 grams of explosive on the drone, according to one source. The device was defused, according to one report.",
+    "new_prompt_summaries": [
+      "A drone carrying an unknown explosive device was discovered near the south or southern runway at Leipzig/Halle Airport in Germany, within the secure cargo flight operations area close to parked Antonov planes; this led to the closure of the southern runway following the incident, according to BBC, The Guardian, and NPR. Police found as much as 800 grams of explosive on the drone, as reported by The Guardian. NPR also stated that the device was defused.",
+      "A drone carrying an unknown explosive device was found near the south or southern runway at Leipzig/Halle Airport in Germany, in the secure cargo flight operations area close to parked Antonov planes; the drone was discovered by an airport employee and led to the closure of the southern runway. Police found up to 800 grams of explosive on the drone, which was subsequently defused. These facts are reported by BBC, The Guardian, and NPR.",
+      "A drone carrying an explosive device was found near the southern runway at Leipzig/Halle Airport in Germany, in a secure cargo flight operations area close to parked Antonov planes; the device was spotted by an airport employee and later defused. According to The Guardian, police discovered as much as 800 grams of explosives on the drone. The southern runway remained closed after the incident. (Sources: BBC, The Guardian, NPR)"
+    ]
+  },
+  "14": {
+    "n_distinct_asserting_domains": 3,
+    "domains": [
+      "bbc.com",
+      "npr.org",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "A second unidentified flying object, possibly a drone, collided with a DHL cargo plane as it climbed away after aborting its landing at Leipzig/Halle Airport due to a runway closure, according to four sources. One source describes the collision occurring several hundred meters above the ground.",
+    "new_prompt_summaries": [
+      "A second unidentified object collided with a DHL cargo plane near Leipzig/Halle Airport after the plane aborted its landing due to a runway closure, according to BBC, The Guardian, and NPR. The Guardian adds that this second object, possibly another drone, struck the aircraft several hundred metres above the ground.",
+      "A second unidentified flying object, possibly a drone, collided with a DHL cargo plane several hundred meters above the ground near Leipzig/Halle Airport after the plane aborted its landing due to a runway closure, according to The Guardian, BBC, and NPR. The Guardian adds that this collision occurred as the cargo plane climbed away from the airport following a previous incident.",
+      "A second unidentified flying object collided with a DHL cargo plane near Leipzig/Halle Airport after the aircraft aborted its landing due to a runway closure, according to BBC, The Guardian, and NPR. The Guardian reports that this second object, possibly another drone, struck the plane several hundred meters above the ground as it climbed away from the airport."
+    ]
+  },
+  "17": {
+    "n_distinct_asserting_domains": 2,
+    "domains": [
+      "bbc.com",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "Leipzig/Halle Airport is used by the German military and NATO allies for the transport of military goods, according to two sources. The airport also serves as the European base for Ukraine\u2019s Antonov Airlines, which operate most of Ukraine\u2019s aerial cargo, as reported by four sources.",
+    "new_prompt_summaries": [
+      "Leipzig/Halle Airport is used by the German military and NATO allies for transporting military goods, serving as a logistics hub. The airport also functions as the European base for Ukraine\u2019s Antonov Airlines, which carries most of Ukraine\u2019s aerial cargo and operates heavy cargo jets. According to BBC and The Guardian.",
+      "Leipzig/Halle Airport is used by the German military and NATO allies for transporting military goods, according to BBC and The Guardian. The airport also serves as the European base for Ukraine\u2019s Antonov Airlines, which carries most of Ukraine\u2019s aerial cargo and operates heavy cargo flights, as reported by both BBC and The Guardian.",
+      "Leipzig/Halle Airport is used by the German military and NATO allies for the transport of military goods, according to BBC and The Guardian. It also serves as the European base for Ukraine's Antonov Airlines, which handles most of Ukraine's aerial cargo, as reported by BBC and The Guardian."
+    ]
+  },
+  "23": {
+    "n_distinct_asserting_domains": 3,
+    "domains": [
+      "bbc.com",
+      "npr.org",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "Police removed the detonator from the explosive device attached to a drone at Leipzig/Halle Airport, and later carried out a controlled explosion, according to one source. One source stated that the bomb on the drone did not explode because the detonator was faulty.",
+    "new_prompt_summaries": [
+      "Police removed the detonator from the explosive device attached to the drone before conducting a controlled explosion at Leipzig/Halle Airport, according to BBC and NPR. The Guardian reports that the bomb did not explode because the detonator was faulty.",
+      "The detonator was removed from the explosive device attached to the drone, and police later conducted a controlled explosion at Leipzig/Halle Airport, according to BBC and NPR. The bomb did not explode because the detonator was faulty, according to The Guardian.",
+      "The detonator was removed from the explosive device attached to a drone, and police later carried out a controlled explosion at Leipzig/Halle Airport, according to BBC and NPR. The bomb did not explode because the detonator was faulty, according to The Guardian."
+    ]
+  },
+  "27": {
+    "n_distinct_asserting_domains": 3,
+    "domains": [
+      "bbc.com",
+      "npr.org",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "Both runways at Leipzig/Halle Airport were closed shortly before midnight on Tuesday after a flying object was sighted nearby, according to two sources. The northern runway reopened about two hours later, with one source specifying it resumed operations at 01:55, while the southern runway remained closed as reported by one source.",
+    "new_prompt_summaries": [
+      "Both runways at Leipzig/Halle Airport were closed shortly before midnight Tuesday after a flying object was sighted nearby, according to NPR. Operations on the northern runway resumed about two hours later, at 01:55 (23:55 GMT on Tuesday), as reported by BBC, The Guardian, and NPR. The southern runway remains closed, according to BBC.",
+      "Both runways at Leipzig/Halle Airport were closed shortly before midnight Tuesday after a flying object was sighted nearby, according to NPR. Flights on the northern runway resumed about two hours later, at 01:55 (23:55 GMT on Tuesday), while the southern runway remained closed, as reported by BBC, NPR, and The Guardian.",
+      "All runways at Leipzig/Halle Airport were closed shortly before midnight Tuesday after a flying object was sighted nearby, with the northern runway reopening about two hours later or at 01:55 (23:55 GMT Tuesday), while the southern runway remained closed, according to NPR, BBC, and The Guardian."
+    ]
+  },
+  "9": {
+    "n_distinct_asserting_domains": 3,
+    "domains": [
+      "bbc.com",
+      "npr.org",
+      "theguardian.com"
+    ],
+    "old_prompt_summary": "German Interior Minister Alexander Dobrindt described the drone incident as part of a professional, hybrid threat or attack scenario, according to three sources. Two sources specifically state that investigators are treating the incident as a hybrid threat scenario.",
+    "new_prompt_summaries": [
+      "German Interior Minister Alexander Dobrindt described the drone incidents as a professional, hybrid threat or hybrid attack scenario. This characterization was reported by BBC, The Guardian, and NPR, with The Guardian noting that investigators were treating the incident in this way.",
+      "German Interior Minister Alexander Dobrindt described the drone incidents as part of a professional hybrid threat or hybrid attack scenario. This characterization was reported by BBC, The Guardian, and NPR.",
+      "German Interior Minister Alexander Dobrindt described the drone incident as part of a professional hybrid threat or hybrid attack scenario, with investigators treating it as such. This characterization is reported by BBC, The Guardian, and NPR."
+    ]
+  }
+}

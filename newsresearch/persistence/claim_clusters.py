@@ -94,6 +94,20 @@ def write_cluster_summary(pool: ConnectionPool, cluster_id: str, summary: str) -
         )
 
 
+def read_subtopic_cluster_ids(pool: ConnectionPool, subtopic_id: str) -> list[str]:
+    """Every persisted cluster_id for one subtopic, in stable id order.
+
+    Needed by `agents/bias_framing_agent.py`, which batches a subtopic's
+    clusters rather than addressing them one at a time.
+    """
+    with pool.connection() as conn:
+        rows = conn.execute(
+            "SELECT cluster_id FROM claim_clusters WHERE subtopic_id = %s ORDER BY cluster_id",
+            (subtopic_id,),
+        ).fetchall()
+    return [r[0] for r in rows]
+
+
 def read_cluster_article_relations(pool: ConnectionPool, cluster_id: str) -> list[dict[str, Any]]:
     """Every `claim_cluster_articles` row for one persisted cluster.
 

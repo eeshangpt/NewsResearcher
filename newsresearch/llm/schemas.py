@@ -8,6 +8,8 @@ are built.
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -121,4 +123,139 @@ class ClaimList(BaseModel):
     claims: list[Claim] = Field(
         ...,
         description="Every distinct atomic claim found in the article, deduplicated.",
+    )
+
+
+class ArticleFraming(BaseModel):
+    """How ONE article presents ONE claim cluster.
+
+    Deliberately keyed on `article_id`, not on the source domain: one domain
+    can contribute several articles to a subtopic (in the real Leipzig-drone
+    data, theguardian.com supplies both a news report and an opinion column),
+    and blending them produces a false outlet-level bias signal. `domain` is
+    carried alongside so downstream code can still roll up by domain when
+    that is genuinely what it wants.
+    """
+
+    article_id: str = Field(
+        ...,
+        description=(
+            "The article id exactly as given in this cluster's claim list. "
+            "Never an id that does not appear in this cluster."
+        ),
+    )
+    domain: str = Field(
+        ...,
+        description="The source domain shown next to that article id in the input.",
+    )
+    epistemic_treatment: Literal[
+        "states_as_established",
+        "attributes_to_named_party",
+        "hedges_as_uncertain",
+        "reports_as_contested",
+    ] = Field(
+        ...,
+        description=(
+            "How this article commits to the claim: asserted in its own "
+            "voice as settled ('states_as_established'), relayed as what an "
+            "identified party said without vouching for it "
+            "('attributes_to_named_party'), qualified as possible/apparent/"
+            "suspected/under investigation ('hedges_as_uncertain'), or "
+            "presented alongside a denial or conflicting account "
+            "('reports_as_contested')."
+        ),
+    )
+    contextual_frame: str = Field(
+        ...,
+        description=(
+            "Short descriptive phrase (roughly 4-12 words) naming the wider "
+            "context this article places the claim in, or the aspect it "
+            "foregrounds -- e.g. 'links incident to wider sabotage pattern', "
+            "'keeps to procedural police response'. Describes what this "
+            "article's own words do. Never a political leaning, ideological "
+            "position, partisan alignment, quality rating, or comparison "
+            "against another article."
+        ),
+    )
+    evidence_quote: str = Field(
+        ...,
+        description=(
+            "A verbatim span copied from THIS article's claim text in THIS "
+            "cluster -- a phrase, not the whole claim -- that the "
+            "contextual_frame and epistemic_treatment are based on. Never a "
+            "paraphrase, never another article's wording."
+        ),
+    )
+
+
+class ClusterFraming(BaseModel):
+    """Framing description for one claim cluster across its articles."""
+
+    cluster_id: str = Field(
+        ...,
+        description="The cluster_id exactly as provided in this batch's input.",
+    )
+    cluster_coherence: Literal["single_shared_fact", "multiple_distinct_facts"] = Field(
+        ...,
+        description=(
+            "Whether the grouped claims restate one underlying fact "
+            "(allowing paraphrase/wire-rewrite differences) or contain "
+            "several genuinely distinct facts that were grouped together. "
+            "Upstream claim clustering is imperfect, so the latter is common."
+        ),
+    )
+    shared_focus: str = Field(
+        ...,
+        description=(
+            "One sentence naming what this cluster is actually about. When "
+            "cluster_coherence is 'multiple_distinct_facts', name each "
+            "distinct fact rather than only the most prominent one."
+        ),
+    )
+    divergence: Literal[
+        "single_article_only",
+        "no_notable_divergence",
+        "wording_or_emphasis_differs",
+        "context_differs",
+        "accounts_conflict",
+    ] = Field(
+        ...,
+        description=(
+            "Relationship between the articles' presentations. "
+            "'accounts_conflict' is reserved for assertions about the same "
+            "subject that cannot both be true -- two articles covering "
+            "different facts are NOT in conflict."
+        ),
+    )
+    divergence_note: str = Field(
+        ...,
+        description=(
+            "One or two sentences explaining the divergence value, naming "
+            "the specific article ids or domains involved and the actual "
+            "differing wording. Never states a count of articles or sources "
+            "-- names them instead."
+        ),
+    )
+    per_article: list[ArticleFraming] = Field(
+        ...,
+        description=(
+            "One entry per article id appearing in this cluster's claim "
+            "list, and no others. Articles that omit the claim are NOT "
+            "listed here -- omission is read deterministically from "
+            "claim_cluster_articles, never generated by the model."
+        ),
+    )
+
+
+class BiasFramingBatch(BaseModel):
+    """Structured output of one `bias_framing.txt` call.
+
+    One call covers `Settings.models.bias_framing_batch_size` clusters
+    (default 8) from a single subtopic; each batch's `clusters` list merges
+    additively into that subtopic's full result set.
+    """
+
+    clusters: list[ClusterFraming] = Field(
+        ...,
+        description="One entry per cluster given in this batch, keyed by cluster_id.",
     )

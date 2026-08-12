@@ -1,0 +1,138 @@
+{
+  "21": {
+    "claims": [
+      {
+        "domain": "asiaone.com",
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally"
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally"
+      },
+      {
+        "domain": "finance.yahoo.com",
+        "claim_text": "A version of Chinese startup DeepSeek's flagship AI model is by far the least expensive to run on benchmark tests among well-known models globally."
+      }
+    ],
+    "summary": "A version of Chinese startup DeepSeek's flagship AI model is reportedly the least expensive to run on benchmark tests among well-known models globally, according to asiaone.com, economictimes.indiatimes.com, and finance.yahoo.com."
+  },
+  "31": {
+    "claims": [
+      {
+        "domain": "asiaone.com",
+        "claim_text": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens"
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "claim_text": "DeepSeek's V4-Flash model charges $0.14 per million input tokens and $0.28 per million output tokens"
+      },
+      {
+        "domain": "economictimes.indiatimes.com",
+        "claim_text": "Artificial Analysis estimated DeepSeek's V4-Flash average cost at 3 cents per test"
+      },
+      {
+        "domain": "finance.yahoo.com",
+        "claim_text": "DeepSeek's V4-Flash charges $0.14 per million input tokens and $0.28 per million output tokens according to research firm Artificial Analysis."
+      }
+    ],
+    "summary": "DeepSeek's V4-Flash model charges $0.14 per million input tokens and $0.28 per million output tokens, according to asiaone.com, economictimes.indiatimes.com, and finance.yahoo.com citing research firm Artificial Analysis. Artificial Analysis also estimated the average cost of DeepSeek's V4-Flash at 3 cents per test, as reported by economictimes.indiatimes.com."
+  },
+  "2": {
+    "claims": [
+      {
+        "domain": "benzinga.com",
+        "claim_text": "OpenAI CEO Sam Altman announced an 80% price cut for the lightweight GPT-5.6 Luna model."
+      },
+      {
+        "domain": "benzinga.com",
+        "claim_text": "OpenAI CEO Sam Altman announced a 20% price reduction for the mid-tier GPT-5.6 Terra model."
+      }
+    ],
+    "summary": "OpenAI CEO Sam Altman announced an 80% price cut for the lightweight GPT-5.6 Luna model, according to benzinga.com. He also announced a 20% price reduction for the mid-tier GPT-5.6 Terra model, as reported by benzinga.com."
+  },
+  "9": {
+    "claims": [
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "Qwen3.8-Max scored 86.6 on TerminalBench-2.1, ahead of every other model including Fable 5"
+      },
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "Qwen3.8-Max posted a leading score of 93.0 on PaperBench, ahead of Fable 5's 88.8"
+      },
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "On FrontierSWE benchmark, Qwen3.8-Max scored 73.5, trailing Opus 4.8 and Fable 5"
+      },
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "Qwen3.8-Max scored 74.8 on CoWorkBench and 53.4 on JobBench, ahead of its predecessor Qwen 3.7 Max but behind Fable 5"
+      },
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "Qwen3.8-Max led Fable 5's scores on OSWorld-Verified but trailed on MobileWorld"
+      }
+    ],
+    "summary": "According to freepressjournal.in, Qwen3.8-Max scored 86.6 on TerminalBench-2.1 and 93.0 on PaperBench, both times surpassing Fable 5. The same source reports that on the FrontierSWE benchmark, Qwen3.8-Max scored 73.5, trailing behind Opus 4.8 and Fable 5. Freepressjournal.in also states that Qwen3.8-Max achieved 74.8 on CoWorkBench and 53.4 on JobBench, outperforming its predecessor Qwen 3.7 Max but ranking below Fable 5. Additionally, this source notes that Qwen3.8-Max outscored Fable 5 on OSWorld-Verified but scored lower than Fable 5 on MobileWorld."
+  },
+  "34": {
+    "claims": [
+      {
+        "domain": "benzinga.com",
+        "claim_text": "A potential U.S. ban on Chinese open-weight AI models could come at a massive cost to American businesses as companies increasingly rely on lower-cost Chinese AI solutions."
+      },
+      {
+        "domain": "benzinga.com",
+        "claim_text": "Banning open-weight AI models could sharply reduce AI demand."
+      }
+    ],
+    "summary": "A potential U.S. ban on Chinese open-weight AI models could impose a significant cost on American businesses, which increasingly depend on lower-cost Chinese AI solutions, according to benzinga.com. The same source also states that banning open-weight AI models could sharply reduce AI demand."
+  },
+  "0": {
+    "claims": [
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "PLA Unit 96941, the main cyberwarfare group in the People\u2019s Liberation Army, distilled OpenAI\u2019s GPT-3.5 to process and summarize sensitive military source code."
+      },
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "PLA Unit 96941 developed a lightweight model specializing in safely processing sensitive data on Chinese military networks from distillation of GPT-3.5 outputs."
+      }
+    ],
+    "summary": "According to siliconangle.com, PLA Unit 96941, the main cyberwarfare group in the People\u2019s Liberation Army, used OpenAI\u2019s GPT-3.5 to develop a lightweight model specialized in safely processing and summarizing sensitive military source code on Chinese military networks."
+  },
+  "15": {
+    "claims": [
+      {
+        "domain": "benzinga.com",
+        "claim_text": "Washington\u2019s concerns over Chinese open-weight AI models intensified after Beijing-based Moonshot AI launched Kimi K3 in late July."
+      },
+      {
+        "domain": "freepressjournal.in",
+        "claim_text": "Moonshot's Kimi K3 has 2.8 trillion parameters"
+      },
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "The Chinese startup Moonshot AI released the world\u2019s largest open-weights model called Kimi K3 with claimed frontier-level performance."
+      }
+    ],
+    "summary": "The Chinese startup Moonshot AI launched Kimi K3 in late July, a model described as the world\u2019s largest open-weight AI model with claimed frontier-level performance, according to siliconangle.com. Moonshot\u2019s Kimi K3 reportedly has 2.8 trillion parameters, as stated by freepressjournal.in. Washington\u2019s concerns over Chinese open-weight AI models intensified following this release, according to benzinga.com."
+  },
+  "1": {
+    "claims": [
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "Chinese researchers are misusing a technique known as model distillation, which involves using outputs and data from powerful teacher models to train smaller student models."
+      },
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "The White House is concerned that model distillation undermines its export controls and infringes on the intellectual property rights of U.S. model makers."
+      },
+      {
+        "domain": "siliconangle.com",
+        "claim_text": "SapienX Inc. co-founder Trevor Koverko stated that Chinese model distillation is best understood as transferring selected capabilities into cheaper, locally controlled systems and does not imply independence from frontier AI."
+      }
+    ],
+    "summary": "According to siliconangle.com, Chinese researchers are misusing model distillation, a technique where outputs and data from powerful teacher models train smaller student models. The White House is concerned that this practice undermines its export controls and infringes on intellectual property rights held by U.S. model makers, as reported by siliconangle.com. Siliconangle.com also quotes SapienX Inc. co-founder Trevor Koverko, who said Chinese model distillation is best understood as transferring selected capabilities into cheaper, locally controlled systems and does not mean independence from frontier AI."
+  }
+}
